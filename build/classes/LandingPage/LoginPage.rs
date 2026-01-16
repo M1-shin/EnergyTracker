@@ -1,0 +1,10 @@
+Main.RegisterPage$4
+Main.RegisterPage$3
+Main.RegisterPage$2
+Main.RegisterPage$1
+Main.RegisterPage
+Main.LoginPage
+Main.LoginPage$1
+Main.LoginPage$2
+Main.LoginPage$3
+Main.LoginPage$4
