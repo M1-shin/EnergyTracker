@@ -5,7 +5,9 @@
  */
 package Main;
 
+import Config.config;
 import Main.LoginPage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,7 +42,7 @@ public class RegisterPage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         Email = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        Loginbtn = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         show = new javax.swing.JLabel();
@@ -48,7 +50,7 @@ public class RegisterPage extends javax.swing.JFrame {
         ConfirmPass = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        Registrbtn = new javax.swing.JLabel();
         Role = new javax.swing.JComboBox<>();
         FullName = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -103,11 +105,16 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel4.setText("REGISTER");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Login");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 50, -1));
+        Loginbtn.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        Loginbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Loginbtn.setText("Login");
+        Loginbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Loginbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginbtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(Loginbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 50, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -155,13 +162,23 @@ public class RegisterPage extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Register");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 60));
+        Registrbtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Registrbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Registrbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Registrbtn.setText("Register");
+        Registrbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RegistrbtnMouseClicked(evt);
+            }
+        });
+        jPanel3.add(Registrbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 80, 60));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 220, 60));
 
@@ -286,6 +303,24 @@ public class RegisterPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_BackHomeMouseClicked
 
+    private void LoginbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginbtnMouseClicked
+        LoginPage Loginbtn = new LoginPage();
+        Loginbtn.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LoginbtnMouseClicked
+
+    private void RegistrbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrbtnMouseClicked
+       
+    }//GEN-LAST:event_RegistrbtnMouseClicked
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        config con = new config();
+        
+        String sql = "INSERT INTO tbl_accts (name, email, password, type, status) VALUES (?,?,?,?,?)";
+        con.addRecord(sql, FullName.getText(),Email.getText(),Pass.getText(),"Admin","Pending");
+        JOptionPane.showMessageDialog(null,"RECORD ADDED!");
+    }//GEN-LAST:event_jPanel3MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -326,20 +361,20 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JPasswordField ConfirmPass;
     private javax.swing.JTextField Email;
     private javax.swing.JTextField FullName;
+    private javax.swing.JLabel Loginbtn;
     private javax.swing.JLabel Logo;
     private javax.swing.JPasswordField Pass;
+    private javax.swing.JLabel Registrbtn;
     private javax.swing.JComboBox<String> Role;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

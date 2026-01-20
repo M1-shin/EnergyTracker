@@ -36,9 +36,9 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        Username = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        SignUpbtn = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         show = new javax.swing.JLabel();
@@ -82,23 +82,28 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        Username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                UsernameActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 350, 40));
+        jPanel2.add(Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 350, 40));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("LOGIN ");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Sign up");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 70, -1));
+        SignUpbtn.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        SignUpbtn.setForeground(new java.awt.Color(255, 255, 255));
+        SignUpbtn.setText("Sign up");
+        SignUpbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SignUpbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SignUpbtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(SignUpbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 70, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,9 +178,9 @@ public class LoginPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_UsernameActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
         // TODO add your handling code here:
@@ -200,6 +205,12 @@ public class LoginPage extends javax.swing.JFrame {
         BackHome.setVisible(true);
         dispose();
     }//GEN-LAST:event_BackHomeMouseClicked
+
+    private void SignUpbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignUpbtnMouseClicked
+        RegisterPage SignUpbtn = new RegisterPage();
+        SignUpbtn.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_SignUpbtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -239,14 +250,15 @@ public class LoginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackHome;
     private javax.swing.JLabel Logo;
+    private javax.swing.JLabel SignUpbtn;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
+    private javax.swing.JTextField Username;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -255,7 +267,6 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JPasswordField pass;
     private javax.swing.JLabel show;
     // End of variables declaration//GEN-END:variables
