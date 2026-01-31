@@ -6,6 +6,8 @@
 package Main;
 
 import Main.LoginPage;
+import java.awt.Color;
+import javax.swing.JPanel;
 
 /**
  *
@@ -30,22 +32,30 @@ public class LandingPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         Background = new javax.swing.JPanel();
         Title = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
         TitleDesc = new javax.swing.JLabel();
-        Home = new javax.swing.JLabel();
-        Login = new javax.swing.JLabel();
-        Pic = new javax.swing.JLabel();
-        PicBg = new javax.swing.JLabel();
         Energized = new javax.swing.JLabel();
         Balanced = new javax.swing.JLabel();
-        Registerbtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        AboutPanel = new javax.swing.JPanel();
+        About = new javax.swing.JLabel();
+        LoginPanel = new javax.swing.JPanel();
+        Login = new javax.swing.JLabel();
+        SignPanel = new javax.swing.JPanel();
+        SignUp = new javax.swing.JLabel();
+        StartPanel = new javax.swing.JPanel();
+        Start = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled design (3).png"))); // NOI18N
         jLabel2.setToolTipText("");
+
+        jLabel6.setText("jLabel6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,89 +66,193 @@ public class LandingPage extends javax.swing.JFrame {
         Title.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
         Title.setForeground(new java.awt.Color(255, 255, 255));
         Title.setText("EnergiFy");
-        Background.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 330, 40));
+        Background.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 190, 40));
 
-        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design-removebg-preview.png"))); // NOI18N
-        Background.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, 20, 280, 110));
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
+        Background.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-110, 40, 280, 110));
 
         TitleDesc.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         TitleDesc.setForeground(new java.awt.Color(255, 255, 255));
         TitleDesc.setText("Personal Energy and Productivity Tracker");
-        Background.add(TitleDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
-
-        Home.setFont(new java.awt.Font("Broadway", 1, 18)); // NOI18N
-        Home.setForeground(new java.awt.Color(255, 255, 255));
-        Home.setText("HOME");
-        Home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Background.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 50, -1, -1));
-
-        Login.setFont(new java.awt.Font("Broadway", 1, 18)); // NOI18N
-        Login.setForeground(new java.awt.Color(255, 255, 255));
-        Login.setText("LOGIN");
-        Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Login.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LoginMouseClicked(evt);
-            }
-        });
-        Background.add(Login, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, -1, -1));
-
-        Pic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__4_-removebg-preview.png"))); // NOI18N
-        Background.add(Pic, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
-
-        PicBg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled design (3).png"))); // NOI18N
-        PicBg.setToolTipText("");
-        Background.add(PicBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 600, -1));
+        Background.add(TitleDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
 
         Energized.setFont(new java.awt.Font("Broadway", 3, 48)); // NOI18N
         Energized.setForeground(new java.awt.Color(255, 255, 255));
         Energized.setText("Stay Energized");
-        Background.add(Energized, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 470, -1));
+        Background.add(Energized, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 470, -1));
 
         Balanced.setFont(new java.awt.Font("Broadway", 3, 48)); // NOI18N
         Balanced.setForeground(new java.awt.Color(255, 255, 255));
         Balanced.setText("Stay Balanced");
-        Background.add(Balanced, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 450, -1));
+        Background.add(Balanced, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 450, -1));
 
-        Registerbtn.setBackground(new java.awt.Color(0, 102, 102));
-        Registerbtn.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        Registerbtn.setForeground(new java.awt.Color(255, 255, 255));
-        Registerbtn.setText("Register Now!");
-        Registerbtn.setBorderPainted(false);
-        Registerbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Registerbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterbtnActionPerformed(evt);
-            }
-        });
-        Background.add(Registerbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 220, 60));
-
-        jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Build better habits by understanding ");
-        Background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, 40));
+        Background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, -1, 40));
 
-        jLabel3.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("how your energy changes throughout the day.");
-        Background.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, 30));
+        Background.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
 
-        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 570));
+        AboutPanel.setBackground(new java.awt.Color(0, 51, 51));
+        AboutPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AboutPanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AboutPanelMouseExited(evt);
+            }
+        });
+        AboutPanel.setLayout(null);
+
+        About.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        About.setForeground(new java.awt.Color(255, 255, 255));
+        About.setText("ABOUT");
+        About.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AboutPanel.add(About);
+        About.setBounds(34, 16, 88, 29);
+
+        Background.add(AboutPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, 160, 60));
+
+        LoginPanel.setBackground(new java.awt.Color(0, 51, 51));
+        LoginPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LoginPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginPanelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LoginPanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LoginPanelMouseExited(evt);
+            }
+        });
+        LoginPanel.setLayout(null);
+
+        Login.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        Login.setForeground(new java.awt.Color(255, 255, 255));
+        Login.setText("LOGIN");
+        LoginPanel.add(Login);
+        Login.setBounds(40, 20, 81, 20);
+
+        Background.add(LoginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 50, 160, 60));
+
+        SignPanel.setBackground(new java.awt.Color(0, 51, 51));
+        SignPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SignPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SignPanelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SignPanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SignPanelMouseExited(evt);
+            }
+        });
+        SignPanel.setLayout(null);
+
+        SignUp.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        SignUp.setForeground(new java.awt.Color(255, 255, 255));
+        SignUp.setText("SIGNUP");
+        SignPanel.add(SignUp);
+        SignUp.setBounds(32, 16, 97, 29);
+
+        Background.add(SignPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 160, 60));
+
+        StartPanel.setBackground(new java.awt.Color(0, 51, 51));
+        StartPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        StartPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        StartPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                StartPanelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                StartPanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                StartPanelMouseExited(evt);
+            }
+        });
+        StartPanel.setLayout(null);
+
+        Start.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        Start.setForeground(new java.awt.Color(255, 255, 255));
+        Start.setText("Get Started");
+        StartPanel.add(Start);
+        Start.setBounds(60, 30, 144, 20);
+
+        Background.add(StartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, 270, 80));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (5).png"))); // NOI18N
+        Background.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
+        Background.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
+
+        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void setColor(JPanel p){
+    p.setBackground(new Color(0,51,51));
+    }
+    public void resetColor(JPanel p){
+    p.setBackground(new Color(0,102,102));
+    }
+    
+    private void AboutPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutPanelMouseEntered
+        resetColor(AboutPanel);
+    }//GEN-LAST:event_AboutPanelMouseEntered
 
-    private void RegisterbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterbtnActionPerformed
-        RegisterPage Registerbtn = new RegisterPage();
-        Registerbtn.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_RegisterbtnActionPerformed
+    private void AboutPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutPanelMouseExited
+        setColor(AboutPanel);
+    }//GEN-LAST:event_AboutPanelMouseExited
 
-    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
-        LoginPage Login = new LoginPage();
-        Login.setVisible(true);
+    private void LoginPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginPanelMouseClicked
+        LoginPage LoginPanel = new LoginPage();
+        LoginPanel.setVisible(true);
         dispose();
-    }//GEN-LAST:event_LoginMouseClicked
+    }//GEN-LAST:event_LoginPanelMouseClicked
+
+    private void LoginPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginPanelMouseEntered
+        resetColor(LoginPanel);
+    }//GEN-LAST:event_LoginPanelMouseEntered
+
+    private void LoginPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginPanelMouseExited
+        setColor(LoginPanel);
+    }//GEN-LAST:event_LoginPanelMouseExited
+
+    private void SignPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignPanelMouseEntered
+        resetColor(SignPanel);
+    }//GEN-LAST:event_SignPanelMouseEntered
+
+    private void SignPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignPanelMouseExited
+        setColor(SignPanel);
+    }//GEN-LAST:event_SignPanelMouseExited
+
+    private void SignPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignPanelMouseClicked
+        RegisterPage SignPanel = new RegisterPage();
+        SignPanel.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_SignPanelMouseClicked
+
+    private void StartPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StartPanelMouseEntered
+        resetColor(StartPanel);
+    }//GEN-LAST:event_StartPanelMouseEntered
+
+    private void StartPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StartPanelMouseExited
+        setColor(StartPanel);
+    }//GEN-LAST:event_StartPanelMouseExited
+
+    private void StartPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StartPanelMouseClicked
+        RegisterPage StartPanel = new RegisterPage();
+        StartPanel.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_StartPanelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -176,19 +290,25 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel About;
+    private javax.swing.JPanel AboutPanel;
     private javax.swing.JPanel Background;
     private javax.swing.JLabel Balanced;
     private javax.swing.JLabel Energized;
-    private javax.swing.JLabel Home;
     private javax.swing.JLabel Login;
+    private javax.swing.JPanel LoginPanel;
     private javax.swing.JLabel Logo;
-    private javax.swing.JLabel Pic;
-    private javax.swing.JLabel PicBg;
-    private javax.swing.JButton Registerbtn;
+    private javax.swing.JPanel SignPanel;
+    private javax.swing.JLabel SignUp;
+    private javax.swing.JLabel Start;
+    private javax.swing.JPanel StartPanel;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }

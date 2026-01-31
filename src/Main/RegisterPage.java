@@ -7,6 +7,7 @@ package Main;
 
 import Config.config;
 import Main.LoginPage;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -48,9 +49,9 @@ public class RegisterPage extends javax.swing.JFrame {
         show = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ConfirmPass = new javax.swing.JPasswordField();
+        Forgot = new javax.swing.JLabel();
+        Register = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        Registrbtn = new javax.swing.JLabel();
         Role = new javax.swing.JComboBox<>();
         FullName = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -59,6 +60,7 @@ public class RegisterPage extends javax.swing.JFrame {
         show1 = new javax.swing.JLabel();
         Pass = new javax.swing.JPasswordField();
         BackHome = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,39 +73,40 @@ public class RegisterPage extends javax.swing.JFrame {
         Title.setText("EnergiFy");
         jPanel1.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 180, 40));
 
-        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design-removebg-preview.png"))); // NOI18N
-        jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 220, 280, 110));
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
+        jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 280, 110));
 
         TitleDesc.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         TitleDesc.setForeground(new java.awt.Color(255, 255, 255));
         TitleDesc.setText("Personal Energy and Productivity");
-        jPanel1.add(TitleDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
+        jPanel1.add(TitleDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tracker");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__7_-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 380, 440, 320));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bot.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 440, 320));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__8_-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -40, 410, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/top.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 410, -1));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Email.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EmailActionPerformed(evt);
             }
         });
-        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 350, 40));
+        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 400, 40));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("REGISTER");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 270, -1));
 
         Loginbtn.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         Loginbtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -113,18 +116,24 @@ public class RegisterPage extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LoginbtnMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LoginbtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LoginbtnMouseExited(evt);
+            }
         });
-        jPanel2.add(Loginbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, 50, -1));
+        jPanel2.add(Loginbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, 50, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Already have an account?");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, 20));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Email Address");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, 20));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, 20));
 
         show.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
         show.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -139,78 +148,89 @@ public class RegisterPage extends javax.swing.JFrame {
                 showMouseReleased(evt);
             }
         });
-        jPanel2.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, 50, 80));
+        jPanel2.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, 50, 80));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Confirm Password");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, -1, 20));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, -1, 20));
 
+        ConfirmPass.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         ConfirmPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConfirmPassActionPerformed(evt);
             }
         });
-        jPanel2.add(ConfirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 500, 350, 40));
+        jPanel2.add(ConfirmPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 520, 400, 40));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        Forgot.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Forgot.setForeground(new java.awt.Color(255, 255, 255));
+        Forgot.setText("Forgot Password?");
+        Forgot.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Forgot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ForgotMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ForgotMouseExited(evt);
+            }
+        });
+        jPanel2.add(Forgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, 160, 20));
+
+        Register.setBackground(new java.awt.Color(0, 51, 51));
+        Register.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Register.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Register.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RegisterMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                RegisterMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                RegisterMouseExited(evt);
+            }
+        });
+        Register.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Forgot Password?");
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 540, 130, 20));
+        jLabel9.setText("REGISTER");
+        Register.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 140, 20));
 
-        jPanel3.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel3MouseClicked(evt);
-            }
-        });
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 620, 210, 60));
 
-        Registrbtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Registrbtn.setForeground(new java.awt.Color(255, 255, 255));
-        Registrbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Registrbtn.setText("Register");
-        Registrbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RegistrbtnMouseClicked(evt);
-            }
-        });
-        jPanel3.add(Registrbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 80, 60));
-
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 220, 60));
-
-        Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Mentor" }));
+        Role.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Mentor", "Admin" }));
         Role.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RoleActionPerformed(evt);
             }
         });
-        jPanel2.add(Role, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 350, 40));
+        jPanel2.add(Role, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 400, 40));
 
+        FullName.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         FullName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FullNameActionPerformed(evt);
             }
         });
-        jPanel2.add(FullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 350, 40));
+        jPanel2.add(FullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 400, 40));
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Full Name");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, 20));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, 20));
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Password");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, 20));
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Apply Role");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, -1, 20));
 
         show1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
         show1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -225,14 +245,15 @@ public class RegisterPage extends javax.swing.JFrame {
                 show1MouseReleased(evt);
             }
         });
-        jPanel2.add(show1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 400, 50, 80));
+        jPanel2.add(show1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 420, 50, 80));
 
+        Pass.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PassActionPerformed(evt);
             }
         });
-        jPanel2.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 350, 40));
+        jPanel2.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 400, 40));
 
         BackHome.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         BackHome.setForeground(new java.awt.Color(255, 255, 255));
@@ -242,12 +263,22 @@ public class RegisterPage extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackHomeMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BackHomeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BackHomeMouseExited(evt);
+            }
         });
-        jPanel2.add(BackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, -1));
+        jPanel2.add(BackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 160, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 630, 700));
+        jLabel5.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 690));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 850, 740));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -309,17 +340,45 @@ public class RegisterPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_LoginbtnMouseClicked
 
-    private void RegistrbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrbtnMouseClicked
-       
-    }//GEN-LAST:event_RegistrbtnMouseClicked
-
-    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+    private void RegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegisterMouseClicked
         config con = new config();
         
         String sql = "INSERT INTO tbl_accts (name, email, password, type, status) VALUES (?,?,?,?,?)";
         con.addRecord(sql, FullName.getText(),Email.getText(),Pass.getText(),"Admin","Pending");
         JOptionPane.showMessageDialog(null,"RECORD ADDED!");
-    }//GEN-LAST:event_jPanel3MouseClicked
+    }//GEN-LAST:event_RegisterMouseClicked
+
+    private void BackHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackHomeMouseEntered
+        BackHome.setForeground(new Color(255,153,51));
+    }//GEN-LAST:event_BackHomeMouseEntered
+
+    private void BackHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackHomeMouseExited
+        BackHome.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_BackHomeMouseExited
+
+    private void LoginbtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginbtnMouseEntered
+        Loginbtn.setForeground(new Color(255,153,51));
+    }//GEN-LAST:event_LoginbtnMouseEntered
+
+    private void LoginbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginbtnMouseExited
+        Loginbtn.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_LoginbtnMouseExited
+
+    private void ForgotMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseEntered
+        Forgot.setForeground(new Color(255,153,51));
+    }//GEN-LAST:event_ForgotMouseEntered
+
+    private void ForgotMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseExited
+        Forgot.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_ForgotMouseExited
+
+    private void RegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegisterMouseEntered
+        Register.setBackground(new Color(0,102,102));
+    }//GEN-LAST:event_RegisterMouseEntered
+
+    private void RegisterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegisterMouseExited
+        Register.setBackground(new Color(0,51,51));
+    }//GEN-LAST:event_RegisterMouseExited
 
     /**
      * @param args the command line arguments
@@ -360,11 +419,12 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JLabel BackHome;
     private javax.swing.JPasswordField ConfirmPass;
     private javax.swing.JTextField Email;
+    private javax.swing.JLabel Forgot;
     private javax.swing.JTextField FullName;
     private javax.swing.JLabel Loginbtn;
     private javax.swing.JLabel Logo;
     private javax.swing.JPasswordField Pass;
-    private javax.swing.JLabel Registrbtn;
+    private javax.swing.JPanel Register;
     private javax.swing.JComboBox<String> Role;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
@@ -375,13 +435,13 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JLabel show;
     private javax.swing.JLabel show1;
