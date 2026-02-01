@@ -58,6 +58,8 @@ public class LandingPage extends javax.swing.JFrame {
         jLabel6.setText("jLabel6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1300, 737));
+        setMinimumSize(new java.awt.Dimension(1300, 737));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Background.setBackground(new java.awt.Color(0, 51, 51));
@@ -97,6 +99,7 @@ public class LandingPage extends javax.swing.JFrame {
         Background.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
 
         AboutPanel.setBackground(new java.awt.Color(0, 51, 51));
+        AboutPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         AboutPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AboutPanelMouseEntered(evt);
@@ -117,6 +120,7 @@ public class LandingPage extends javax.swing.JFrame {
         Background.add(AboutPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, 160, 60));
 
         LoginPanel.setBackground(new java.awt.Color(0, 51, 51));
+        LoginPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         LoginPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -140,6 +144,7 @@ public class LandingPage extends javax.swing.JFrame {
         Background.add(LoginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 50, 160, 60));
 
         SignPanel.setBackground(new java.awt.Color(0, 51, 51));
+        SignPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         SignPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SignPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -195,6 +200,7 @@ public class LandingPage extends javax.swing.JFrame {
         getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
     public void setColor(JPanel p){

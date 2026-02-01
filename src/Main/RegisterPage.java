@@ -63,6 +63,8 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1300, 737));
+        setMinimumSize(new java.awt.Dimension(1300, 737));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
@@ -257,7 +259,7 @@ public class RegisterPage extends javax.swing.JFrame {
 
         BackHome.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         BackHome.setForeground(new java.awt.Color(255, 255, 255));
-        BackHome.setText("Go Back to Home");
+        BackHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (9).png"))); // NOI18N
         BackHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackHome.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -270,7 +272,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 BackHomeMouseExited(evt);
             }
         });
-        jPanel2.add(BackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 160, -1));
+        jPanel2.add(BackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 70, 60));
 
         jLabel5.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
@@ -281,6 +283,7 @@ public class RegisterPage extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
@@ -292,12 +295,13 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ConfirmPassActionPerformed
 
     private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
- 
-      
+        show.setVisible(true);
+        ConfirmPass.setEchoChar((char)0);
     }//GEN-LAST:event_showMouseClicked
 
     private void showMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMousePressed
-       
+        show.setVisible(true);
+        ConfirmPass.setEchoChar((char)0);
     }//GEN-LAST:event_showMousePressed
 
     private void showMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseReleased
@@ -313,11 +317,13 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_RoleActionPerformed
 
     private void show1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show1MouseClicked
-        // TODO add your handling code here:
+        show1.setVisible(true);
+        Pass.setEchoChar((char)0);
     }//GEN-LAST:event_show1MouseClicked
 
     private void show1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show1MousePressed
-        // TODO add your handling code here:
+        show1.setVisible(true);
+        Pass.setEchoChar((char)0);
     }//GEN-LAST:event_show1MousePressed
 
     private void show1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show1MouseReleased

@@ -23,6 +23,13 @@ public class Users extends javax.swing.JFrame {
     public Users() {
         initComponents();
         DisplayUser();
+        
+        this.addWindowFocusListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowGainedFocus(java.awt.event.WindowEvent e) {
+            DisplayUser();
+        }
+    });
     }
     
     void DisplayUser(){
@@ -33,8 +40,6 @@ public class Users extends javax.swing.JFrame {
     
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,6 +82,8 @@ public class Users extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1300, 737));
+        setMinimumSize(new java.awt.Dimension(1300, 737));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
@@ -106,6 +113,9 @@ public class Users extends javax.swing.JFrame {
         Home.setForeground(new java.awt.Color(255, 255, 255));
         Home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 HomeMouseEntered(evt);
             }
@@ -247,7 +257,7 @@ public class Users extends javax.swing.JFrame {
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 360, 60));
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102,90));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 51), java.awt.Color.lightGray));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -279,6 +289,9 @@ public class Users extends javax.swing.JFrame {
         Update.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Update.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 UpdateMouseEntered(evt);
             }
@@ -372,6 +385,7 @@ public class Users extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 1310, 750));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void SearchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTextActionPerformed
@@ -379,18 +393,9 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_SearchTextActionPerformed
 
     private void AddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseClicked
-      
-
-    config conf = new config();
-
-    String sql = "INSERT INTO tbl_accts (name, email, password, type, status) VALUES (?, ?, ?, ?, ?)";
-
-    //TO BE CONTINUED......
-
-    JOptionPane.showMessageDialog(this, "User added successfully!");
-    DisplayUser();
-
-
+        Add_1 Add = new Add_1();
+        Add.setVisible(true);
+        dispose();
     }//GEN-LAST:event_AddMouseClicked
 
     private void DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseClicked
@@ -424,13 +429,23 @@ public class Users extends javax.swing.JFrame {
 
     config conf = new config();
 
-    String keyword = SearchText.getText();
+    String keyword = SearchText.getText().trim();
+
+    if (keyword.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter a name or email to search.");
+        return;
+    }
 
     String sql = "SELECT a_id, name, email, password, type, status " +
                  "FROM tbl_accts WHERE name LIKE '%" + keyword + "%' " +
                  "OR email LIKE '%" + keyword + "%'";
 
     conf.displayData(sql, UserTable);
+
+    if (UserTable.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "Doesn't Exist");
+        DisplayUser();
+    }
 
 
     }//GEN-LAST:event_SearchMouseClicked
@@ -525,6 +540,36 @@ public class Users extends javax.swing.JFrame {
         Logo.setVisible(true);
         dispose();
     }//GEN-LAST:event_LogoMouseClicked
+
+    private void UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseClicked
+
+
+    int row = UserTable.getSelectedRow();
+
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a user to update.");
+        return;
+    }
+
+    int a_id = Integer.parseInt(UserTable.getValueAt(row, 0).toString());
+    String name = UserTable.getValueAt(row, 1).toString();
+    String email = UserTable.getValueAt(row, 2).toString();
+    String password = UserTable.getValueAt(row, 3).toString();
+    String type = UserTable.getValueAt(row, 4).toString();
+    String status = UserTable.getValueAt(row, 5).toString();
+
+    Update up = new Update (a_id, name, email, password, type, status);
+    up.setVisible(true);
+    dispose();
+
+
+    }//GEN-LAST:event_UpdateMouseClicked
+
+    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
+        Admin Users = new Admin();
+        Users.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_HomeMouseClicked
 
     /**
      * @param args the command line arguments
