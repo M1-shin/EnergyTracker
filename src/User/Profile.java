@@ -9,20 +9,27 @@ import Admin.AdminDashboard;
 import Main.LandingPage;
 import java.awt.Color;
 import javax.swing.JPanel;
+import Config.session;
 
 /**
  *
  * @author Sheena
  */
 public class Profile extends javax.swing.JFrame {
-
     /**
      * Creates new form Profile
      */
+    
     public Profile() {
         initComponents();
+        loadProfile();
+        
     }
-
+    private void loadProfile() {
+    Namelbl.setText(session.getName());
+    Emaillbl.setText(session.getEmail());
+    Typelbl.setText(session.getType());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,13 +57,12 @@ public class Profile extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         javax.swing.JLabel jLabel11 = new javax.swing.JLabel();
-        Edit = new javax.swing.JButton();
         NameLbl = new javax.swing.JLabel();
         EmailLbl = new javax.swing.JLabel();
         TypeLbl = new javax.swing.JLabel();
-        Nametxt = new javax.swing.JTextField();
-        Emailtxt = new javax.swing.JTextField();
-        Typetst = new javax.swing.JTextField();
+        Namelbl = new javax.swing.JLabel();
+        Emaillbl = new javax.swing.JLabel();
+        Typelbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,8 +81,8 @@ public class Profile extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("USERS");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 60, -1, -1));
+        jLabel9.setText("USER PROFILE");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -182,9 +188,9 @@ public class Profile extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("PROFILE");
+        jLabel7.setText("ACCOUNT");
         Acc.add(jLabel7);
-        jLabel7.setBounds(120, 20, 125, 20);
+        jLabel7.setBounds(110, 20, 125, 20);
 
         jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
@@ -214,10 +220,7 @@ public class Profile extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 200, 200));
-
-        Edit.setText("Edit Button");
-        jPanel2.add(Edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 200, 200));
 
         NameLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         NameLbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -234,26 +237,17 @@ public class Profile extends javax.swing.JFrame {
         TypeLbl.setText("Type");
         jPanel2.add(TypeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, -1, -1));
 
-        Nametxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NametxtActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Nametxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 290, 40));
+        Namelbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Namelbl.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(Namelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 220, 30));
 
-        Emailtxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailtxtActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Emailtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 290, 40));
+        Emaillbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Emaillbl.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(Emaillbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 130, 220, 30));
 
-        Typetst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TypetstActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Typetst, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 290, 40));
+        Typelbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Typelbl.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(Typelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, 220, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
@@ -336,18 +330,6 @@ public class Profile extends javax.swing.JFrame {
         setColor(Logout);
     }//GEN-LAST:event_LogoutMouseExited
 
-    private void NametxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NametxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NametxtActionPerformed
-
-    private void EmailtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailtxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmailtxtActionPerformed
-
-    private void TypetstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TypetstActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TypetstActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -386,17 +368,16 @@ public class Profile extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
     private javax.swing.JPanel App;
-    private javax.swing.JButton Edit;
     private javax.swing.JLabel EmailLbl;
-    private javax.swing.JTextField Emailtxt;
+    private javax.swing.JLabel Emaillbl;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
     private javax.swing.JLabel NameLbl;
-    private javax.swing.JTextField Nametxt;
+    private javax.swing.JLabel Namelbl;
     private javax.swing.JLabel TypeLbl;
-    private javax.swing.JTextField Typetst;
+    private javax.swing.JLabel Typelbl;
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

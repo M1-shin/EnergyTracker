@@ -273,60 +273,67 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void LoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonMouseClicked
         String email = Username.getText();
-        String password = Pass.getText();
+String password = Pass.getText();
 
-        if (email.equals("") || password.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields!");
-            return;
-        }
+if (email.equals("") || password.equals("")) {
+    JOptionPane.showMessageDialog(null, "Please fill in all fields!");
+    return;
+}
 
-        String sql = "SELECT status, type FROM tbl_accts WHERE email = ? AND password = ?";
+String sql = "SELECT a_id, name, email, status, type FROM tbl_accts WHERE email = ? AND password = ?";
 
-        String status = null;
-        String userType = null;
+String status = null;
+String userType = null;
 
-        try (
-            java.sql.Connection conn = Config.config.connectDB();
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        ) {
+try (
+    java.sql.Connection conn = Config.config.connectDB();
+    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+) {
 
-            pst.setString(1, email);
-            pst.setString(2, password);
+    pst.setString(1, email);
+    pst.setString(2, password);
 
-            java.sql.ResultSet rs = pst.executeQuery();
+    java.sql.ResultSet rs = pst.executeQuery();
 
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "Invalid email or password!");
-                return;
-            }
+    if (!rs.next()) {
+        JOptionPane.showMessageDialog(null, "Invalid email or password!");
+        return;
+    }
 
-            status = rs.getString("status");
-            userType = rs.getString("type");
+    status = rs.getString("status");
+    userType = rs.getString("type");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
-            return;
-        }
+    Config.session.setSession(
+        rs.getInt("a_id"),
+        rs.getString("name"),
+        rs.getString("email"),
+        userType
+    );
 
-        if (!status.equalsIgnoreCase("Active")) {
-            JOptionPane.showMessageDialog(
-                null,
-                "Your account is inactive. Please contact the administrator."
-            );
-            return;
-        }
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
+    return;
+}
 
-        JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
+if (!status.equalsIgnoreCase("Active")) {
+    JOptionPane.showMessageDialog(
+        null,
+        "Your account is inactive. Please contact the administrator."
+    );
+    return;
+}
 
-        if (userType.equalsIgnoreCase("Admin")) {
-            new AdminDashboard().setVisible(true);
-        } else if (userType.equalsIgnoreCase("User")) {
-            new UserDashboard().setVisible(true);
-        } else if (userType.equalsIgnoreCase("Mentor")) {
-            new MentorDashboard().setVisible(true);
-        }
+JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
 
-        dispose();
+if (userType.equalsIgnoreCase("Admin")) {
+    new AdminDashboard().setVisible(true);
+} else if (userType.equalsIgnoreCase("User")) {
+    new UserDashboard().setVisible(true);
+} else if (userType.equalsIgnoreCase("Mentor")) {
+    new MentorDashboard().setVisible(true);
+}
+
+dispose();
 
     }//GEN-LAST:event_LoginButtonMouseClicked
 

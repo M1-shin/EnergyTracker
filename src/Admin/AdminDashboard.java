@@ -200,6 +200,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -416,6 +419,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         Logo.setVisible(true);
         dispose();
     }//GEN-LAST:event_LogoMouseClicked
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        AdminProfile Acc = new AdminProfile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
 
     /**
      * @param args the command line arguments
