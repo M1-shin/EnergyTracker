@@ -51,35 +51,33 @@ public class Users extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Logo = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        UsersPage = new javax.swing.JLabel();
+        Title = new javax.swing.JLabel();
         Home = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        HomeLbl = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        AppLbl = new javax.swing.JLabel();
         Users = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        UsersLbl = new javax.swing.JLabel();
         Mentors = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        System = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         Acc = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        AccLbl = new javax.swing.JLabel();
         Logout = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        LogoutLbl = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Add = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        AddLbl = new javax.swing.JLabel();
         Update = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        UpdateLbl = new javax.swing.JLabel();
         Delete = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        DeleteLbl = new javax.swing.JLabel();
         Search = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
+        SearchLbl = new javax.swing.JLabel();
         SearchText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         UserTable = new javax.swing.JTable();
-        jLabel10 = new javax.swing.JLabel();
+        Bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1300, 737));
@@ -88,6 +86,9 @@ public class Users extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1300, 737));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1300, 737));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1300, 737));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
@@ -98,15 +99,15 @@ public class Users extends javax.swing.JFrame {
         });
         jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, 40, 290, 110));
 
-        jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("USERS");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 70, -1, -1));
+        UsersPage.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
+        UsersPage.setForeground(new java.awt.Color(255, 255, 255));
+        UsersPage.setText("USERS");
+        jPanel1.add(UsersPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 70, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("EnergiFy");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 180, 30));
+        Title.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
+        Title.setForeground(new java.awt.Color(255, 255, 255));
+        Title.setText("EnergiFy");
+        jPanel1.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 180, 30));
 
         Home.setBackground(new java.awt.Color(0, 51, 51));
         Home.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -125,11 +126,11 @@ public class Users extends javax.swing.JFrame {
         });
         Home.setLayout(null);
 
-        jLabel2.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("HOME");
-        Home.add(jLabel2);
-        jLabel2.setBounds(139, 16, 79, 29);
+        HomeLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        HomeLbl.setForeground(new java.awt.Color(255, 255, 255));
+        HomeLbl.setText("HOME");
+        Home.add(HomeLbl);
+        HomeLbl.setBounds(139, 16, 79, 29);
 
         jPanel1.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 360, 60));
 
@@ -147,11 +148,11 @@ public class Users extends javax.swing.JFrame {
         });
         App.setLayout(null);
 
-        jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("APPLICATIONS");
-        App.add(jLabel3);
-        jLabel3.setBounds(85, 16, 189, 29);
+        AppLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AppLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AppLbl.setText("APPLICATIONS");
+        App.add(AppLbl);
+        AppLbl.setBounds(85, 16, 189, 29);
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 360, 60));
 
@@ -161,11 +162,11 @@ public class Users extends javax.swing.JFrame {
         Users.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Users.setLayout(null);
 
-        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("USERS");
-        Users.add(jLabel4);
-        jLabel4.setBounds(134, 16, 86, 29);
+        UsersLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        UsersLbl.setForeground(new java.awt.Color(255, 255, 255));
+        UsersLbl.setText("USERS");
+        Users.add(UsersLbl);
+        UsersLbl.setBounds(134, 16, 86, 29);
 
         jPanel1.add(Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 360, 60));
 
@@ -185,33 +186,11 @@ public class Users extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("MENTOR ASSIGNMENTS");
+        jLabel5.setText("ASSIGNMENTS");
         Mentors.add(jLabel5);
-        jLabel5.setBounds(30, 20, 308, 20);
+        jLabel5.setBounds(90, 20, 187, 20);
 
         jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 360, 60));
-
-        System.setBackground(new java.awt.Color(0, 51, 51));
-        System.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        System.setForeground(new java.awt.Color(255, 255, 255));
-        System.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        System.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SystemMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                SystemMouseExited(evt);
-            }
-        });
-        System.setLayout(null);
-
-        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("SYSTEM SETTINGS");
-        System.add(jLabel6);
-        jLabel6.setBounds(57, 16, 244, 29);
-
-        jPanel1.add(System, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 360, 60));
 
         Acc.setBackground(new java.awt.Color(0, 51, 51));
         Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -227,13 +206,13 @@ public class Users extends javax.swing.JFrame {
         });
         Acc.setLayout(null);
 
-        jLabel7.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("ACCOUNT");
-        Acc.add(jLabel7);
-        jLabel7.setBounds(114, 16, 125, 29);
+        AccLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AccLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AccLbl.setText("ACCOUNT");
+        Acc.add(AccLbl);
+        AccLbl.setBounds(114, 16, 125, 29);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -249,13 +228,13 @@ public class Users extends javax.swing.JFrame {
         });
         Logout.setLayout(null);
 
-        jLabel8.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("LOGOUT");
-        Logout.add(jLabel8);
-        jLabel8.setBounds(126, 16, 107, 29);
+        LogoutLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        LogoutLbl.setForeground(new java.awt.Color(255, 255, 255));
+        LogoutLbl.setText("LOGOUT");
+        Logout.add(LogoutLbl);
+        LogoutLbl.setBounds(126, 16, 107, 29);
 
-        jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 360, 60));
+        jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, 360, 60));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102,90));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 51), java.awt.Color.lightGray));
@@ -277,11 +256,11 @@ public class Users extends javax.swing.JFrame {
         });
         Add.setLayout(null);
 
-        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("ADD");
-        Add.add(jLabel11);
-        jLabel11.setBounds(44, 16, 41, 22);
+        AddLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        AddLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AddLbl.setText("ADD");
+        Add.add(AddLbl);
+        AddLbl.setBounds(44, 16, 41, 22);
 
         jPanel2.add(Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 50));
 
@@ -301,11 +280,11 @@ public class Users extends javax.swing.JFrame {
         });
         Update.setLayout(null);
 
-        jLabel12.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("UPDATE");
-        Update.add(jLabel12);
-        jLabel12.setBounds(27, 16, 79, 22);
+        UpdateLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        UpdateLbl.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateLbl.setText("UPDATE");
+        Update.add(UpdateLbl);
+        UpdateLbl.setBounds(27, 16, 79, 22);
 
         jPanel2.add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 50));
 
@@ -325,11 +304,11 @@ public class Users extends javax.swing.JFrame {
         });
         Delete.setLayout(null);
 
-        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("DELETE");
-        Delete.add(jLabel13);
-        jLabel13.setBounds(24, 16, 81, 22);
+        DeleteLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        DeleteLbl.setForeground(new java.awt.Color(255, 255, 255));
+        DeleteLbl.setText("DELETE");
+        Delete.add(DeleteLbl);
+        DeleteLbl.setBounds(24, 16, 81, 22);
 
         jPanel2.add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 130, 50));
 
@@ -349,11 +328,11 @@ public class Users extends javax.swing.JFrame {
         });
         Search.setLayout(null);
 
-        jLabel14.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("SEARCH");
-        Search.add(jLabel14);
-        jLabel14.setBounds(25, 16, 81, 22);
+        SearchLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        SearchLbl.setForeground(new java.awt.Color(255, 255, 255));
+        SearchLbl.setText("SEARCH");
+        Search.add(SearchLbl);
+        SearchLbl.setBounds(25, 16, 81, 22);
 
         jPanel2.add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 130, 50));
 
@@ -379,8 +358,8 @@ public class Users extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 940, 570));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
+        Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
+        jPanel1.add(Bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 1310, 750));
 
@@ -479,14 +458,6 @@ public class Users extends javax.swing.JFrame {
         setColor(Mentors);
     }//GEN-LAST:event_MentorsMouseExited
 
-    private void SystemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SystemMouseEntered
-        resetColor(System);
-    }//GEN-LAST:event_SystemMouseEntered
-
-    private void SystemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SystemMouseExited
-        setColor(System);
-    }//GEN-LAST:event_SystemMouseExited
-
     private void AccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseEntered
         resetColor(Acc);
     }//GEN-LAST:event_AccMouseEntered
@@ -566,7 +537,7 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_UpdateMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        Admin Users = new Admin();
+        AdminDashboard Users = new AdminDashboard();
         Users.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
@@ -608,33 +579,31 @@ public class Users extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
+    private javax.swing.JLabel AccLbl;
     private javax.swing.JPanel Add;
+    private javax.swing.JLabel AddLbl;
     private javax.swing.JPanel App;
+    private javax.swing.JLabel AppLbl;
+    private javax.swing.JLabel Bg;
     private javax.swing.JPanel Delete;
+    private javax.swing.JLabel DeleteLbl;
     private javax.swing.JPanel Home;
+    private javax.swing.JLabel HomeLbl;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
+    private javax.swing.JLabel LogoutLbl;
     private javax.swing.JPanel Mentors;
     private javax.swing.JPanel Search;
+    private javax.swing.JLabel SearchLbl;
     private javax.swing.JTextField SearchText;
-    private javax.swing.JPanel System;
+    private javax.swing.JLabel Title;
     private javax.swing.JPanel Update;
+    private javax.swing.JLabel UpdateLbl;
     private javax.swing.JTable UserTable;
     private javax.swing.JPanel Users;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel UsersLbl;
+    private javax.swing.JLabel UsersPage;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

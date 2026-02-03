@@ -39,18 +39,18 @@ public class LandingPage extends javax.swing.JFrame {
         TitleDesc = new javax.swing.JLabel();
         Energized = new javax.swing.JLabel();
         Balanced = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        Text = new javax.swing.JLabel();
+        Text2 = new javax.swing.JLabel();
         AboutPanel = new javax.swing.JPanel();
-        About = new javax.swing.JLabel();
+        AboutLbl = new javax.swing.JLabel();
         LoginPanel = new javax.swing.JPanel();
-        Login = new javax.swing.JLabel();
+        LoginLbl = new javax.swing.JLabel();
         SignPanel = new javax.swing.JPanel();
-        SignUp = new javax.swing.JLabel();
+        SignUpLbl = new javax.swing.JLabel();
         StartPanel = new javax.swing.JPanel();
-        Start = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        StartLbl = new javax.swing.JLabel();
+        VisualIcon = new javax.swing.JLabel();
+        Bg = new javax.swing.JLabel();
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled design (3).png"))); // NOI18N
         jLabel2.setToolTipText("");
@@ -88,15 +88,15 @@ public class LandingPage extends javax.swing.JFrame {
         Balanced.setText("Stay Balanced");
         Background.add(Balanced, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 450, -1));
 
-        jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Build better habits by understanding ");
-        Background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, -1, 40));
+        Text.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
+        Text.setForeground(new java.awt.Color(255, 255, 255));
+        Text.setText("Build better habits by understanding ");
+        Background.add(Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, -1, 40));
 
-        jLabel3.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("how your energy changes throughout the day.");
-        Background.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
+        Text2.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
+        Text2.setForeground(new java.awt.Color(255, 255, 255));
+        Text2.setText("how your energy changes throughout the day.");
+        Background.add(Text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
 
         AboutPanel.setBackground(new java.awt.Color(0, 51, 51));
         AboutPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -110,12 +110,12 @@ public class LandingPage extends javax.swing.JFrame {
         });
         AboutPanel.setLayout(null);
 
-        About.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        About.setForeground(new java.awt.Color(255, 255, 255));
-        About.setText("ABOUT");
-        About.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        AboutPanel.add(About);
-        About.setBounds(34, 16, 88, 29);
+        AboutLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AboutLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AboutLbl.setText("ABOUT");
+        AboutLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AboutPanel.add(AboutLbl);
+        AboutLbl.setBounds(34, 16, 88, 29);
 
         Background.add(AboutPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, 160, 60));
 
@@ -135,11 +135,11 @@ public class LandingPage extends javax.swing.JFrame {
         });
         LoginPanel.setLayout(null);
 
-        Login.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        Login.setForeground(new java.awt.Color(255, 255, 255));
-        Login.setText("LOGIN");
-        LoginPanel.add(Login);
-        Login.setBounds(40, 20, 81, 20);
+        LoginLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        LoginLbl.setForeground(new java.awt.Color(255, 255, 255));
+        LoginLbl.setText("LOGIN");
+        LoginPanel.add(LoginLbl);
+        LoginLbl.setBounds(40, 20, 81, 20);
 
         Background.add(LoginPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 50, 160, 60));
 
@@ -159,11 +159,11 @@ public class LandingPage extends javax.swing.JFrame {
         });
         SignPanel.setLayout(null);
 
-        SignUp.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        SignUp.setForeground(new java.awt.Color(255, 255, 255));
-        SignUp.setText("SIGNUP");
-        SignPanel.add(SignUp);
-        SignUp.setBounds(32, 16, 97, 29);
+        SignUpLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        SignUpLbl.setForeground(new java.awt.Color(255, 255, 255));
+        SignUpLbl.setText("SIGNUP");
+        SignPanel.add(SignUpLbl);
+        SignUpLbl.setBounds(32, 16, 97, 29);
 
         Background.add(SignPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 160, 60));
 
@@ -183,19 +183,19 @@ public class LandingPage extends javax.swing.JFrame {
         });
         StartPanel.setLayout(null);
 
-        Start.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        Start.setForeground(new java.awt.Color(255, 255, 255));
-        Start.setText("Get Started");
-        StartPanel.add(Start);
-        Start.setBounds(60, 30, 144, 20);
+        StartLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        StartLbl.setForeground(new java.awt.Color(255, 255, 255));
+        StartLbl.setText("Get Started");
+        StartPanel.add(StartLbl);
+        StartLbl.setBounds(60, 30, 144, 20);
 
         Background.add(StartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 510, 270, 80));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (5).png"))); // NOI18N
-        Background.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        VisualIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (5).png"))); // NOI18N
+        Background.add(VisualIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
-        Background.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
+        Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
+        Background.add(Bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
 
         getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 740));
 
@@ -296,25 +296,25 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel About;
+    private javax.swing.JLabel AboutLbl;
     private javax.swing.JPanel AboutPanel;
     private javax.swing.JPanel Background;
     private javax.swing.JLabel Balanced;
+    private javax.swing.JLabel Bg;
     private javax.swing.JLabel Energized;
-    private javax.swing.JLabel Login;
+    private javax.swing.JLabel LoginLbl;
     private javax.swing.JPanel LoginPanel;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel SignPanel;
-    private javax.swing.JLabel SignUp;
-    private javax.swing.JLabel Start;
+    private javax.swing.JLabel SignUpLbl;
+    private javax.swing.JLabel StartLbl;
     private javax.swing.JPanel StartPanel;
+    private javax.swing.JLabel Text;
+    private javax.swing.JLabel Text2;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel VisualIcon;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }

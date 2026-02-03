@@ -37,30 +37,30 @@ public class RegisterPage extends javax.swing.JFrame {
         Title = new javax.swing.JLabel();
         Logo = new javax.swing.JLabel();
         TitleDesc = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        Text = new javax.swing.JLabel();
+        Bot = new javax.swing.JLabel();
+        Top = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Email = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        RegisterTitle = new javax.swing.JLabel();
         Loginbtn = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        show = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        Acc = new javax.swing.JLabel();
+        EmailLbl = new javax.swing.JLabel();
+        ShowIcon = new javax.swing.JLabel();
+        CpassLbl = new javax.swing.JLabel();
         ConfirmPass = new javax.swing.JPasswordField();
         Forgot = new javax.swing.JLabel();
         Register = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         Role = new javax.swing.JComboBox<>();
         FullName = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        show1 = new javax.swing.JLabel();
+        FullNameLbl = new javax.swing.JLabel();
+        PassLbl = new javax.swing.JLabel();
+        RoleLbl = new javax.swing.JLabel();
+        Show = new javax.swing.JLabel();
         Pass = new javax.swing.JPasswordField();
         BackHome = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        Bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1300, 737));
@@ -83,16 +83,16 @@ public class RegisterPage extends javax.swing.JFrame {
         TitleDesc.setText("Personal Energy and Productivity");
         jPanel1.add(TitleDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Tracker");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, -1, -1));
+        Text.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
+        Text.setForeground(new java.awt.Color(255, 255, 255));
+        Text.setText("Tracker");
+        jPanel1.add(Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bot.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 440, 320));
+        Bot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bot.png"))); // NOI18N
+        jPanel1.add(Bot, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 440, 320));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/top.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 410, -1));
+        Top.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/top.png"))); // NOI18N
+        jPanel1.add(Top, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 410, -1));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,10 +105,10 @@ public class RegisterPage extends javax.swing.JFrame {
         });
         jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 400, 40));
 
-        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("REGISTER");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 270, -1));
+        RegisterTitle.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
+        RegisterTitle.setForeground(new java.awt.Color(255, 255, 255));
+        RegisterTitle.setText("REGISTER");
+        jPanel2.add(RegisterTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 270, -1));
 
         Loginbtn.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         Loginbtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,35 +127,35 @@ public class RegisterPage extends javax.swing.JFrame {
         });
         jPanel2.add(Loginbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, 50, -1));
 
-        jLabel7.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Already have an account?");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, 20));
+        Acc.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Acc.setForeground(new java.awt.Color(255, 255, 255));
+        Acc.setText("Already have an account?");
+        jPanel2.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, 20));
 
-        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Email Address");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, 20));
+        EmailLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        EmailLbl.setForeground(new java.awt.Color(255, 255, 255));
+        EmailLbl.setText("Email Address");
+        jPanel2.add(EmailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, 20));
 
-        show.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
-        show.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        show.addMouseListener(new java.awt.event.MouseAdapter() {
+        ShowIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
+        ShowIcon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ShowIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                showMouseClicked(evt);
+                ShowIconMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                showMousePressed(evt);
+                ShowIconMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                showMouseReleased(evt);
+                ShowIconMouseReleased(evt);
             }
         });
-        jPanel2.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, 50, 80));
+        jPanel2.add(ShowIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, 50, 80));
 
-        jLabel8.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Confirm Password");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, -1, 20));
+        CpassLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        CpassLbl.setForeground(new java.awt.Color(255, 255, 255));
+        CpassLbl.setText("Confirm Password");
+        jPanel2.add(CpassLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, -1, 20));
 
         ConfirmPass.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         ConfirmPass.addActionListener(new java.awt.event.ActionListener() {
@@ -219,35 +219,35 @@ public class RegisterPage extends javax.swing.JFrame {
         });
         jPanel2.add(FullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 400, 40));
 
-        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Full Name");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, 20));
+        FullNameLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        FullNameLbl.setForeground(new java.awt.Color(255, 255, 255));
+        FullNameLbl.setText("Full Name");
+        jPanel2.add(FullNameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, 20));
 
-        jLabel12.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Password");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, 20));
+        PassLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        PassLbl.setForeground(new java.awt.Color(255, 255, 255));
+        PassLbl.setText("Password");
+        jPanel2.add(PassLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, 20));
 
-        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Apply Role");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, -1, 20));
+        RoleLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        RoleLbl.setForeground(new java.awt.Color(255, 255, 255));
+        RoleLbl.setText("Apply Role");
+        jPanel2.add(RoleLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, -1, 20));
 
-        show1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
-        show1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        show1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Show.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
+        Show.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Show.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                show1MouseClicked(evt);
+                ShowMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                show1MousePressed(evt);
+                ShowMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                show1MouseReleased(evt);
+                ShowMouseReleased(evt);
             }
         });
-        jPanel2.add(show1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 420, 50, 80));
+        jPanel2.add(Show, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 420, 50, 80));
 
         Pass.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Pass.addActionListener(new java.awt.event.ActionListener() {
@@ -274,9 +274,9 @@ public class RegisterPage extends javax.swing.JFrame {
         });
         jPanel2.add(BackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 70, 60));
 
-        jLabel5.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        Bg.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
+        jPanel2.add(Bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 850, 740));
 
@@ -294,19 +294,19 @@ public class RegisterPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ConfirmPassActionPerformed
 
-    private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
-        show.setVisible(true);
+    private void ShowIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowIconMouseClicked
+        ShowIcon.setVisible(true);
         ConfirmPass.setEchoChar((char)0);
-    }//GEN-LAST:event_showMouseClicked
+    }//GEN-LAST:event_ShowIconMouseClicked
 
-    private void showMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMousePressed
-        show.setVisible(true);
+    private void ShowIconMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowIconMousePressed
+        ShowIcon.setVisible(true);
         ConfirmPass.setEchoChar((char)0);
-    }//GEN-LAST:event_showMousePressed
+    }//GEN-LAST:event_ShowIconMousePressed
 
-    private void showMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseReleased
+    private void ShowIconMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowIconMouseReleased
 
-    }//GEN-LAST:event_showMouseReleased
+    }//GEN-LAST:event_ShowIconMouseReleased
 
     private void FullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FullNameActionPerformed
         // TODO add your handling code here:
@@ -316,19 +316,19 @@ public class RegisterPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_RoleActionPerformed
 
-    private void show1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show1MouseClicked
-        show1.setVisible(true);
+    private void ShowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowMouseClicked
+        Show.setVisible(true);
         Pass.setEchoChar((char)0);
-    }//GEN-LAST:event_show1MouseClicked
+    }//GEN-LAST:event_ShowMouseClicked
 
-    private void show1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show1MousePressed
-        show1.setVisible(true);
+    private void ShowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowMousePressed
+        Show.setVisible(true);
         Pass.setEchoChar((char)0);
-    }//GEN-LAST:event_show1MousePressed
+    }//GEN-LAST:event_ShowMousePressed
 
-    private void show1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_show1MouseReleased
+    private void ShowMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShowMouseReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_show1MouseReleased
+    }//GEN-LAST:event_ShowMouseReleased
 
     private void PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassActionPerformed
         // TODO add your handling code here:
@@ -349,9 +349,38 @@ public class RegisterPage extends javax.swing.JFrame {
     private void RegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegisterMouseClicked
         config con = new config();
         
+        String email = Email.getText();
+        String password = Pass.getText();
+        String role = Role.getSelectedItem().toString(); 
+
         String sql = "INSERT INTO tbl_accts (name, email, password, type, status) VALUES (?,?,?,?,?)";
-        con.addRecord(sql, FullName.getText(),Email.getText(),Pass.getText(),"Admin","Pending");
-        JOptionPane.showMessageDialog(null,"RECORD ADDED!");
+
+        if (email.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Please fill in all fields!",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        con.addRecord(
+            sql,
+            FullName.getText(),
+            Email.getText(),
+            Pass.getText(),
+            role,       
+            "Pending"
+        );
+
+        JOptionPane.showMessageDialog(null, "RECORD ADDED!");
+
+        FullName.setText("");
+        Email.setText("");
+        Pass.setText("");
+        ConfirmPass.setText("");
+        Role.setSelectedIndex(0);
     }//GEN-LAST:event_RegisterMouseClicked
 
     private void BackHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackHomeMouseEntered
@@ -422,34 +451,34 @@ public class RegisterPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Acc;
     private javax.swing.JLabel BackHome;
+    private javax.swing.JLabel Bg;
+    private javax.swing.JLabel Bot;
     private javax.swing.JPasswordField ConfirmPass;
+    private javax.swing.JLabel CpassLbl;
     private javax.swing.JTextField Email;
+    private javax.swing.JLabel EmailLbl;
     private javax.swing.JLabel Forgot;
     private javax.swing.JTextField FullName;
+    private javax.swing.JLabel FullNameLbl;
     private javax.swing.JLabel Loginbtn;
     private javax.swing.JLabel Logo;
     private javax.swing.JPasswordField Pass;
+    private javax.swing.JLabel PassLbl;
     private javax.swing.JPanel Register;
+    private javax.swing.JLabel RegisterTitle;
     private javax.swing.JComboBox<String> Role;
+    private javax.swing.JLabel RoleLbl;
+    private javax.swing.JLabel Show;
+    private javax.swing.JLabel ShowIcon;
+    private javax.swing.JLabel Text;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel Top;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JLabel show;
-    private javax.swing.JLabel show1;
     // End of variables declaration//GEN-END:variables
 }
