@@ -6,8 +6,11 @@
 package User;
 
 import Admin.AdminDashboard;
+import Config.config;
 import Main.LandingPage;
+import Main.LoginPage;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +23,24 @@ public class UserDashboard extends javax.swing.JFrame {
      * Creates new form UserDashb
      */
     public UserDashboard() {
+        if (Config.session.getUserId() == 0) 
+        {
+        JOptionPane.showMessageDialog(null, "Login Required!");
+        new LoginPage().setVisible(true);
+        dispose();
+        return;
+        }
+        
         initComponents();
+        DisplayLog();
+    }
+    
+    void DisplayLog(){
+    
+        config con = new config();
+        String sql = "SELECT task, energy_level, log_date FROM energy_logs";
+        con.displayData(sql, LogTable);
+    
     }
 
     /**
@@ -48,6 +68,26 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         Logout = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        LogTable = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,6 +146,9 @@ public class UserDashboard extends javax.swing.JFrame {
         App.setForeground(new java.awt.Color(255, 255, 255));
         App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         App.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AppMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AppMouseEntered(evt);
             }
@@ -127,6 +170,14 @@ public class UserDashboard extends javax.swing.JFrame {
         Users.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Users.setForeground(new java.awt.Color(255, 255, 255));
         Users.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Users.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                UsersMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UsersMouseExited(evt);
+            }
+        });
         Users.setLayout(null);
 
         jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
@@ -180,7 +231,7 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("ACCOUNT");
         Acc.add(jLabel7);
-        jLabel7.setBounds(110, 20, 125, 20);
+        jLabel7.setBounds(120, 20, 125, 20);
 
         jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
@@ -189,6 +240,9 @@ public class UserDashboard extends javax.swing.JFrame {
         Logout.setForeground(new java.awt.Color(255, 255, 255));
         Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutMouseEntered(evt);
             }
@@ -205,6 +259,103 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel8.setBounds(126, 16, 107, 29);
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
+
+        jScrollPane1.setBackground(new java.awt.Color(0, 51, 51));
+        jScrollPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        jScrollPane1.setToolTipText("");
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jPanel6.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setLayout(null);
+
+        jLabel23.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        jLabel23.setText("Energy Today");
+        jPanel3.add(jLabel23);
+        jLabel23.setBounds(10, 10, 160, 29);
+
+        jLabel14.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabel14.setText("3");
+        jPanel3.add(jLabel14);
+        jLabel14.setBounds(10, 60, 30, 50);
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
+        jPanel3.add(jLabel20);
+        jLabel20.setBounds(0, 0, 430, 180);
+
+        jPanel6.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 410, 150));
+
+        jPanel4.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        jLabel11.setText("Weekly Average");
+        jPanel4.add(jLabel11);
+        jLabel11.setBounds(10, 10, 200, 29);
+
+        jLabel15.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabel15.setText("2");
+        jPanel4.add(jLabel15);
+        jLabel15.setBounds(10, 60, 30, 60);
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
+        jPanel4.add(jLabel21);
+        jLabel21.setBounds(10, 0, 430, 180);
+
+        jPanel6.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 420, 150));
+
+        jPanel5.setLayout(null);
+
+        jLabel12.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        jLabel12.setText("Streak");
+        jPanel5.add(jLabel12);
+        jLabel12.setBounds(10, 10, 90, 29);
+
+        jLabel16.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabel16.setText("1");
+        jPanel5.add(jLabel16);
+        jLabel16.setBounds(10, 50, 30, 60);
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
+        jPanel5.add(jLabel22);
+        jLabel22.setBounds(0, 0, 430, 180);
+
+        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 410, 150));
+
+        jPanel7.setLayout(null);
+
+        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        jLabel13.setText("Undone Tasks");
+        jPanel7.add(jLabel13);
+        jLabel13.setBounds(10, 10, 170, 29);
+
+        jLabel17.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabel17.setText("1");
+        jPanel7.add(jLabel17);
+        jLabel17.setBounds(10, 50, 30, 60);
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
+        jPanel7.add(jLabel19);
+        jLabel19.setBounds(10, 0, 440, 180);
+
+        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 420, 150));
+
+        LogTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(LogTable);
+
+        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 860, 320));
+
+        jScrollPane1.setViewportView(jPanel6);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
@@ -297,6 +448,27 @@ public class UserDashboard extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_AccMouseClicked
 
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        Config.session.clearSession();
+        JOptionPane.showMessageDialog(null, "Logged out successfully!");
+        new LoginPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoutMouseClicked
+
+    private void UsersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseEntered
+        resetColor(Users);
+    }//GEN-LAST:event_UsersMouseEntered
+
+    private void UsersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseExited
+        setColor(Users);
+    }//GEN-LAST:event_UsersMouseExited
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+        LogEnergy App = new LogEnergy();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -337,13 +509,26 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Acc;
     private javax.swing.JPanel App;
     private javax.swing.JPanel Home;
+    private javax.swing.JTable LogTable;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -351,5 +536,12 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

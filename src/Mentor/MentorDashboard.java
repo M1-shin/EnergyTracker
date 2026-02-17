@@ -7,7 +7,9 @@ package Mentor;
 
 import Admin.AdminDashboard;
 import Main.LandingPage;
+import Main.LoginPage;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,6 +22,13 @@ public class MentorDashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     public MentorDashboard() {
+        if (Config.session.getUserId() == 0) 
+        {
+        JOptionPane.showMessageDialog(null, "Login Required!");
+        new LoginPage().setVisible(true);
+        dispose();
+        return;
+        }
         initComponents();
     }
 
@@ -163,6 +172,9 @@ public class MentorDashboard extends javax.swing.JFrame {
         Logout.setForeground(new java.awt.Color(255, 255, 255));
         Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutMouseEntered(evt);
             }
@@ -237,6 +249,13 @@ public class MentorDashboard extends javax.swing.JFrame {
     private void LogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseExited
         setColor(Logout);
     }//GEN-LAST:event_LogoutMouseExited
+
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        Config.session.clearSession();
+        JOptionPane.showMessageDialog(null, "Logged out successfully!");
+        new LoginPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoutMouseClicked
 
     /**
      * @param args the command line arguments

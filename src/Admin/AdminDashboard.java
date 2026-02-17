@@ -7,7 +7,9 @@ package Admin;
 
 import Config.config;
 import Main.LandingPage;
+import Main.LoginPage;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,9 +22,17 @@ public class AdminDashboard extends javax.swing.JFrame {
      * Creates new form Admin
      */
     public AdminDashboard() {
+        if (Config.session.getUserId() == 0) 
+        {
+        JOptionPane.showMessageDialog(null, "Login Required!");
+        new LoginPage().setVisible(true);
+        dispose();
+        return;
+        }
         initComponents();
         DisplayUser();
-    }
+}
+    
     
     void DisplayUser(){
     
@@ -225,6 +235,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         Logout.setForeground(new java.awt.Color(255, 255, 255));
         Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutMouseEntered(evt);
             }
@@ -425,6 +438,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         Acc.setVisible(true);
         dispose();
     }//GEN-LAST:event_AccMouseClicked
+
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        Config.session.clearSession();
+        JOptionPane.showMessageDialog(null, "Logged out successfully!");
+        new LoginPage().setVisible(true);
+        dispose();       
+    }//GEN-LAST:event_LogoutMouseClicked
 
     /**
      * @param args the command line arguments

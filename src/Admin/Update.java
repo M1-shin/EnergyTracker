@@ -11,6 +11,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Admin.Users;
+import Main.LoginPage;
 
 /**
  *
@@ -24,6 +25,14 @@ public class Update extends javax.swing.JFrame {
     int userId;
     
     public Update(int a_id, String name, String email, String password, String type, String status) {
+        if (Config.session.getUserId() == 0) 
+        {
+        JOptionPane.showMessageDialog(null, "Login Required!");
+        new LoginPage().setVisible(true);
+        dispose();
+        return;
+        }
+        
         initComponents();
         
             userId = a_id;
@@ -60,8 +69,6 @@ public class Update extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         Mentors = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        System = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         Acc = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         Logout = new javax.swing.JPanel();
@@ -192,39 +199,20 @@ public class Update extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("MENTOR ASSIGNMENTS");
+        jLabel5.setText("ASSIGNMENTS");
         Mentors.add(jLabel5);
-        jLabel5.setBounds(30, 20, 308, 20);
+        jLabel5.setBounds(90, 20, 190, 20);
 
         jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 360, 60));
-
-        System.setBackground(new java.awt.Color(0, 51, 51));
-        System.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        System.setForeground(new java.awt.Color(255, 255, 255));
-        System.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        System.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SystemMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                SystemMouseExited(evt);
-            }
-        });
-        System.setLayout(null);
-
-        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("SYSTEM SETTINGS");
-        System.add(jLabel6);
-        jLabel6.setBounds(57, 16, 244, 29);
-
-        jPanel1.add(System, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 360, 60));
 
         Acc.setBackground(new java.awt.Color(0, 51, 51));
         Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -240,13 +228,16 @@ public class Update extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(114, 16, 125, 29);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Logout.setForeground(new java.awt.Color(255, 255, 255));
         Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutMouseEntered(evt);
             }
@@ -262,7 +253,7 @@ public class Update extends javax.swing.JFrame {
         Logout.add(jLabel8);
         jLabel8.setBounds(126, 16, 107, 29);
 
-        jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 360, 60));
+        jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, 360, 60));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102,90));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 51), java.awt.Color.lightGray));
@@ -530,14 +521,6 @@ public class Update extends javax.swing.JFrame {
         setColor(Mentors);
     }//GEN-LAST:event_MentorsMouseExited
 
-    private void SystemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SystemMouseEntered
-        resetColor(System);
-    }//GEN-LAST:event_SystemMouseEntered
-
-    private void SystemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SystemMouseExited
-        setColor(System);
-    }//GEN-LAST:event_SystemMouseExited
-
     private void AccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseEntered
         resetColor(Acc);
     }//GEN-LAST:event_AccMouseEntered
@@ -651,6 +634,19 @@ public class Update extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_BackMouseClicked
 
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        Config.session.clearSession();
+        JOptionPane.showMessageDialog(null, "Logged out successfully!");
+        new LoginPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoutMouseClicked
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        AdminProfile Acc = new AdminProfile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -707,7 +703,6 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JPanel Search;
     private javax.swing.JTextField SearchText;
     private javax.swing.JComboBox<String> Stats;
-    private javax.swing.JPanel System;
     private javax.swing.JPanel Update;
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
@@ -726,7 +721,6 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

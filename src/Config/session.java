@@ -1,26 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Config;
 
-/**
- *
- * @author USER24
- */
 public class session {
 
     private static int a_id;
     private static String name;
+    private static String lname;
+    private static String uname;
     private static String email;
     private static String type;
+    private static String status;
 
-    public static void setSession(int id, String n, String e, String t) {
+    public static void setSession(int id, String n, String ln, String un, String e, String t, String s) {
         a_id = id;
         name = n;
+        lname = ln;
+        uname = un;
         email = e;
         type = t;
+        status = s;
     }
 
     public static int getUserId() {
@@ -31,6 +28,14 @@ public class session {
         return name;
     }
 
+    public static String getLname() {
+        return lname;
+    }
+
+    public static String getUname() {
+        return uname;
+    }
+
     public static String getEmail() {
         return email;
     }
@@ -39,11 +44,17 @@ public class session {
         return type;
     }
 
+    public static String getStatus() {
+        return status;
+    }
+
     public static void clearSession() {
         a_id = 0;
         name = null;
+        lname = null;
+        uname = null;
         email = null;
         type = null;
+        status = null;
     }
 }
-

@@ -7,6 +7,7 @@ package Admin;
 
 import Config.config;
 import Main.LandingPage;
+import Main.LoginPage;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +22,13 @@ public class Users extends javax.swing.JFrame {
      * Creates new form Users
      */
     public Users() {
+        if (Config.session.getUserId() == 0) 
+        {
+        JOptionPane.showMessageDialog(null, "Login Required!");
+        new LoginPage().setVisible(true);
+        dispose();
+        return;
+        }
         initComponents();
         DisplayUser();
         
@@ -197,6 +205,9 @@ public class Users extends javax.swing.JFrame {
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -219,6 +230,9 @@ public class Users extends javax.swing.JFrame {
         Logout.setForeground(new java.awt.Color(255, 255, 255));
         Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutMouseEntered(evt);
             }
@@ -340,6 +354,11 @@ public class Users extends javax.swing.JFrame {
         SearchText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchTextActionPerformed(evt);
+            }
+        });
+        SearchText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                SearchTextKeyTyped(evt);
             }
         });
         jPanel2.add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 300, 50));
@@ -541,6 +560,33 @@ public class Users extends javax.swing.JFrame {
         Users.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
+
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        Config.session.clearSession();
+        JOptionPane.showMessageDialog(null, "Logged out successfully!");
+        new LoginPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoutMouseClicked
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        AdminProfile Acc = new AdminProfile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
+
+    private void SearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextKeyTyped
+        String searchText = SearchText.getText();
+        String sql = "SELECT * FROM tbl_accts WHERE a_id LIKE ? or name LIKE ? or lname LIKE ? or uname LIKE ? or email LIKE ? or type LIKE ? or status LIKE ?";
+        config conf = new config();
+        conf.displayData(sql, UserTable,
+        "%" + searchText + "%",
+        "%" + searchText + "%",
+        "%" + searchText + "%",
+        "%" + searchText + "%",
+        "%" + searchText + "%",
+        "%" + searchText + "%",
+        "%" + searchText + "%");
+    }//GEN-LAST:event_SearchTextKeyTyped
 
     /**
      * @param args the command line arguments

@@ -44,7 +44,7 @@ public class LoginPage extends javax.swing.JFrame {
         Text = new javax.swing.JLabel();
         Top = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        Username = new javax.swing.JTextField();
+        Email = new javax.swing.JTextField();
         LoginTitle = new javax.swing.JLabel();
         SignUpbtn = new javax.swing.JLabel();
         Acc = new javax.swing.JLabel();
@@ -93,12 +93,12 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Username.addActionListener(new java.awt.event.ActionListener() {
+        Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsernameActionPerformed(evt);
+                EmailActionPerformed(evt);
             }
         });
-        jPanel2.add(Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 390, 60));
+        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 280, 390, 60));
 
         LoginTitle.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         LoginTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,7 +129,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         NameLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         NameLbl.setForeground(new java.awt.Color(255, 255, 255));
-        NameLbl.setText("Username");
+        NameLbl.setText("Email");
         jPanel2.add(NameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, -1, -1));
 
         ShowIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
@@ -224,9 +224,9 @@ public class LoginPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameActionPerformed
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UsernameActionPerformed
+    }//GEN-LAST:event_EmailActionPerformed
 
     private void PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassActionPerformed
         // TODO add your handling code here:
@@ -272,69 +272,66 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_LoginButtonMouseExited
 
     private void LoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonMouseClicked
-        String email = Username.getText();
-String password = Pass.getText();
+        String email = Email.getText();
+        String password = Pass.getText();
 
-if (email.equals("") || password.equals("")) {
-    JOptionPane.showMessageDialog(null, "Please fill in all fields!");
-    return;
-}
+        if (email.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields!");
+            return;
+        }
 
-String sql = "SELECT a_id, name, email, status, type FROM tbl_accts WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM tbl_accts WHERE email = ? AND password = ?";
 
-String status = null;
-String userType = null;
+        try (
+            java.sql.Connection conn = Config.config.connectDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        ) {
 
-try (
-    java.sql.Connection conn = Config.config.connectDB();
-    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-) {
+            pst.setString(1, email);
+            pst.setString(2, password);
 
-    pst.setString(1, email);
-    pst.setString(2, password);
+            java.sql.ResultSet rs = pst.executeQuery();
 
-    java.sql.ResultSet rs = pst.executeQuery();
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(null, "Invalid email or password!");
+                return;
+            }
 
-    if (!rs.next()) {
-        JOptionPane.showMessageDialog(null, "Invalid email or password!");
-        return;
-    }
+            if (!rs.getString("status").equalsIgnoreCase("Active")) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Your account is inactive. Please contact the administrator."
+                );
+                return;
+            }
 
-    status = rs.getString("status");
-    userType = rs.getString("type");
+            Config.session.setSession(
+                rs.getInt("a_id"),
+                rs.getString("name"),
+                rs.getString("lname"),
+                rs.getString("uname"),
+                rs.getString("email"),
+                rs.getString("type"),
+                rs.getString("status")
+            );
 
-    Config.session.setSession(
-        rs.getInt("a_id"),
-        rs.getString("name"),
-        rs.getString("email"),
-        userType
-    );
+            JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
 
-} catch (Exception e) {
-    JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
-    return;
-}
+            String userType = rs.getString("type");
 
-if (!status.equalsIgnoreCase("Active")) {
-    JOptionPane.showMessageDialog(
-        null,
-        "Your account is inactive. Please contact the administrator."
-    );
-    return;
-}
+            if (userType.equalsIgnoreCase("Admin")) {
+                new AdminDashboard().setVisible(true);
+            } else if (userType.equalsIgnoreCase("User")) {
+                new UserDashboard().setVisible(true);
+            } else if (userType.equalsIgnoreCase("Mentor")) {
+                new MentorDashboard().setVisible(true);
+            }
 
-JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
+            dispose();
 
-if (userType.equalsIgnoreCase("Admin")) {
-    new AdminDashboard().setVisible(true);
-} else if (userType.equalsIgnoreCase("User")) {
-    new UserDashboard().setVisible(true);
-} else if (userType.equalsIgnoreCase("Mentor")) {
-    new MentorDashboard().setVisible(true);
-}
-
-dispose();
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_LoginButtonMouseClicked
 
     private void BackHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackHomeMouseEntered
@@ -401,6 +398,7 @@ dispose();
     private javax.swing.JLabel BackHome;
     private javax.swing.JLabel Bg;
     private javax.swing.JLabel Bot;
+    private javax.swing.JTextField Email;
     private javax.swing.JLabel Forgot;
     private javax.swing.JPanel LoginButton;
     private javax.swing.JLabel LoginTitle;
@@ -414,7 +412,6 @@ dispose();
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
     private javax.swing.JLabel Top;
-    private javax.swing.JTextField Username;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
