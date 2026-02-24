@@ -2,59 +2,87 @@ package Config;
 
 public class session {
 
-    private static int a_id;
-    private static String name;
-    private static String lname;
-    private static String uname;
-    private static String email;
-    private static String type;
-    private static String status;
+    private static session instance;
 
-    public static void setSession(int id, String n, String ln, String un, String e, String t, String s) {
-        a_id = id;
-        name = n;
-        lname = ln;
-        uname = un;
-        email = e;
-        type = t;
-        status = s;
+    private int a_id;
+    private String name;
+    private String lname;
+    private String uname;
+    private String email;
+    private String type;
+    private String status;
+
+    private session() {
     }
 
-    public static int getUserId() {
+    public static synchronized session getInstance() {
+        if (instance == null) {
+            instance = new session();
+        }
+        return instance;
+    }
+
+    public static boolean isInstanceEmpty() {
+        return instance == null;
+    }
+
+    public int getUserId() {
         return a_id;
     }
 
-    public static String getName() {
+    public void setUserId(int a_id) {
+        this.a_id = a_id;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public static String getLname() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLname() {
         return lname;
     }
 
-    public static String getUname() {
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getUname() {
         return uname;
     }
 
-    public static String getEmail() {
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    public String getEmail() {
         return email;
     }
 
-    public static String getType() {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public static String getStatus() {
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public static void clearSession() {
-        a_id = 0;
-        name = null;
-        lname = null;
-        uname = null;
-        email = null;
-        type = null;
-        status = null;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void clearSession() {
+        instance = null;
     }
 }

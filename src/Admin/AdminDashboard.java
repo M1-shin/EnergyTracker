@@ -6,6 +6,7 @@
 package Admin;
 
 import Config.config;
+import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
@@ -21,13 +22,13 @@ public class AdminDashboard extends javax.swing.JFrame {
     /**
      * Creates new form Admin
      */
+    session sess = session.getInstance();
     public AdminDashboard() {
-        if (Config.session.getUserId() == 0) 
-        {
-        JOptionPane.showMessageDialog(null, "Login Required!");
-        new LoginPage().setVisible(true);
-        dispose();
-        return;
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) {
+            JOptionPane.showMessageDialog(null, "Login Required!");
+            new LoginPage().setVisible(true);
+            dispose();
+            return;
         }
         initComponents();
         DisplayUser();
@@ -440,7 +441,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseClicked
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();       

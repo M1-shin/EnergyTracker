@@ -7,12 +7,14 @@ package User;
 
 import Admin.Add_1;
 import Config.config;
+import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.util.Date;
+import User.LogEnergy;
 
 /**
  *
@@ -23,8 +25,9 @@ public class Add extends javax.swing.JFrame {
     /**
      * Creates new form Add
      */
+    session sess = session.getInstance();
     public Add() {
-        if (Config.session.getUserId() == 0) 
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) 
         {
         JOptionPane.showMessageDialog(null, "Login Required!");
         new LoginPage().setVisible(true);
@@ -34,12 +37,13 @@ public class Add extends javax.swing.JFrame {
         
         initComponents();
         
-        Energy.setMinimum(1);
-        Energy.setMaximum(5);
-        Energy.setMajorTickSpacing(1);
-        Energy.setPaintTicks(true);
-        Energy.setPaintLabels(true);
-        Energy.setValue(3);
+        energySlider.setMinimum(1);
+        energySlider.setMaximum(5);
+        energySlider.setValue(1); // default
+        energySlider.setMajorTickSpacing(1);
+        energySlider.setPaintTicks(true);
+        energySlider.setPaintLabels(true);
+        energySlider.setSnapToTicks(true);
     }
     
    
@@ -69,7 +73,7 @@ public class Add extends javax.swing.JFrame {
         Search = new javax.swing.JPanel();
         SearchLbl = new javax.swing.JLabel();
         Back = new javax.swing.JLabel();
-        Energy = new javax.swing.JSlider();
+        energySlider = new javax.swing.JSlider();
         Addbtn = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -239,15 +243,18 @@ public class Add extends javax.swing.JFrame {
         });
         jPanel2.add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 60, 70));
 
-        Energy.setBackground(new java.awt.Color(0, 51, 51));
-        Energy.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Energy.setMaximum(4);
-        Energy.setPaintTicks(true);
-        Energy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Energy.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        Energy.setDoubleBuffered(true);
-        Energy.setFocusCycleRoot(true);
-        jPanel2.add(Energy, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 420, 50));
+        energySlider.setBackground(new java.awt.Color(0, 51, 51));
+        energySlider.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        energySlider.setMaximum(5);
+        energySlider.setMinimum(1);
+        energySlider.setMinorTickSpacing(1);
+        energySlider.setPaintTicks(true);
+        energySlider.setValue(1);
+        energySlider.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        energySlider.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        energySlider.setDoubleBuffered(true);
+        energySlider.setFocusCycleRoot(true);
+        jPanel2.add(energySlider, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 420, 50));
 
         Addbtn.setBackground(new java.awt.Color(0, 51, 51));
         Addbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -476,7 +483,9 @@ public class Add extends javax.swing.JFrame {
         p2.setBackground(new Color(0,102,102));
     }
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-
+    UserDashboard Home = new UserDashboard();
+    Home.setVisible(true);
+    dispose();
     }//GEN-LAST:event_HomeMouseClicked
 
     private void HomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseEntered
@@ -520,7 +529,7 @@ public class Add extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();
@@ -541,10 +550,12 @@ public class Add extends javax.swing.JFrame {
     private void AddbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddbtnMouseClicked
         config conf = new config();
 
-        String sql = "INSERT INTO energy_log (task, energy_level,  date) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO energy_log (u_id, task, energy_level, date) VALUES (?, ?, ?, ?)";
+        
+        
 
         try {
-            int energyLevel = Energy.getValue();
+            int energyLevel = energySlider.getValue();
 
             java.util.Date selectedDate = Date.getDate();
 
@@ -556,20 +567,25 @@ public class Add extends javax.swing.JFrame {
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM-dd-yyyy");
             String logDate = sdf.format(selectedDate);
 
+            session sess = session.getInstance();
+
             conf.addRecord(sql,
+                sess.getUserId(),
                 Task.getText(),
                 energyLevel,
                 logDate
             );
 
             JOptionPane.showMessageDialog(this, "Task added successfully!");
-
+            this.dispose(); 
+            new LogEnergy().setVisible(true); 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
+        
 
         Task.setText("");
-        Energy.setValue(50);
+        energySlider.setValue(1);
         Date.setDate(null);
     }//GEN-LAST:event_AddbtnMouseClicked
 
@@ -676,7 +692,6 @@ public class Add extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser Date;
     private javax.swing.JPanel Delete;
     private javax.swing.JLabel DeleteLbl;
-    private javax.swing.JSlider Energy;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
@@ -688,6 +703,7 @@ public class Add extends javax.swing.JFrame {
     private javax.swing.JPanel Update;
     private javax.swing.JLabel UpdateLbl;
     private javax.swing.JPanel Users;
+    private javax.swing.JSlider energySlider;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;

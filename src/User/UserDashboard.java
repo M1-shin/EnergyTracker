@@ -7,6 +7,7 @@ package User;
 
 import Admin.AdminDashboard;
 import Config.config;
+import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
@@ -22,8 +23,9 @@ public class UserDashboard extends javax.swing.JFrame {
     /**
      * Creates new form UserDashb
      */
+    session sess = session.getInstance();
     public UserDashboard() {
-        if (Config.session.getUserId() == 0) 
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) 
         {
         JOptionPane.showMessageDialog(null, "Login Required!");
         new LoginPage().setVisible(true);
@@ -38,7 +40,7 @@ public class UserDashboard extends javax.swing.JFrame {
     void DisplayLog(){
     
         config con = new config();
-        String sql = "SELECT task, energy_level, log_date FROM energy_logs";
+        String sql = "SELECT task, energy_level, date FROM energy_log";
         con.displayData(sql, LogTable);
     
     }
@@ -71,20 +73,12 @@ public class UserDashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         LogTable = new javax.swing.JTable();
@@ -271,16 +265,6 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel3.setLayout(null);
 
-        jLabel23.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel23.setText("Energy Today");
-        jPanel3.add(jLabel23);
-        jLabel23.setBounds(10, 10, 160, 29);
-
-        jLabel14.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel14.setText("3");
-        jPanel3.add(jLabel14);
-        jLabel14.setBounds(10, 60, 30, 50);
-
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
         jPanel3.add(jLabel20);
         jLabel20.setBounds(0, 0, 430, 180);
@@ -288,16 +272,6 @@ public class UserDashboard extends javax.swing.JFrame {
         jPanel6.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 410, 150));
 
         jPanel4.setLayout(null);
-
-        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel11.setText("Weekly Average");
-        jPanel4.add(jLabel11);
-        jLabel11.setBounds(10, 10, 200, 29);
-
-        jLabel15.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel15.setText("2");
-        jPanel4.add(jLabel15);
-        jLabel15.setBounds(10, 60, 30, 60);
 
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
         jPanel4.add(jLabel21);
@@ -307,16 +281,6 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel5.setLayout(null);
 
-        jLabel12.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel12.setText("Streak");
-        jPanel5.add(jLabel12);
-        jLabel12.setBounds(10, 10, 90, 29);
-
-        jLabel16.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel16.setText("1");
-        jPanel5.add(jLabel16);
-        jLabel16.setBounds(10, 50, 30, 60);
-
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
         jPanel5.add(jLabel22);
         jLabel22.setBounds(0, 0, 430, 180);
@@ -324,16 +288,6 @@ public class UserDashboard extends javax.swing.JFrame {
         jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 410, 150));
 
         jPanel7.setLayout(null);
-
-        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel13.setText("Undone Tasks");
-        jPanel7.add(jLabel13);
-        jLabel13.setBounds(10, 10, 170, 29);
-
-        jLabel17.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel17.setText("1");
-        jPanel7.add(jLabel17);
-        jLabel17.setBounds(10, 50, 30, 60);
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
         jPanel7.add(jLabel19);
@@ -449,7 +403,7 @@ public class UserDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseClicked
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();
@@ -516,19 +470,11 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

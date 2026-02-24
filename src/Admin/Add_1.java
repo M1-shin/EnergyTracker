@@ -11,6 +11,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Admin.Users;
+import Config.session;
 import Main.LoginPage;
 
 /**
@@ -22,13 +23,13 @@ public class Add_1 extends javax.swing.JFrame {
     /**
      * Creates new form Users
      */
+    session sess = session.getInstance();
     public Add_1() {
-        if (Config.session.getUserId() == 0) 
-        {
-        JOptionPane.showMessageDialog(null, "Login Required!");
-        new LoginPage().setVisible(true);
-        dispose();
-        return;
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) {
+            JOptionPane.showMessageDialog(null, "Login Required!");
+            new LoginPage().setVisible(true);
+            dispose();
+            return;
         }
         initComponents();
     }
@@ -610,7 +611,7 @@ public class Add_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_BackMouseClicked
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();

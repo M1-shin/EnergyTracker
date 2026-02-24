@@ -28,31 +28,32 @@ public class AdminProfile extends javax.swing.JFrame {
     /**
      * Creates new form AdminProfile
      */
+    session sess = session.getInstance();
     public AdminProfile() {
-        if (Config.session.getUserId() == 0) 
-        {
-        JOptionPane.showMessageDialog(null, "Login Required!");
-        new LoginPage().setVisible(true);
-        dispose();
-        return;
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) {
+            JOptionPane.showMessageDialog(null, "Login Required!");
+            new LoginPage().setVisible(true);
+            dispose();
+            return;
         }
         initComponents();
         loadProfile();
     }
     
-private void loadProfile() {
-    Namelbl.setText(session.getName());
-    Emaillbl.setText(session.getEmail());
-    Typelbl.setText(session.getType());
-    Usernm.setText(session.getUname());
-    Idlbl.setText(String.valueOf(session.getUserId()));
-    
-     try {
-        java.sql.Connection con = Config.config.connectDB();
-        String sql = "SELECT image FROM tbl_accts WHERE a_id=?";
-        PreparedStatement pst = con.prepareStatement(sql);
-        pst.setInt(1, session.getUserId());
-        ResultSet rs = pst.executeQuery();
+    private void loadProfile() {
+        Namelbl.setText(sess.getName());
+        Emaillbl.setText(sess.getEmail());
+        Typelbl.setText(sess.getType());
+        Usernm.setText(sess.getUname());
+        Idlbl.setText(String.valueOf(sess.getUserId()));
+
+     try (java.sql.Connection con = Config.config.connectDB();
+     PreparedStatement pst = con.prepareStatement(
+             "SELECT image FROM tbl_accts WHERE a_id=?")) {
+
+    pst.setInt(1, sess.getUserId());
+
+    try (ResultSet rs = pst.executeQuery()) {
 
         if (rs.next()) {
             String path = rs.getString("image");
@@ -60,17 +61,18 @@ private void loadProfile() {
             if (path != null && !path.isEmpty()) {
                 ImageIcon icon = new ImageIcon(path);
                 Image img = icon.getImage().getScaledInstance(
-                        ImageIcon.getWidth(),
-                        ImageIcon.getHeight(),
+                        Pics.getWidth(),
+                        Pics.getHeight(),
                         Image.SCALE_SMOOTH
                 );
-                ImageIcon.setIcon(new ImageIcon(img));
+                Pics.setIcon(new ImageIcon(img));
             }
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
     }
+
+} catch (Exception e) {
+    e.printStackTrace();
+}
 }
 
     /**
@@ -100,7 +102,7 @@ private void loadProfile() {
         Emaillbl = new javax.swing.JLabel();
         Typelbl = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        ImageIcon = new javax.swing.JLabel();
+        Pics = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Idlbl = new javax.swing.JLabel();
         Usernm = new javax.swing.JLabel();
@@ -247,20 +249,20 @@ private void loadProfile() {
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
         jPanel3.setLayout(null);
 
-        ImageIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
-        jPanel3.add(ImageIcon);
-        ImageIcon.setBounds(50, 30, 200, 200);
+        Pics.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
+        jPanel3.add(Pics);
+        Pics.setBounds(50, 30, 200, 200);
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 310, 260));
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("ID:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, 20));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, 20));
 
         Idlbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Idlbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Idlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 90, 40));
+        jPanel2.add(Idlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 90, 40));
 
         Usernm.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Usernm.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,6 +274,12 @@ private void loadProfile() {
         Edit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                EditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                EditMouseExited(evt);
             }
         });
         Edit.setLayout(null);
@@ -289,6 +297,14 @@ private void loadProfile() {
 
         Reports.setBackground(new java.awt.Color(0, 51, 51));
         Reports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Reports.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ReportsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ReportsMouseExited(evt);
+            }
+        });
         Reports.setLayout(null);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/8_2.png"))); // NOI18N
@@ -299,6 +315,14 @@ private void loadProfile() {
 
         Out.setBackground(new java.awt.Color(0, 51, 51));
         Out.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Out.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                OutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                OutMouseExited(evt);
+            }
+        });
         Out.setLayout(null);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/6_2.png"))); // NOI18N
@@ -442,7 +466,7 @@ private void loadProfile() {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();
@@ -489,6 +513,30 @@ private void loadProfile() {
         Edit.setVisible(true);
         dispose();
     }//GEN-LAST:event_EditMouseClicked
+
+    private void EditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseEntered
+        resetColor(Edit);
+    }//GEN-LAST:event_EditMouseEntered
+
+    private void EditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseExited
+        setColor(Edit);
+    }//GEN-LAST:event_EditMouseExited
+
+    private void ReportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseEntered
+        resetColor(Reports);
+    }//GEN-LAST:event_ReportsMouseEntered
+
+    private void ReportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseExited
+        setColor(Reports);
+    }//GEN-LAST:event_ReportsMouseExited
+
+    private void OutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseEntered
+        resetColor(Out);
+    }//GEN-LAST:event_OutMouseEntered
+
+    private void OutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseExited
+        setColor(Out);
+    }//GEN-LAST:event_OutMouseExited
 
     /**
      * @param args the command line arguments
@@ -537,13 +585,13 @@ private void loadProfile() {
     private javax.swing.JLabel Emaillbl;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Idlbl;
-    private javax.swing.JLabel ImageIcon;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentor;
     private javax.swing.JLabel NameLbl;
     private javax.swing.JLabel Namelbl;
     private javax.swing.JPanel Out;
+    private javax.swing.JLabel Pics;
     private javax.swing.JPanel Reports;
     private javax.swing.JLabel TypeLbl;
     private javax.swing.JLabel Typelbl;

@@ -6,6 +6,7 @@
 package User;
 
 import Admin.AdminDashboard;
+import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
@@ -21,8 +22,9 @@ public class Mentor extends javax.swing.JFrame {
     /**
      * Creates new form Mentor
      */
+    session sess = session.getInstance();
     public Mentor() {
-        if (Config.session.getUserId() == 0) 
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) 
         {
         JOptionPane.showMessageDialog(null, "Login Required!");
         new LoginPage().setVisible(true);
@@ -300,7 +302,7 @@ public class Mentor extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();

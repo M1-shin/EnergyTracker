@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/Main/LoginPage.java</file>
-            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/User/Update.java</file>
-            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/User/UserDashboard.java</file>
-            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/Admin/Users.java</file>
             <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/Admin/Update.java</file>
-            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/User/LogEnergy.java</file>
+            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/Admin/AdminProfile.java</file>
+            <file>file:/C:/Users/Sheena/OneDrive/Book%20Rentals/Documents/NetBeansProjects/EnergyTracker/src/Admin/EditProfile.java</file>
         </group>
     </open-files>
 </project-private>

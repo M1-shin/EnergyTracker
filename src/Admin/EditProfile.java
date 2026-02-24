@@ -28,30 +28,29 @@ public class EditProfile extends javax.swing.JFrame {
     /**
      * Creates new form EditProfile
      */
+    session sess = session.getInstance();
     public EditProfile() {
-        if (Config.session.getUserId() == 0) 
-        {
-        JOptionPane.showMessageDialog(null, "Login Required!");
-        new LoginPage().setVisible(true);
-        dispose();
-        return;
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) {
+            JOptionPane.showMessageDialog(null, "Login Required!");
+            new LoginPage().setVisible(true);
+            dispose();
+            return;
         }
         initComponents();
         loadProfile();
     }
     
     private void loadProfile() {
-    Name.setText(session.getName());
-    Email.setText(session.getEmail());
-    Typelbl.setText(session.getType());
-    Username.setText(session.getUname());
-    Idlbl.setText(String.valueOf(session.getUserId()));
-    
+        Name.setText(sess.getName());
+        Email.setText(sess.getEmail());
+        Typelbl.setText(sess.getType());
+        Username.setText(sess.getUname());
+        Idlbl.setText(String.valueOf(sess.getUserId()));
      try (java.sql.Connection con = Config.config.connectDB();
      PreparedStatement pst = con.prepareStatement(
              "SELECT image FROM tbl_accts WHERE a_id=?")) {
 
-    pst.setInt(1, session.getUserId());
+    pst.setInt(1, sess.getUserId());
 
     try (ResultSet rs = pst.executeQuery()) {
 
@@ -111,7 +110,7 @@ public class EditProfile extends javax.swing.JFrame {
         TypeLbl1 = new javax.swing.JLabel();
         Typelbl = new javax.swing.JLabel();
         TypeLbl2 = new javax.swing.JLabel();
-        Out1 = new javax.swing.JPanel();
+        Save = new javax.swing.JPanel();
         TypeLbl4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
@@ -256,6 +255,12 @@ public class EditProfile extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                EditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                EditMouseExited(evt);
+            }
         });
         Edit.setLayout(null);
 
@@ -270,6 +275,17 @@ public class EditProfile extends javax.swing.JFrame {
 
         Out.setBackground(new java.awt.Color(0, 51, 51));
         Out.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Out.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                OutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                OutMouseExited(evt);
+            }
+        });
         Out.setLayout(null);
 
         TypeLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
@@ -304,18 +320,29 @@ public class EditProfile extends javax.swing.JFrame {
         TypeLbl2.setText("Username:");
         jPanel2.add(TypeLbl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, -1, -1));
 
-        Out1.setBackground(new java.awt.Color(0, 51, 51));
-        Out1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        Out1.setLayout(null);
+        Save.setBackground(new java.awt.Color(0, 51, 51));
+        Save.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Save.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SaveMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SaveMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SaveMouseExited(evt);
+            }
+        });
+        Save.setLayout(null);
 
         TypeLbl4.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         TypeLbl4.setForeground(new java.awt.Color(255, 255, 255));
         TypeLbl4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TypeLbl4.setText("SAVE CHANGES");
-        Out1.add(TypeLbl4);
+        Save.add(TypeLbl4);
         TypeLbl4.setBounds(30, 20, 210, 40);
 
-        jPanel2.add(Out1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, 270, 80));
+        jPanel2.add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, 270, 80));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
@@ -444,7 +471,7 @@ public class EditProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();
@@ -505,7 +532,7 @@ public class EditProfile extends javax.swing.JFrame {
              "UPDATE tbl_accts SET image=? WHERE a_id=?")) {
 
     pst.setString(1, imagePath);
-    pst.setInt(2, session.getUserId());
+    pst.setInt(2, sess.getUserId());
     pst.executeUpdate();
 
     ImageIcon icon = new ImageIcon(imagePath);
@@ -524,6 +551,82 @@ public class EditProfile extends javax.swing.JFrame {
     }
 
     }//GEN-LAST:event_EditMouseClicked
+
+    private void SaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveMouseClicked
+    String newName = Name.getText();
+    String newEmail = Email.getText();
+    String newUsername = Username.getText();
+
+    if (newName.isEmpty() || newEmail.isEmpty() || newUsername.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to save changes?",
+            "Confirm Save",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        return; 
+    }
+    
+    try {
+        java.sql.Connection con = Config.config.connectDB();
+        String sql = "UPDATE tbl_accts SET name=?, email=?, uname=? WHERE a_id=?";
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setString(1, newName);
+        pst.setString(2, newEmail);
+        pst.setString(3, newUsername);
+        pst.setInt(4, sess.getUserId());
+
+        pst.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Profile updated successfully!");
+
+        pst.close();
+        con.close();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+
+    new AdminProfile().setVisible(true);
+    dispose();
+    }//GEN-LAST:event_SaveMouseClicked
+
+    private void EditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseEntered
+        resetColor(Edit);
+    }//GEN-LAST:event_EditMouseEntered
+
+    private void EditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseExited
+        setColor(Edit);
+    }//GEN-LAST:event_EditMouseExited
+
+    private void SaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveMouseEntered
+        resetColor(Save);
+    }//GEN-LAST:event_SaveMouseEntered
+
+    private void SaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveMouseExited
+        setColor(Save);
+    }//GEN-LAST:event_SaveMouseExited
+
+    private void OutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseClicked
+        new AdminProfile().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_OutMouseClicked
+
+    private void OutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseEntered
+        resetColor(Out);
+    }//GEN-LAST:event_OutMouseEntered
+
+    private void OutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseExited
+        setColor(Out);
+    }//GEN-LAST:event_OutMouseExited
 
     /**
      * @param args the command line arguments
@@ -577,8 +680,8 @@ public class EditProfile extends javax.swing.JFrame {
     private javax.swing.JTextField Name;
     private javax.swing.JLabel NameLbl;
     private javax.swing.JPanel Out;
-    private javax.swing.JPanel Out1;
     private javax.swing.JLabel Pic;
+    private javax.swing.JPanel Save;
     private javax.swing.JLabel TypeLbl;
     private javax.swing.JLabel TypeLbl1;
     private javax.swing.JLabel TypeLbl2;

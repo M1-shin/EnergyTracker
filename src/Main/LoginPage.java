@@ -7,7 +7,7 @@ package Main;
 
 import Admin.AdminDashboard;
 import Config.config;
-import Mentor.MentorDashboard;
+import Config.session;
 import User.UserDashboard;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -305,15 +305,14 @@ public class LoginPage extends javax.swing.JFrame {
                 return;
             }
 
-            Config.session.setSession(
-                rs.getInt("a_id"),
-                rs.getString("name"),
-                rs.getString("lname"),
-                rs.getString("uname"),
-                rs.getString("email"),
-                rs.getString("type"),
-                rs.getString("status")
-            );
+            session sess = session.getInstance();
+                sess.setUserId(rs.getInt("a_id"));
+                sess.setName(rs.getString("name"));
+                sess.setLname(rs.getString("lname"));
+                sess.setUname(rs.getString("uname"));
+                sess.setEmail(rs.getString("email"));
+                sess.setType(rs.getString("type"));
+                sess.setStatus(rs.getString("status"));
 
             JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
 
@@ -323,8 +322,6 @@ public class LoginPage extends javax.swing.JFrame {
                 new AdminDashboard().setVisible(true);
             } else if (userType.equalsIgnoreCase("User")) {
                 new UserDashboard().setVisible(true);
-            } else if (userType.equalsIgnoreCase("Mentor")) {
-                new MentorDashboard().setVisible(true);
             }
 
             dispose();

@@ -6,12 +6,15 @@
 package User;
 
 import Admin.Add_1;
-import User.Update;
 import Admin.AdminDashboard;
 import Config.config;
+import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,8 +27,9 @@ public class LogEnergy extends javax.swing.JFrame {
     /**
      * Creates new form LogEnergy
      */
+    session sess = session.getInstance();
     public LogEnergy() {
-        if (Config.session.getUserId() == 0) 
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) 
         {
         JOptionPane.showMessageDialog(null, "Login Required!");
         new LoginPage().setVisible(true);
@@ -34,15 +38,42 @@ public class LogEnergy extends javax.swing.JFrame {
         }
         initComponents();
         DisplayLog();
+        loadStatistics();
     }
     
-     void DisplayLog(){
+    void DisplayLog(){
+
+    config con = new config();
     
-        config con = new config();
-        String sql = "SELECT task, energy_level, date FROM energy_log";
-        con.displayData(sql, LogTable);
+    String sql = "SELECT logs_id, task, energy_level, date "
+               + "FROM energy_log WHERE u_id = " + sess.getUserId();
+
+    con.displayData(sql, logTable);
+}
     
+    void loadStatistics() {
+
+    config con = new config();
+
+    String sql = "SELECT AVG(energy_level) AS avg_energy, "
+               + "MIN(energy_level) AS min_energy, "
+               + "MAX(energy_level) AS max_energy "
+               + "FROM energy_log WHERE u_id = " + sess.getUserId();
+
+    try (Connection conn = config.connectDB();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        if (rs.next()) {
+            avgValue.setText(String.format("%.2f", rs.getDouble("avg_energy")));
+            lowestValue.setText(String.valueOf(rs.getInt("min_energy")));
+            highestValue.setText(String.valueOf(rs.getInt("max_energy")));
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,15 +92,29 @@ public class LogEnergy extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         Add = new javax.swing.JPanel();
         AddLbl = new javax.swing.JLabel();
-        Update = new javax.swing.JPanel();
+        Ud = new javax.swing.JPanel();
         UpdateLbl = new javax.swing.JLabel();
         Delete = new javax.swing.JPanel();
         DeleteLbl = new javax.swing.JLabel();
         SearchText = new javax.swing.JTextField();
         Search = new javax.swing.JPanel();
         SearchLbl = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        LogTable = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        avgValue = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        highestValue = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        lowestValue = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        logTable = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         Home = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -139,29 +184,29 @@ public class LogEnergy extends javax.swing.JFrame {
 
         jPanel2.add(Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 50));
 
-        Update.setBackground(new java.awt.Color(0, 51, 51));
-        Update.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        Update.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Update.addMouseListener(new java.awt.event.MouseAdapter() {
+        Ud.setBackground(new java.awt.Color(0, 51, 51));
+        Ud.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Ud.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Ud.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UpdateMouseClicked(evt);
+                UdMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UpdateMouseEntered(evt);
+                UdMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                UpdateMouseExited(evt);
+                UdMouseExited(evt);
             }
         });
-        Update.setLayout(null);
+        Ud.setLayout(null);
 
         UpdateLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         UpdateLbl.setForeground(new java.awt.Color(255, 255, 255));
         UpdateLbl.setText("UPDATE");
-        Update.add(UpdateLbl);
+        Ud.add(UpdateLbl);
         UpdateLbl.setBounds(27, 16, 79, 22);
 
-        jPanel2.add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 50));
+        jPanel2.add(Ud, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 50));
 
         Delete.setBackground(new java.awt.Color(0, 51, 51));
         Delete.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -224,7 +269,67 @@ public class LogEnergy extends javax.swing.JFrame {
 
         jPanel2.add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 130, 50));
 
-        LogTable.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel3.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel3.setLayout(null);
+
+        jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        jPanel4.setLayout(null);
+
+        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        jLabel13.setText("Average Energy");
+        jPanel4.add(jLabel13);
+        jLabel13.setBounds(10, 10, 140, 22);
+
+        avgValue.setFont(new java.awt.Font("Bookman Old Style", 0, 36)); // NOI18N
+        jPanel4.add(avgValue);
+        avgValue.setBounds(10, 40, 140, 70);
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled design (13).png"))); // NOI18N
+        jPanel4.add(jLabel11);
+        jLabel11.setBounds(0, 0, 250, 120);
+
+        jPanel3.add(jPanel4);
+        jPanel4.setBounds(30, 30, 250, 120);
+
+        jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        jPanel6.setLayout(null);
+
+        jLabel15.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        jLabel15.setText("Highest Energy Level");
+        jPanel6.add(jLabel15);
+        jLabel15.setBounds(10, 10, 200, 20);
+
+        highestValue.setFont(new java.awt.Font("Bookman Old Style", 0, 36)); // NOI18N
+        jPanel6.add(highestValue);
+        highestValue.setBounds(10, 40, 70, 70);
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled design (13).png"))); // NOI18N
+        jPanel6.add(jLabel12);
+        jLabel12.setBounds(0, 0, 250, 120);
+
+        jPanel3.add(jPanel6);
+        jPanel6.setBounds(610, 30, 250, 120);
+
+        jPanel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
+        jPanel7.setLayout(null);
+
+        jLabel14.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        jLabel14.setText("Lowest Energy Level");
+        jPanel7.add(jLabel14);
+        jLabel14.setBounds(10, 10, 190, 22);
+
+        lowestValue.setFont(new java.awt.Font("Bookman Old Style", 0, 36)); // NOI18N
+        jPanel7.add(lowestValue);
+        lowestValue.setBounds(10, 40, 70, 70);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled design (13).png"))); // NOI18N
+        jPanel7.add(jLabel2);
+        jLabel2.setBounds(0, 0, 250, 120);
+
+        jPanel3.add(jPanel7);
+        jPanel7.setBounds(320, 30, 250, 120);
+
+        logTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -232,9 +337,14 @@ public class LogEnergy extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(LogTable);
+        jScrollPane4.setViewportView(logTable);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 900, 460));
+        jPanel3.add(jScrollPane4);
+        jScrollPane4.setBounds(30, 180, 840, 480);
+
+        jScrollPane3.setViewportView(jPanel3);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 900, 460));
 
         jScrollPane1.setViewportView(jPanel2);
 
@@ -332,6 +442,9 @@ public class LogEnergy extends javax.swing.JFrame {
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -400,7 +513,7 @@ public class LogEnergy extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        AdminDashboard Users = new AdminDashboard();
+        UserDashboard Users = new UserDashboard();
         Users.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
@@ -451,7 +564,7 @@ public class LogEnergy extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        Config.session.clearSession();
+        session.getInstance().clearSession();
         JOptionPane.showMessageDialog(null, "Logged out successfully!");
         new LoginPage().setVisible(true);
         dispose();
@@ -477,12 +590,12 @@ public class LogEnergy extends javax.swing.JFrame {
         }
 
         String sql = "SELECT a_id, name, email, password, type, status " +
-        "FROM tbl_accts WHERE name LIKE '%" + keyword + "%' " +
+        "FROM energy_log WHERE name LIKE '%" + keyword + "%' " +
         "OR email LIKE '%" + keyword + "%'";
 
-        conf.displayData(sql, LogTable);
+        conf.displayData(sql, logTable);
 
-        if (LogTable.getRowCount() == 0) {
+        if (logTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Doesn't Exist");
         }
     }//GEN-LAST:event_SearchMouseClicked
@@ -490,7 +603,7 @@ public class LogEnergy extends javax.swing.JFrame {
     private void SearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextKeyTyped
         String searchText = SearchText.getText();
 
-        String sql = "SELECT * FROM tbl_accts WHERE "
+        String sql = "SELECT * FROM energy_log WHERE "
                 + "logs_id LIKE ? OR "
                 + "u_id LIKE ? OR "
                 + "task LIKE ? OR "
@@ -500,7 +613,7 @@ public class LogEnergy extends javax.swing.JFrame {
 
         config conf = new config();
 
-        conf.displayData(sql, LogTable,
+        conf.displayData(sql, logTable,
                 "%" + searchText + "%",
                 "%" + searchText + "%",
                 "%" + searchText + "%",
@@ -522,42 +635,59 @@ public class LogEnergy extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteMouseEntered
 
     private void DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseClicked
-        int row = LogTable.getSelectedRow();
+        int row = logTable.getSelectedRow();
+
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select a user first!");
+            JOptionPane.showMessageDialog(this, "Select a log first!");
             return;
         }
 
         int confirm = JOptionPane.showConfirmDialog(
             this,
-            "Are you sure you want to delete this user?",
+            "Are you sure you want to delete this log?",
             "Confirm Delete",
             JOptionPane.YES_NO_OPTION
         );
 
         if (confirm != JOptionPane.YES_OPTION) return;
 
-        int id = Integer.parseInt(LogTable.getValueAt(row, 0).toString());
+        int logId = Integer.parseInt(logTable.getValueAt(row, 0).toString());
 
         config conf = new config();
-        String sql = "DELETE FROM tbl_accts WHERE a_id=?";
+        String sql = "DELETE FROM energy_log WHERE logs_id=?";
 
-        conf.addRecord(sql, id);
+        conf.addRecord(sql, logId);
 
-        JOptionPane.showMessageDialog(this, "User deleted successfully!");
+        JOptionPane.showMessageDialog(this, "Log deleted successfully!");
+
+        DisplayLog(); 
     }//GEN-LAST:event_DeleteMouseClicked
 
-    private void UpdateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseExited
-        setColor(Update);
-    }//GEN-LAST:event_UpdateMouseExited
+    private void UdMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UdMouseExited
+        setColor(Ud);
+    }//GEN-LAST:event_UdMouseExited
 
-    private void UpdateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseEntered
-        resetColor(Update);
-    }//GEN-LAST:event_UpdateMouseEntered
+    private void UdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UdMouseEntered
+        resetColor(Ud);
+    }//GEN-LAST:event_UdMouseEntered
 
-    private void UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseClicked
+    private void UdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UdMouseClicked
+    int row = logTable.getSelectedRow();
 
-    }//GEN-LAST:event_UpdateMouseClicked
+if (row == -1) {
+    JOptionPane.showMessageDialog(this, "Please select a record to update.");
+    return;
+}
+
+int logs_id = Integer.parseInt(logTable.getValueAt(row, 0).toString());
+String task = logTable.getValueAt(row, 1).toString();
+int energy_level = Integer.parseInt(logTable.getValueAt(row, 2).toString());
+String date = logTable.getValueAt(row, 3).toString();
+
+LogUpdate Ud = new LogUpdate(logs_id, task, energy_level, date);
+Ud.setVisible(true);
+dispose();
+    }//GEN-LAST:event_UdMouseClicked
 
     private void AddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseExited
         setColor(Add);
@@ -572,6 +702,12 @@ public class LogEnergy extends javax.swing.JFrame {
         Add.setVisible(true);
         dispose();
     }//GEN-LAST:event_AddMouseClicked
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        Profile Acc = new Profile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
 
     /**
      * @param args the command line arguments
@@ -616,18 +752,25 @@ public class LogEnergy extends javax.swing.JFrame {
     private javax.swing.JPanel Delete;
     private javax.swing.JLabel DeleteLbl;
     private javax.swing.JPanel Home;
-    private javax.swing.JTable LogTable;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
     private javax.swing.JPanel Search;
     private javax.swing.JLabel SearchLbl;
     private javax.swing.JTextField SearchText;
-    private javax.swing.JPanel Update;
+    private javax.swing.JPanel Ud;
     private javax.swing.JLabel UpdateLbl;
     private javax.swing.JPanel Users;
+    private javax.swing.JLabel avgValue;
+    private javax.swing.JLabel highestValue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -637,7 +780,14 @@ public class LogEnergy extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable logTable;
+    private javax.swing.JLabel lowestValue;
     // End of variables declaration//GEN-END:variables
 }
