@@ -150,6 +150,9 @@ public class User extends javax.swing.JFrame {
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -225,11 +228,11 @@ public class User extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("APPLICATIONS");
         App.add(jLabel3);
-        jLabel3.setBounds(90, 20, 200, 29);
+        jLabel3.setBounds(90, 20, 200, 20);
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 
-        Mentors.setBackground(new java.awt.Color(0, 51, 51));
+        Mentors.setBackground(new java.awt.Color(16, 79, 79));
         Mentors.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Mentors.setForeground(new java.awt.Color(255, 255, 255));
         Mentors.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -348,6 +351,12 @@ public class User extends javax.swing.JFrame {
     private void MentorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseExited
         setColor(Mentors);
     }//GEN-LAST:event_MentorsMouseExited
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        ProfileM Acc = new ProfileM();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
 
     /**
      * @param args the command line arguments

@@ -223,7 +223,7 @@ public class ApplicationsM extends javax.swing.JFrame {
 
         jPanel1.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 360, 60));
 
-        App.setBackground(new java.awt.Color(0, 51, 51));
+        App.setBackground(new java.awt.Color(16, 79, 79));
         App.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         App.setForeground(new java.awt.Color(255, 255, 255));
         App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -244,7 +244,7 @@ public class ApplicationsM extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("APPLICATIONS");
         App.add(jLabel3);
-        jLabel3.setBounds(90, 20, 200, 29);
+        jLabel3.setBounds(90, 20, 200, 20);
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 
@@ -389,7 +389,7 @@ public class ApplicationsM extends javax.swing.JFrame {
     }//GEN-LAST:event_HomeMouseExited
 
     private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
-        LogEnergy App = new LogEnergy();
+        ApplicationsM App = new ApplicationsM();
         App.setVisible(true);
         dispose();
     }//GEN-LAST:event_AppMouseClicked
@@ -403,7 +403,9 @@ public class ApplicationsM extends javax.swing.JFrame {
     }//GEN-LAST:event_AppMouseExited
 
     private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
-
+        User Mentors = new User();
+        Mentors.setVisible(true);
+        dispose();
     }//GEN-LAST:event_MentorsMouseClicked
 
     private void MentorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseEntered
@@ -415,7 +417,7 @@ public class ApplicationsM extends javax.swing.JFrame {
     }//GEN-LAST:event_MentorsMouseExited
 
     private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
-        Profile Acc = new Profile();
+        ProfileM Acc = new ProfileM();
         Acc.setVisible(true);
         dispose();
     }//GEN-LAST:event_AccMouseClicked

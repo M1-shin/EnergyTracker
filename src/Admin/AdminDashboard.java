@@ -31,17 +31,11 @@ public class AdminDashboard extends javax.swing.JFrame {
             return;
         }
         initComponents();
-        DisplayUser();
+       
 }
     
     
-    void DisplayUser(){
-    
-        config con = new config();
-        String sql = "SELECT name, email, type, status FROM tbl_accts";
-        con.displayData(sql, UserTable);
-    
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,24 +64,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         LogoutLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        UserTable = new javax.swing.JTable();
         Dashboard = new javax.swing.JLabel();
         Bg = new javax.swing.JLabel();
 
@@ -270,91 +246,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(0, 51, 51));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel3.setLayout(null);
-
-        jLabel10.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel10.setText("Pending Applications");
-        jPanel3.add(jLabel10);
-        jLabel10.setBounds(10, 10, 260, 29);
-
-        jLabel14.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel14.setText("3");
-        jPanel3.add(jLabel14);
-        jLabel14.setBounds(10, 60, 30, 50);
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel3.add(jLabel20);
-        jLabel20.setBounds(0, 0, 430, 180);
-
-        jPanel6.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 410, 150));
-
-        jPanel4.setLayout(null);
-
-        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel11.setText("Active Users");
-        jPanel4.add(jLabel11);
-        jLabel11.setBounds(10, 10, 160, 29);
-
-        jLabel15.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel15.setText("2");
-        jPanel4.add(jLabel15);
-        jLabel15.setBounds(10, 60, 30, 60);
-
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel4.add(jLabel21);
-        jLabel21.setBounds(10, 0, 430, 180);
-
-        jPanel6.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 420, 150));
-
-        jPanel5.setLayout(null);
-
-        jLabel12.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel12.setText("Active Mentors");
-        jPanel5.add(jLabel12);
-        jLabel12.setBounds(10, 10, 200, 29);
-
-        jLabel16.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel16.setText("1");
-        jPanel5.add(jLabel16);
-        jLabel16.setBounds(10, 50, 30, 60);
-
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel5.add(jLabel22);
-        jLabel22.setBounds(0, 0, 430, 180);
-
-        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 410, 150));
-
-        jPanel7.setLayout(null);
-
-        jLabel13.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
-        jLabel13.setText("Unassigned Students");
-        jPanel7.add(jLabel13);
-        jLabel13.setBounds(10, 10, 270, 29);
-
-        jLabel17.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
-        jLabel17.setText("1");
-        jPanel7.add(jLabel17);
-        jLabel17.setBounds(10, 50, 30, 60);
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel7.add(jLabel19);
-        jLabel19.setBounds(10, 0, 440, 180);
-
-        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 420, 150));
-
-        UserTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(UserTable);
-
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 860, 320));
-
         jScrollPane1.setViewportView(jPanel6);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
@@ -517,28 +408,10 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Mentor;
     private javax.swing.JLabel Title;
     private javax.swing.JPanel User;
-    private javax.swing.JTable UserTable;
     private javax.swing.JLabel UsersLbl;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

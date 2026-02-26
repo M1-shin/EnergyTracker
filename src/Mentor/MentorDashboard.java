@@ -300,7 +300,7 @@ public class MentorDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_MentorsMouseExited
 
     private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
-        Profile Acc = new Profile();
+        ProfileM Acc = new ProfileM();
         Acc.setVisible(true);
         dispose();
     }//GEN-LAST:event_AccMouseClicked

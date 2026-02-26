@@ -30,16 +30,10 @@ public class UserDashboard extends javax.swing.JFrame {
         
         
         initComponents();
-        DisplayLog();
+       
     }
     
-    void DisplayLog(){
-    
-        config con = new config();
-        String sql = "SELECT task, energy_level, date FROM energy_log";
-        con.displayData(sql, LogTable);
-    
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,8 +60,6 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        LogTable = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -229,19 +221,6 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(0, 51, 51));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        LogTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(LogTable);
-
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 860, 320));
-
         jScrollPane1.setViewportView(jPanel6);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
@@ -414,7 +393,6 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Acc;
     private javax.swing.JPanel App;
     private javax.swing.JPanel Home;
-    private javax.swing.JTable LogTable;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
@@ -429,6 +407,5 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

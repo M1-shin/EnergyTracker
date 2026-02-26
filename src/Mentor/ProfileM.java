@@ -89,8 +89,8 @@ public class ProfileM extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("USER PROFILE");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, -1, -1));
+        jLabel9.setText("MENTOR PROFILE");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 60, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,7 +122,7 @@ public class ProfileM extends javax.swing.JFrame {
 
         jPanel1.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 360, 60));
 
-        Acc.setBackground(new java.awt.Color(0, 102, 102));
+        Acc.setBackground(new java.awt.Color(16, 79, 79));
         Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -310,7 +310,7 @@ public class ProfileM extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("APPLICATIONS");
         App.add(jLabel3);
-        jLabel3.setBounds(90, 20, 200, 29);
+        jLabel3.setBounds(90, 20, 200, 20);
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 

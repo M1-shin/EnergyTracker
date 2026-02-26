@@ -94,6 +94,7 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Email.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EmailActionPerformed(evt);
@@ -153,6 +154,7 @@ public class LoginPage extends javax.swing.JFrame {
         PassLbl.setText("Password");
         jPanel2.add(PassLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, -1, -1));
 
+        Pass.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PassActionPerformed(evt);

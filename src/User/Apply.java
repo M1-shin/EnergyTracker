@@ -241,7 +241,7 @@ public class Apply extends javax.swing.JFrame {
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 
-        Mentors.setBackground(new java.awt.Color(0, 51, 51));
+        Mentors.setBackground(new java.awt.Color(16, 79, 79));
         Mentors.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Mentors.setForeground(new java.awt.Color(255, 255, 255));
         Mentors.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -266,11 +266,14 @@ public class Apply extends javax.swing.JFrame {
 
         jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
 
-        Acc.setBackground(new java.awt.Color(16, 79, 79));
+        Acc.setBackground(new java.awt.Color(0, 51, 51));
         Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -434,6 +437,12 @@ public class Apply extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_MentorsMouseClicked
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        Profile Acc =new Profile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
 
     /**
      * @param args the command line arguments
