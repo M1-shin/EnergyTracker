@@ -11,6 +11,8 @@ import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -25,13 +27,7 @@ public class UserDashboard extends javax.swing.JFrame {
      */
     session sess = session.getInstance();
     public UserDashboard() {
-        if (session.isInstanceEmpty() || sess.getUserId() == 0) 
-        {
-        JOptionPane.showMessageDialog(null, "Login Required!");
-        new LoginPage().setVisible(true);
-        dispose();
-        return;
-        }
+        
         
         initComponents();
         DisplayLog();
@@ -62,8 +58,6 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        Users = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         Mentors = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         Acc = new javax.swing.JPanel();
@@ -72,14 +66,6 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         LogTable = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -102,8 +88,8 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("USERS DASHBOARD");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
+        jLabel9.setText("USER DASHBOARD");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -160,33 +146,14 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 
-        Users.setBackground(new java.awt.Color(0, 51, 51));
-        Users.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        Users.setForeground(new java.awt.Color(255, 255, 255));
-        Users.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Users.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UsersMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UsersMouseExited(evt);
-            }
-        });
-        Users.setLayout(null);
-
-        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("INSIGHTS");
-        Users.add(jLabel4);
-        jLabel4.setBounds(120, 20, 130, 29);
-
-        jPanel1.add(Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
-
         Mentors.setBackground(new java.awt.Color(0, 51, 51));
         Mentors.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Mentors.setForeground(new java.awt.Color(255, 255, 255));
         Mentors.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Mentors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MentorsMouseEntered(evt);
             }
@@ -202,7 +169,7 @@ public class UserDashboard extends javax.swing.JFrame {
         Mentors.add(jLabel5);
         jLabel5.setBounds(120, 20, 113, 20);
 
-        jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
 
         Acc.setBackground(new java.awt.Color(0, 51, 51));
         Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -227,7 +194,7 @@ public class UserDashboard extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(120, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -263,38 +230,6 @@ public class UserDashboard extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(0, 51, 51));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setLayout(null);
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel3.add(jLabel20);
-        jLabel20.setBounds(0, 0, 430, 180);
-
-        jPanel6.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 410, 150));
-
-        jPanel4.setLayout(null);
-
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel4.add(jLabel21);
-        jLabel21.setBounds(10, 0, 430, 180);
-
-        jPanel6.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 420, 150));
-
-        jPanel5.setLayout(null);
-
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel5.add(jLabel22);
-        jLabel22.setBounds(0, 0, 430, 180);
-
-        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 410, 150));
-
-        jPanel7.setLayout(null);
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (10).png"))); // NOI18N
-        jPanel7.add(jLabel19);
-        jLabel19.setBounds(10, 0, 440, 180);
-
-        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 420, 150));
-
         LogTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -305,7 +240,7 @@ public class UserDashboard extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(LogTable);
 
-        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 860, 320));
+        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 860, 320));
 
         jScrollPane1.setViewportView(jPanel6);
 
@@ -339,68 +274,13 @@ public class UserDashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoMouseClicked
-        LandingPage Logo = new LandingPage();
-        Logo.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_LogoMouseClicked
-
-    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        AdminDashboard Users = new AdminDashboard();
-        Users.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_HomeMouseClicked
-    public void setColor(JPanel p){
-        p.setBackground(new Color(0,51,51));
-    }
-    public void resetColor(JPanel p2){
-        p2.setBackground(new Color(0,102,102));
-    }
-    private void HomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseEntered
-        resetColor(Home);
-    }//GEN-LAST:event_HomeMouseEntered
-
-    private void HomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseExited
-        setColor(Home);
-    }//GEN-LAST:event_HomeMouseExited
-
-    private void AppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseEntered
-        resetColor(App);
-    }//GEN-LAST:event_AppMouseEntered
-
-    private void AppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseExited
-        setColor(App);
-    }//GEN-LAST:event_AppMouseExited
-
-    private void MentorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseEntered
-        resetColor(Mentors);
-    }//GEN-LAST:event_MentorsMouseEntered
-
-    private void MentorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseExited
-        setColor(Mentors);
-    }//GEN-LAST:event_MentorsMouseExited
-
-    private void AccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseEntered
-        resetColor(Acc);
-    }//GEN-LAST:event_AccMouseEntered
-
-    private void AccMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseExited
-        setColor(Acc);
-    }//GEN-LAST:event_AccMouseExited
-
-    private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
-        resetColor(Logout);
-    }//GEN-LAST:event_LogoutMouseEntered
-
     private void LogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseExited
         setColor(Logout);
     }//GEN-LAST:event_LogoutMouseExited
 
-    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
-        Profile Acc = new Profile();
-        Acc.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_AccMouseClicked
+    private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
+        resetColor(Logout);
+    }//GEN-LAST:event_LogoutMouseEntered
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
         session.getInstance().clearSession();
@@ -409,13 +289,61 @@ public class UserDashboard extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_LogoutMouseClicked
 
-    private void UsersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseEntered
-        resetColor(Users);
-    }//GEN-LAST:event_UsersMouseEntered
+    private void AccMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseExited
+        setColor(Acc);
+    }//GEN-LAST:event_AccMouseExited
 
-    private void UsersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersMouseExited
-        setColor(Users);
-    }//GEN-LAST:event_UsersMouseExited
+    private void AccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseEntered
+        resetColor(Acc);
+    }//GEN-LAST:event_AccMouseEntered
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        Profile Acc = new Profile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
+
+    private void MentorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseExited
+        setColor(Mentors);
+    }//GEN-LAST:event_MentorsMouseExited
+
+    private void MentorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseEntered
+        resetColor(Mentors);
+    }//GEN-LAST:event_MentorsMouseEntered
+
+    private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
+        config con = new config();
+
+        session sess = session.getInstance();
+        int userId = sess.getUserId();
+
+        String sql = "SELECT mentor_id FROM mentor_client WHERE client_id = ?";
+
+        try {
+            PreparedStatement pst = con.connectDB().prepareStatement(sql);
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next() && rs.getInt("mentor_id") > 0) {
+                new Mentor().setVisible(true);
+            } else {
+                new Apply().setVisible(true);
+            }
+
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_MentorsMouseClicked
+
+    private void AppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseExited
+        setColor(App);
+    }//GEN-LAST:event_AppMouseExited
+
+    private void AppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseEntered
+        resetColor(App);
+    }//GEN-LAST:event_AppMouseEntered
 
     private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
         LogEnergy App = new LogEnergy();
@@ -423,6 +351,29 @@ public class UserDashboard extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_AppMouseClicked
 
+    private void HomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseExited
+        setColor(Home);
+    }//GEN-LAST:event_HomeMouseExited
+
+    private void HomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseEntered
+        resetColor(Home);
+    }//GEN-LAST:event_HomeMouseEntered
+
+    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
+      
+    }//GEN-LAST:event_HomeMouseClicked
+
+    private void LogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoMouseClicked
+        LandingPage Logo = new LandingPage();
+        Logo.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoMouseClicked
+    public void setColor(JPanel p){
+        p.setBackground(new Color(0,51,51));
+    }
+    public void resetColor(JPanel p2){
+        p2.setBackground(new Color(0,102,102));
+    }
     /**
      * @param args the command line arguments
      */
@@ -467,26 +418,16 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
-    private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

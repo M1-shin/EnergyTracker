@@ -117,6 +117,9 @@ public class Add_1 extends javax.swing.JFrame {
         Mentor.setForeground(new java.awt.Color(255, 255, 255));
         Mentor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Mentor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MentorMouseEntered(evt);
             }
@@ -161,6 +164,9 @@ public class Add_1 extends javax.swing.JFrame {
         App.setForeground(new java.awt.Color(255, 255, 255));
         App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         App.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AppMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AppMouseEntered(evt);
             }
@@ -178,7 +184,7 @@ public class Add_1 extends javax.swing.JFrame {
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 360, 60));
 
-        Users.setBackground(new java.awt.Color(0, 102, 102));
+        Users.setBackground(new java.awt.Color(16, 79, 79));
         Users.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Users.setForeground(new java.awt.Color(255, 255, 255));
         Users.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -243,7 +249,7 @@ public class Add_1 extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 51), java.awt.Color.lightGray));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Add.setBackground(new java.awt.Color(0, 153, 153));
+        Add.setBackground(new java.awt.Color(16, 79, 79));
         Add.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Add.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -624,6 +630,20 @@ public class Add_1 extends javax.swing.JFrame {
     private void MentorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseExited
         setColor(Mentor);
     }//GEN-LAST:event_MentorMouseExited
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+       Applications App = new Applications();
+        App.setVisible(true);
+        dispose();
+
+    }//GEN-LAST:event_AppMouseClicked
+
+    private void MentorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseClicked
+       Assignments Mentor = new Assignments();
+        Mentor.setVisible(true);
+        dispose();
+
+    }//GEN-LAST:event_MentorMouseClicked
 
     /**
      * @param args the command line arguments

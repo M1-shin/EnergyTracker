@@ -341,6 +341,9 @@ public class AdminProfile extends javax.swing.JFrame {
         App.setForeground(new java.awt.Color(255, 255, 255));
         App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         App.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AppMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AppMouseEntered(evt);
             }
@@ -363,6 +366,9 @@ public class AdminProfile extends javax.swing.JFrame {
         Mentor.setForeground(new java.awt.Color(255, 255, 255));
         Mentor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Mentor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MentorMouseEntered(evt);
             }
@@ -537,6 +543,19 @@ public class AdminProfile extends javax.swing.JFrame {
     private void OutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseExited
         setColor(Out);
     }//GEN-LAST:event_OutMouseExited
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+        Applications App = new Applications();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
+
+    private void MentorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseClicked
+       Assignments Mentor = new Assignments();
+        Mentor.setVisible(true);
+        dispose();
+
+    }//GEN-LAST:event_MentorMouseClicked
 
     /**
      * @param args the command line arguments

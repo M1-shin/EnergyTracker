@@ -148,6 +148,9 @@ public class Users extends javax.swing.JFrame {
         App.setForeground(new java.awt.Color(255, 255, 255));
         App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         App.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AppMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AppMouseEntered(evt);
             }
@@ -165,7 +168,7 @@ public class Users extends javax.swing.JFrame {
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 360, 60));
 
-        Users.setBackground(new java.awt.Color(0, 102, 102));
+        Users.setBackground(new java.awt.Color(16, 79, 79));
         Users.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Users.setForeground(new java.awt.Color(255, 255, 255));
         Users.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -184,6 +187,9 @@ public class Users extends javax.swing.JFrame {
         Mentors.setForeground(new java.awt.Color(255, 255, 255));
         Mentors.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Mentors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MentorsMouseEntered(evt);
             }
@@ -588,6 +594,18 @@ public class Users extends javax.swing.JFrame {
         "%" + searchText + "%",
         "%" + searchText + "%");
     }//GEN-LAST:event_SearchTextKeyTyped
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+       Applications App = new Applications();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
+
+    private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
+        Assignments Mentor = new Assignments();
+        Mentor.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_MentorsMouseClicked
 
     /**
      * @param args the command line arguments

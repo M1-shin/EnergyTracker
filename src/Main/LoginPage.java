@@ -8,6 +8,7 @@ package Main;
 import Admin.AdminDashboard;
 import Config.config;
 import Config.session;
+import Mentor.MentorDashboard;
 import User.UserDashboard;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -322,6 +323,8 @@ public class LoginPage extends javax.swing.JFrame {
                 new AdminDashboard().setVisible(true);
             } else if (userType.equalsIgnoreCase("User")) {
                 new UserDashboard().setVisible(true);
+            } else if (userType.equalsIgnoreCase("Mentor")) {
+                new MentorDashboard().setVisible(true);
             }
 
             dispose();

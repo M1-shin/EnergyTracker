@@ -6,6 +6,7 @@
 package User;
 
 import Admin.AdminDashboard;
+import Config.config;
 import Main.LandingPage;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -89,8 +90,6 @@ public class Profile extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        Users = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         Mentors = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         Acc = new javax.swing.JPanel();
@@ -171,6 +170,9 @@ public class Profile extends javax.swing.JFrame {
         App.setForeground(new java.awt.Color(255, 255, 255));
         App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         App.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AppMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AppMouseEntered(evt);
             }
@@ -188,25 +190,14 @@ public class Profile extends javax.swing.JFrame {
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 
-        Users.setBackground(new java.awt.Color(0, 51, 51));
-        Users.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        Users.setForeground(new java.awt.Color(255, 255, 255));
-        Users.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Users.setLayout(null);
-
-        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("INSIGHTS");
-        Users.add(jLabel4);
-        jLabel4.setBounds(120, 20, 130, 29);
-
-        jPanel1.add(Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
-
         Mentors.setBackground(new java.awt.Color(0, 51, 51));
         Mentors.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Mentors.setForeground(new java.awt.Color(255, 255, 255));
         Mentors.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Mentors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MentorsMouseEntered(evt);
             }
@@ -222,7 +213,7 @@ public class Profile extends javax.swing.JFrame {
         Mentors.add(jLabel5);
         jLabel5.setBounds(120, 20, 113, 20);
 
-        jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
 
         Acc.setBackground(new java.awt.Color(0, 102, 102));
         Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -244,7 +235,7 @@ public class Profile extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(120, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -417,7 +408,7 @@ public class Profile extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        AdminDashboard Users = new AdminDashboard();
+        UserDashboard Users = new UserDashboard();
         Users.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
@@ -510,6 +501,38 @@ public class Profile extends javax.swing.JFrame {
         setColor(Out);
     }//GEN-LAST:event_OutMouseExited
 
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+        LogEnergy App = new LogEnergy();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
+
+    private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
+         config con = new config();
+
+        session sess = session.getInstance();
+        int userId = sess.getUserId();
+
+        String sql = "SELECT mentor_id FROM mentor_client WHERE client_id = ?";
+
+        try {
+            PreparedStatement pst = con.connectDB().prepareStatement(sql);
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next() && rs.getInt("mentor_id") > 0) {
+                new Mentor().setVisible(true);
+            } else {
+                new Apply().setVisible(true);
+            }
+
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_MentorsMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -565,14 +588,12 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JLabel TypeLbl;
     private javax.swing.JLabel Typelbl;
     private javax.swing.JLabel Usernm;
-    private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

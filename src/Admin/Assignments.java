@@ -1,0 +1,558 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Admin;
+
+import Config.config;
+import Config.session;
+import Main.LandingPage;
+import Main.LoginPage;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+/**
+ *
+ * @author Sheena
+ */
+public class Assignments extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Assignments
+     */
+    public Assignments() {
+        initComponents();
+        loadAssignments();
+    }
+
+    private void updateStatus(int recordId, String newStatus) {
+
+    config con = new config();
+
+    try {
+        String sql;
+
+        if (newStatus.equals("Approved")) {
+            sql = "UPDATE mentor_client " +
+                  "SET status = ?, approved_date = datetime('now') " +
+                  "WHERE mc_id = ?";
+        } else {
+            sql = "UPDATE mentor_client SET status = ? WHERE mc_id = ?";
+        }
+
+        PreparedStatement pst = con.connectDB().prepareStatement(sql);
+        pst.setString(1, newStatus);
+        pst.setInt(2, recordId);
+
+        int rows = pst.executeUpdate();
+
+        System.out.println("Rows updated: " + rows); 
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    
+    private JPanel createAssignmentCard(String mentorName, String clientName, String approvedDate) {
+
+    JPanel card = new JPanel();
+    card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+    card.setPreferredSize(new Dimension(260, 200));
+    card.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    card.setBackground(Color.WHITE);
+
+    Font titleFont = new Font("Bookman Old Style", Font.BOLD, 18);
+    Font textFont = new Font("Bookman Old Style", Font.PLAIN, 16);
+
+    JLabel title = new JLabel("Approved Assignment");
+    title.setFont(titleFont);
+    title.setAlignmentX(Component.CENTER_ALIGNMENT);
+    title.setHorizontalAlignment(SwingConstants.CENTER);
+
+    JLabel mentorLabel = new JLabel("Mentor: " + mentorName);
+    mentorLabel.setFont(textFont);
+    mentorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    mentorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+    JLabel clientLabel = new JLabel("Client: " + clientName);
+    clientLabel.setFont(textFont);
+    clientLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    clientLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+    JLabel dateLabel = new JLabel("Approved On: " + approvedDate);
+    dateLabel.setFont(textFont);
+    dateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    dateLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+    card.add(Box.createVerticalStrut(15));
+    card.add(title);
+    card.add(Box.createVerticalStrut(15));
+    card.add(mentorLabel);
+    card.add(clientLabel);
+    card.add(Box.createVerticalStrut(10));
+    card.add(dateLabel);
+
+    return card;
+}
+    
+    private void loadAssignments() {
+
+    config con = new config();
+
+    String sql = "SELECT " +
+                 "m.name AS mentor_fname, m.lname AS mentor_lname, " +
+                 "c.name AS client_fname, c.lname AS client_lname, " +
+                 "mc.approved_date " +
+                 "FROM mentor_client mc " +
+                 "JOIN tbl_accts m ON mc.mentor_id = m.a_id " +
+                 "JOIN tbl_accts c ON mc.client_id = c.a_id " +
+                 "WHERE mc.status = 'Approved'";
+
+    try {
+        PreparedStatement pst = con.connectDB().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+
+            String mentorName = rs.getString("mentor_fname") + " " +
+                                rs.getString("mentor_lname");
+
+            String clientName = rs.getString("client_fname") + " " +
+                                rs.getString("client_lname");
+
+            String approvedDate = rs.getString("approved_date");
+if (approvedDate != null && approvedDate.contains(" ")) {
+    approvedDate = approvedDate.split(" ")[0]; 
+}
+
+            JPanel card = createAssignmentCard(mentorName, clientName, approvedDate);
+            assignmentContainer.add(card);
+        }
+
+        assignmentContainer.revalidate();
+        assignmentContainer.repaint();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error loading assignments: " + e.getMessage());
+    }
+}
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        Logo = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        Home = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        Logout = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel6 = new javax.swing.JPanel();
+        assignmentContainer = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        App = new javax.swing.JPanel();
+        AppLbl = new javax.swing.JLabel();
+        User = new javax.swing.JPanel();
+        UsersLbl = new javax.swing.JLabel();
+        Mentor = new javax.swing.JPanel();
+        AssignLbl = new javax.swing.JLabel();
+        Acc = new javax.swing.JPanel();
+        AccLbl = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1300, 737));
+        setMinimumSize(new java.awt.Dimension(1300, 737));
+
+        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1300, 737));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
+        Logo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-140, 30, 290, 110));
+
+        jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("ASSIGNNMENTS");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("EnergiFy");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 180, 30));
+
+        Home.setBackground(new java.awt.Color(0, 51, 51));
+        Home.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Home.setForeground(new java.awt.Color(255, 255, 255));
+        Home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                HomeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                HomeMouseExited(evt);
+            }
+        });
+        Home.setLayout(null);
+
+        jLabel2.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("HOME");
+        Home.add(jLabel2);
+        jLabel2.setBounds(139, 16, 79, 29);
+
+        jPanel1.add(Home, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 360, 60));
+
+        Logout.setBackground(new java.awt.Color(0, 51, 51));
+        Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Logout.setForeground(new java.awt.Color(255, 255, 255));
+        Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogoutMouseExited(evt);
+            }
+        });
+        Logout.setLayout(null);
+
+        jLabel8.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("LOGOUT");
+        Logout.add(jLabel8);
+        jLabel8.setBounds(126, 16, 107, 29);
+
+        jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
+
+        jScrollPane1.setBackground(new java.awt.Color(0, 51, 51));
+        jScrollPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        jScrollPane1.setToolTipText("");
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jPanel6.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        assignmentContainer.setBackground(new java.awt.Color(16, 79, 79));
+        assignmentContainer.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 25));
+        jPanel6.add(assignmentContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 880, 860));
+
+        jScrollPane1.setViewportView(jPanel6);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
+
+        App.setBackground(new java.awt.Color(0, 51, 51));
+        App.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        App.setForeground(new java.awt.Color(255, 255, 255));
+        App.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        App.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AppMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AppMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AppMouseExited(evt);
+            }
+        });
+        App.setLayout(null);
+
+        AppLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AppLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AppLbl.setText("APPLICATIONS");
+        App.add(AppLbl);
+        AppLbl.setBounds(85, 16, 189, 29);
+
+        jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
+
+        User.setBackground(new java.awt.Color(0, 51, 51));
+        User.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        User.setForeground(new java.awt.Color(255, 255, 255));
+        User.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        User.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UserMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                UserMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UserMouseExited(evt);
+            }
+        });
+        User.setLayout(null);
+
+        UsersLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        UsersLbl.setForeground(new java.awt.Color(255, 255, 255));
+        UsersLbl.setText("USERS");
+        User.add(UsersLbl);
+        UsersLbl.setBounds(134, 16, 86, 29);
+
+        jPanel1.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
+
+        Mentor.setBackground(new java.awt.Color(16, 79, 79));
+        Mentor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Mentor.setForeground(new java.awt.Color(255, 255, 255));
+        Mentor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Mentor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                MentorMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                MentorMouseExited(evt);
+            }
+        });
+        Mentor.setLayout(null);
+
+        AssignLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AssignLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AssignLbl.setText("ASSIGNMENTS");
+        Mentor.add(AssignLbl);
+        AssignLbl.setBounds(90, 20, 190, 20);
+
+        jPanel1.add(Mentor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+
+        Acc.setBackground(new java.awt.Color(0, 51, 51));
+        Acc.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Acc.setForeground(new java.awt.Color(255, 255, 255));
+        Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AccMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AccMouseExited(evt);
+            }
+        });
+        Acc.setLayout(null);
+
+        AccLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AccLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AccLbl.setText("ACCOUNT");
+        Acc.add(AccLbl);
+        AccLbl.setBounds(114, 16, 125, 29);
+
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1300, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 737, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void LogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoMouseClicked
+        LandingPage Logo = new LandingPage();
+        Logo.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoMouseClicked
+
+    private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
+        AdminDashboard Users = new AdminDashboard();
+        Users.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_HomeMouseClicked
+    public void setColor(JPanel p){
+        p.setBackground(new Color(0,51,51));
+    }
+    public void resetColor(JPanel p2){
+        p2.setBackground(new Color(0,102,102));
+    }
+    private void HomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseEntered
+        resetColor(Home);
+    }//GEN-LAST:event_HomeMouseEntered
+
+    private void HomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseExited
+        setColor(Home);
+    }//GEN-LAST:event_HomeMouseExited
+
+    private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
+        session.getInstance().clearSession();
+        JOptionPane.showMessageDialog(null, "Logged out successfully!");
+        new LoginPage().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoutMouseClicked
+
+    private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
+        resetColor(Logout);
+    }//GEN-LAST:event_LogoutMouseEntered
+
+    private void LogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseExited
+        setColor(Logout);
+    }//GEN-LAST:event_LogoutMouseExited
+
+    private void AppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseEntered
+        resetColor(App);
+    }//GEN-LAST:event_AppMouseEntered
+
+    private void AppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseExited
+        setColor(App);
+    }//GEN-LAST:event_AppMouseExited
+
+    private void UserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserMouseClicked
+        Users User = new Users();
+        User.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_UserMouseClicked
+
+    private void UserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserMouseEntered
+        resetColor(User);
+    }//GEN-LAST:event_UserMouseEntered
+
+    private void UserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserMouseExited
+        setColor(User);
+    }//GEN-LAST:event_UserMouseExited
+
+    private void MentorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseEntered
+        resetColor(Mentor);
+    }//GEN-LAST:event_MentorMouseEntered
+
+    private void MentorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseExited
+        setColor(Mentor);
+    }//GEN-LAST:event_MentorMouseExited
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        AdminProfile Acc = new AdminProfile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
+
+    private void AccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseEntered
+        resetColor(Acc);
+    }//GEN-LAST:event_AccMouseEntered
+
+    private void AccMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseExited
+        setColor(Acc);
+    }//GEN-LAST:event_AccMouseExited
+
+    private void MentorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseClicked
+        Assignments Mentor = new Assignments();
+        Mentor.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_MentorMouseClicked
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+        Applications App = new Applications();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Assignments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Assignments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Assignments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Assignments.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Assignments().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Acc;
+    private javax.swing.JLabel AccLbl;
+    private javax.swing.JPanel App;
+    private javax.swing.JLabel AppLbl;
+    private javax.swing.JLabel AssignLbl;
+    private javax.swing.JPanel Home;
+    private javax.swing.JLabel Logo;
+    private javax.swing.JPanel Logout;
+    private javax.swing.JPanel Mentor;
+    private javax.swing.JPanel User;
+    private javax.swing.JLabel UsersLbl;
+    private javax.swing.JPanel assignmentContainer;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+}
