@@ -339,6 +339,9 @@ public class Applications extends javax.swing.JFrame {
         Mentor.setForeground(new java.awt.Color(255, 255, 255));
         Mentor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Mentor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MentorMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 MentorMouseEntered(evt);
             }
@@ -489,6 +492,13 @@ public class Applications extends javax.swing.JFrame {
     private void AccMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseExited
         setColor(Acc);
     }//GEN-LAST:event_AccMouseExited
+
+    private void MentorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseClicked
+        Assignments Mentor = new Assignments();
+        Mentor.setVisible(true);
+        dispose();
+
+    }//GEN-LAST:event_MentorMouseClicked
 
     /**
      * @param args the command line arguments

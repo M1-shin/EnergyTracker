@@ -9,6 +9,7 @@ import Config.config;
 import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.sql.Connection;
@@ -19,9 +20,15 @@ import javax.swing.JPanel;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -38,7 +45,12 @@ public class Assignments extends javax.swing.JFrame {
         initComponents();
         loadAssignments();
     }
-
+    
+    private void refreshAssignments() {
+    assignmentContainer.removeAll();
+    loadAssignments();
+}
+    
     private void updateStatus(int recordId, String newStatus) {
 
     config con = new config();
@@ -66,6 +78,92 @@ public class Assignments extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
+    
+    
+    private Map<String, Integer> getAvailableMentors() {
+
+    Map<String, Integer> mentors = new LinkedHashMap<>();
+    config con = new config();
+
+    String sql = "SELECT a.a_id, a.name, a.lname " +
+                 "FROM tbl_accts a " +
+                 "WHERE a.type = 'Mentor' " +
+                 "AND a.status = 'Active' " +
+                 "AND a.a_id NOT IN ( " +
+                 "   SELECT mentor_id FROM mentor_client WHERE status = 'Approved' " +
+                 ")";
+
+    try {
+        PreparedStatement pst = con.connectDB().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("a_id");
+            String name = rs.getString("name") + " " + rs.getString("lname");
+            mentors.put(name, id);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return mentors;
+}
+    
+    private Map<String, Integer> getActiveClients() {
+
+    Map<String, Integer> clients = new LinkedHashMap<>();
+    config con = new config();
+
+    String sql = "SELECT a_id, name, lname FROM tbl_accts " +
+                 "WHERE type = 'User' AND status = 'Active'";
+
+    try {
+        PreparedStatement pst = con.connectDB().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("a_id");
+            String name = rs.getString("name") + " " + rs.getString("lname");
+            clients.put(name, id);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return clients;
+}
+    
+    private Map<String, Integer> getApprovedAssignments() {
+
+    Map<String, Integer> assignments = new LinkedHashMap<>();
+    config con = new config();
+
+    String sql = "SELECT mc.mc_id, " +
+                 "m.name || ' ' || m.lname || ' - ' || " +
+                 "c.name || ' ' || c.lname AS info " +
+                 "FROM mentor_client mc " +
+                 "JOIN tbl_accts m ON mc.mentor_id = m.a_id " +
+                 "JOIN tbl_accts c ON mc.client_id = c.a_id " +
+                 "WHERE mc.status = 'Approved'";
+
+    try {
+        PreparedStatement pst = con.connectDB().prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            assignments.put(rs.getString("info"), rs.getInt("mc_id"));
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return assignments;
+}
+    
+    
     
     private JPanel createAssignmentCard(String mentorName, String clientName, String approvedDate) {
 
@@ -150,7 +248,8 @@ if (approvedDate != null && approvedDate.contains(" ")) {
         JOptionPane.showMessageDialog(null, "Error loading assignments: " + e.getMessage());
     }
 }
-    
+    private final Font popupTitleFont = new Font("Bookman Old Style", Font.BOLD, 20);
+private final Font popupFont = new Font("Bookman Old Style", Font.PLAIN, 18);
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,6 +270,15 @@ if (approvedDate != null && approvedDate.contains(" ")) {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         assignmentContainer = new javax.swing.JPanel();
+        Add = new javax.swing.JPanel();
+        AddLbl = new javax.swing.JLabel();
+        Update = new javax.swing.JPanel();
+        UpdateLbl = new javax.swing.JLabel();
+        Delete = new javax.swing.JPanel();
+        DeleteLbl = new javax.swing.JLabel();
+        SearchText = new javax.swing.JTextField();
+        Search = new javax.swing.JPanel();
+        SearchLbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
         AppLbl = new javax.swing.JLabel();
@@ -182,7 +290,6 @@ if (approvedDate != null && approvedDate.contains(" ")) {
         AccLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1300, 737));
         setMinimumSize(new java.awt.Dimension(1300, 737));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
@@ -269,6 +376,115 @@ if (approvedDate != null && approvedDate.contains(" ")) {
         assignmentContainer.setBackground(new java.awt.Color(16, 79, 79));
         assignmentContainer.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 25));
         jPanel6.add(assignmentContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 880, 860));
+
+        Add.setBackground(new java.awt.Color(0, 51, 51));
+        Add.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                AddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                AddMouseExited(evt);
+            }
+        });
+        Add.setLayout(null);
+
+        AddLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        AddLbl.setForeground(new java.awt.Color(255, 255, 255));
+        AddLbl.setText("ADD");
+        Add.add(AddLbl);
+        AddLbl.setBounds(44, 16, 41, 22);
+
+        jPanel6.add(Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 50));
+
+        Update.setBackground(new java.awt.Color(0, 51, 51));
+        Update.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Update.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                UpdateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UpdateMouseExited(evt);
+            }
+        });
+        Update.setLayout(null);
+
+        UpdateLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        UpdateLbl.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateLbl.setText("UPDATE");
+        Update.add(UpdateLbl);
+        UpdateLbl.setBounds(27, 16, 79, 22);
+
+        jPanel6.add(Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 50));
+
+        Delete.setBackground(new java.awt.Color(0, 51, 51));
+        Delete.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Delete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DeleteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                DeleteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                DeleteMouseExited(evt);
+            }
+        });
+        Delete.setLayout(null);
+
+        DeleteLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        DeleteLbl.setForeground(new java.awt.Color(255, 255, 255));
+        DeleteLbl.setText("DELETE");
+        Delete.add(DeleteLbl);
+        DeleteLbl.setBounds(24, 16, 81, 22);
+
+        jPanel6.add(Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 130, 50));
+
+        SearchText.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.lightGray, java.awt.Color.darkGray, java.awt.Color.lightGray));
+        SearchText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchTextActionPerformed(evt);
+            }
+        });
+        SearchText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                SearchTextKeyTyped(evt);
+            }
+        });
+        jPanel6.add(SearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 300, 50));
+
+        Search.setBackground(new java.awt.Color(0, 51, 51));
+        Search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Search.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SearchMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SearchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SearchMouseExited(evt);
+            }
+        });
+        Search.setLayout(null);
+
+        SearchLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        SearchLbl.setForeground(new java.awt.Color(255, 255, 255));
+        SearchLbl.setText("SEARCH");
+        Search.add(SearchLbl);
+        SearchLbl.setBounds(25, 16, 81, 22);
+
+        jPanel6.add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, 130, 50));
 
         jScrollPane1.setViewportView(jPanel6);
 
@@ -498,6 +714,239 @@ if (approvedDate != null && approvedDate.contains(" ")) {
         dispose();
     }//GEN-LAST:event_AppMouseClicked
 
+    private void AddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseClicked
+        Map<String, Integer> mentors = getAvailableMentors();
+        Map<String, Integer> clients = getActiveClients();
+
+        if (mentors.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No available mentors.");
+            return;
+        }
+
+        JComboBox<String> mentorBox =
+        new JComboBox<>(mentors.keySet().toArray(new String[0]));
+        mentorBox.setFont(popupFont);
+        mentorBox.setPreferredSize(new Dimension(300, 35));
+
+        JComboBox<String> clientBox =
+                new JComboBox<>(clients.keySet().toArray(new String[0]));
+        clientBox.setFont(popupFont);
+        clientBox.setPreferredSize(new Dimension(300, 35));
+
+        JLabel mentorLabel = new JLabel("Select Mentor:");
+        mentorLabel.setFont(popupTitleFont);
+
+        JLabel clientLabel = new JLabel("Select Client:");
+        clientLabel.setFont(popupTitleFont);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1, 15, 15));
+        panel.setPreferredSize(new Dimension(400, 250));
+        panel.add(mentorLabel);
+        panel.add(mentorBox);
+        panel.add(clientLabel);
+        panel.add(clientBox);
+
+        int result = JOptionPane.showConfirmDialog(null, panel,
+                "Add Assignment", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            int mentorId = mentors.get(mentorBox.getSelectedItem());
+            int clientId = clients.get(clientBox.getSelectedItem());
+
+            String sql = "INSERT INTO mentor_client " +
+                         "(mentor_id, client_id, status, approved_date) " +
+                         "VALUES (?, ?, 'Approved', datetime('now'))";
+
+            try {
+                PreparedStatement pst =
+                    new config().connectDB().prepareStatement(sql);
+
+                pst.setInt(1, mentorId);
+                pst.setInt(2, clientId);
+                pst.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Assignment Added!");
+                refreshAssignments();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_AddMouseClicked
+
+    private void AddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseEntered
+        resetColor(Add);
+    }//GEN-LAST:event_AddMouseEntered
+
+    private void AddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseExited
+        setColor(Add);
+    }//GEN-LAST:event_AddMouseExited
+
+    private void UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseClicked
+        Map<String, Integer> assignments = getApprovedAssignments();
+
+    if (assignments.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "No assignments to update.");
+        return;
+    }
+
+   
+    Map<String, Integer> mentors = getAvailableMentors();
+    Map<String, Integer> clients = getActiveClients();
+
+    JComboBox<String> mentorBox =
+            new JComboBox<>(mentors.keySet().toArray(new String[0]));
+    JComboBox<String> clientBox =
+            new JComboBox<>(clients.keySet().toArray(new String[0]));
+JComboBox<String> assignmentBox =
+        new JComboBox<>(assignments.keySet().toArray(new String[0]));
+assignmentBox.setFont(popupFont);
+assignmentBox.setPreferredSize(new Dimension(300, 35));
+
+mentorBox.setFont(popupFont);
+mentorBox.setPreferredSize(new Dimension(300, 35));
+
+clientBox.setFont(popupFont);
+clientBox.setPreferredSize(new Dimension(300, 35));
+
+JLabel assignLabel = new JLabel("Select Assignment:");
+assignLabel.setFont(popupTitleFont);
+
+JLabel mentorLabel = new JLabel("New Mentor:");
+mentorLabel.setFont(popupTitleFont);
+
+JLabel clientLabel = new JLabel("New Client:");
+clientLabel.setFont(popupTitleFont);
+
+JPanel panel = new JPanel();
+panel.setLayout(new GridLayout(6, 1, 15, 15));
+panel.setPreferredSize(new Dimension(450, 350));
+
+panel.add(assignLabel);
+panel.add(assignmentBox);
+panel.add(mentorLabel);
+panel.add(mentorBox);
+panel.add(clientLabel);
+panel.add(clientBox);
+    int result = JOptionPane.showConfirmDialog(null, panel,
+            "Update Assignment", JOptionPane.OK_CANCEL_OPTION);
+
+    if (result == JOptionPane.OK_OPTION) {
+
+        int mcId = assignments.get(assignmentBox.getSelectedItem());
+        int mentorId = mentors.get(mentorBox.getSelectedItem());
+        int clientId = clients.get(clientBox.getSelectedItem());
+
+        String sql = "UPDATE mentor_client " +
+                     "SET mentor_id = ?, client_id = ?, approved_date = datetime('now') " +
+                     "WHERE mc_id = ?";
+
+        try {
+            PreparedStatement pst =
+                new config().connectDB().prepareStatement(sql);
+
+            pst.setInt(1, mentorId);
+            pst.setInt(2, clientId);
+            pst.setInt(3, mcId);
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Assignment Updated!");
+            refreshAssignments();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    }//GEN-LAST:event_UpdateMouseClicked
+
+    private void UpdateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseEntered
+        resetColor(Update);
+    }//GEN-LAST:event_UpdateMouseEntered
+
+    private void UpdateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseExited
+        setColor(Update);
+    }//GEN-LAST:event_UpdateMouseExited
+
+    private void DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseClicked
+        Map<String, Integer> assignments = getApprovedAssignments();
+
+    if (assignments.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "No assignments to delete.");
+        return;
+    }
+
+    JComboBox<String> box =
+            new JComboBox<>(assignments.keySet().toArray(new String[0]));
+    box.setFont(popupFont);
+    box.setPreferredSize(new Dimension(350, 40));
+
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());
+    panel.setPreferredSize(new Dimension(400, 120));
+
+    JLabel label = new JLabel("Select Assignment to Delete:");
+    label.setFont(popupTitleFont);
+
+    panel.add(label, BorderLayout.NORTH);
+    panel.add(box, BorderLayout.CENTER);
+
+    int result = JOptionPane.showConfirmDialog(null, box,
+            "Delete Assignment", JOptionPane.OK_CANCEL_OPTION);
+
+    if (result == JOptionPane.OK_OPTION) {
+
+        int mcId = assignments.get(box.getSelectedItem());
+
+        String sql = "DELETE FROM mentor_client WHERE mc_id = ?";
+
+        try {
+            PreparedStatement pst =
+                new config().connectDB().prepareStatement(sql);
+
+            pst.setInt(1, mcId);
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Assignment Deleted!");
+            refreshAssignments();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    }//GEN-LAST:event_DeleteMouseClicked
+
+    private void DeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseEntered
+        resetColor(Delete);
+    }//GEN-LAST:event_DeleteMouseEntered
+
+    private void DeleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseExited
+        setColor(Delete);
+    }//GEN-LAST:event_DeleteMouseExited
+
+    private void SearchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTextActionPerformed
+       
+    }//GEN-LAST:event_SearchTextActionPerformed
+
+    private void SearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextKeyTyped
+       
+    }//GEN-LAST:event_SearchTextKeyTyped
+
+    private void SearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchMouseClicked
+
+       
+
+    }//GEN-LAST:event_SearchMouseClicked
+
+    private void SearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchMouseEntered
+        resetColor(Search);
+    }//GEN-LAST:event_SearchMouseEntered
+
+    private void SearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchMouseExited
+        setColor(Search);
+    }//GEN-LAST:event_SearchMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -536,13 +985,22 @@ if (approvedDate != null && approvedDate.contains(" ")) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
     private javax.swing.JLabel AccLbl;
+    private javax.swing.JPanel Add;
+    private javax.swing.JLabel AddLbl;
     private javax.swing.JPanel App;
     private javax.swing.JLabel AppLbl;
     private javax.swing.JLabel AssignLbl;
+    private javax.swing.JPanel Delete;
+    private javax.swing.JLabel DeleteLbl;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentor;
+    private javax.swing.JPanel Search;
+    private javax.swing.JLabel SearchLbl;
+    private javax.swing.JTextField SearchText;
+    private javax.swing.JPanel Update;
+    private javax.swing.JLabel UpdateLbl;
     private javax.swing.JPanel User;
     private javax.swing.JLabel UsersLbl;
     private javax.swing.JPanel assignmentContainer;

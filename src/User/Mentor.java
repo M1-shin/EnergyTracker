@@ -11,8 +11,10 @@ import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -35,8 +37,70 @@ public class Mentor extends javax.swing.JFrame {
         return;
         }
         initComponents();
+        loadGreeting();
+    }
+    
+    public String getApprovedMentorName(int clientId) {
+    String mentorName = "";
+
+    String sql = "SELECT a.name, a.lname " +
+                 "FROM mentor_client mc " +
+                 "JOIN tbl_accts a ON mc.mentor_id = a.a_id " +
+                 "WHERE mc.client_id = ? AND mc.status = 'Approved'";
+
+    try (Connection conn = config.connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, clientId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            mentorName = rs.getString("name") + " " + rs.getString("lname");
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error fetching mentor: " + e.getMessage());
     }
 
+    return mentorName;
+}
+    
+private void loadGreeting() {
+
+    session sess = session.getInstance();
+    String clientName = sess.getName() + " " + sess.getLname();
+
+    String mentorName = "";
+    String sql = "SELECT a.name, a.lname " +
+                 "FROM mentor_client mc " +
+                 "JOIN tbl_accts a ON mc.mentor_id = a.a_id " +
+                 "WHERE mc.client_id = ? AND mc.status = 'Approved'";
+
+    try (Connection conn = config.connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, sess.getUserId());
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            mentorName = rs.getString("name") + " " + rs.getString("lname");
+
+            lblGreeting.setText(
+                "<html>Welcome, <b>" + clientName + "</b>! <br>" +
+                "<br>You are now successfully connected with your mentor, <b>" +
+                mentorName + "</b> in Energify!</html>"
+            );
+        } else {
+            lblGreeting.setText(
+                "<html>Welcome, <b>" + clientName + "</b>!<br>" +
+                "Your mentor application is still pending approval.</html>"
+            );
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error loading greeting: " + e.getMessage());
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,6 +125,7 @@ public class Mentor extends javax.swing.JFrame {
         Logout = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        lblGreeting = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -213,6 +278,11 @@ public class Mentor extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(16, 79, 79));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblGreeting.setFont(new java.awt.Font("Sylfaen", 3, 24)); // NOI18N
+        lblGreeting.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 880, 140));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
@@ -262,22 +332,6 @@ public class Mentor extends javax.swing.JFrame {
         setColor(Home);
     }//GEN-LAST:event_HomeMouseExited
 
-    private void AppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseEntered
-        resetColor(App);
-    }//GEN-LAST:event_AppMouseEntered
-
-    private void AppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseExited
-        setColor(App);
-    }//GEN-LAST:event_AppMouseExited
-
-    private void MentorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseEntered
-        resetColor(Mentors);
-    }//GEN-LAST:event_MentorsMouseEntered
-
-    private void MentorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseExited
-        setColor(Mentors);
-    }//GEN-LAST:event_MentorsMouseExited
-
     private void AccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseEntered
         resetColor(Acc);
     }//GEN-LAST:event_AccMouseEntered
@@ -301,14 +355,16 @@ public class Mentor extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_LogoutMouseClicked
 
-    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
-        LogEnergy App = new LogEnergy();
-        App.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_AppMouseClicked
+    private void MentorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseExited
+        setColor(Mentors);
+    }//GEN-LAST:event_MentorsMouseExited
+
+    private void MentorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseEntered
+        resetColor(Mentors);
+    }//GEN-LAST:event_MentorsMouseEntered
 
     private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
-         config con = new config();
+        config con = new config();
 
         session sess = session.getInstance();
         int userId = sess.getUserId();
@@ -332,6 +388,20 @@ public class Mentor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_MentorsMouseClicked
+
+    private void AppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseExited
+        setColor(App);
+    }//GEN-LAST:event_AppMouseExited
+
+    private void AppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseEntered
+        resetColor(App);
+    }//GEN-LAST:event_AppMouseEntered
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+        LogEnergy App = new LogEnergy();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
 
     /**
      * @param args the command line arguments
@@ -385,5 +455,6 @@ public class Mentor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblGreeting;
     // End of variables declaration//GEN-END:variables
 }

@@ -286,7 +286,9 @@ public class MentorDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_AppMouseExited
 
     private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
-        
+        User Mentors = new User();
+        Mentors.setVisible(true);
+        dispose();
     }//GEN-LAST:event_MentorsMouseClicked
 
     private void MentorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseEntered
