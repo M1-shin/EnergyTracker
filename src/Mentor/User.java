@@ -16,6 +16,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -26,9 +31,11 @@ public class User extends javax.swing.JFrame {
     /**
      * Creates new form User
      */
+    session sess = session.getInstance();
     public User() {
         initComponents();
         loadGreeting();
+        loadEnergyChart(sess.getUserId());
     }
 
     private void loadGreeting() {
@@ -67,6 +74,111 @@ public class User extends javax.swing.JFrame {
         System.out.println("Error loading greeting: " + e.getMessage());
     }
 }
+    
+    public void loadEnergyChart(int mentorId){
+
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    String sql =
+        "SELECT e.task, e.energy_level, e.date " +
+        "FROM energy_log e " +
+        "JOIN mentor_client mc ON e.u_id = mc.client_id " +
+        "WHERE mc.mentor_id = ? " +
+        "ORDER BY e.date";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, mentorId);
+
+        ResultSet rs = pst.executeQuery();
+
+        while(rs.next()){
+
+            String task = rs.getString("task");
+            int energy = rs.getInt("energy_level");
+            String date = rs.getString("date");
+
+            dataset.addValue(energy, date, task);
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Client Energy Tracker",
+                "Tasks",
+                "Energy Level",
+                dataset
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+
+        chartContainer.removeAll();
+        chartContainer.setLayout(new BorderLayout());
+        chartContainer.add(chartPanel, BorderLayout.CENTER);
+        chartContainer.revalidate();
+        chartContainer.repaint();
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
+    
+    public void saveInsight(String insight){
+
+    session sess = session.getInstance();
+    int mentorId = sess.getUserId();
+
+    int clientId = getClientId();
+
+    String sql = "INSERT INTO mentor_insights(mentor_id, client_id, insight, date_created) VALUES(?,?,?,NOW())";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setInt(1, mentorId);
+        pst.setInt(2, clientId);
+        pst.setString(3, insight);
+
+        pst.executeUpdate();
+
+        JOptionPane.showMessageDialog(this,"Insight saved successfully!");
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
+    
+    public int getClientId(){
+
+    session sess = session.getInstance();
+    int mentorId = sess.getUserId();
+
+    int clientId = 0;
+
+    String sql = "SELECT client_id FROM mentor_client WHERE mentor_id=?";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setInt(1, mentorId);
+
+        ResultSet rs = pst.executeQuery();
+
+        if(rs.next()){
+            clientId = rs.getInt("client_id");
+        }
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+
+    return clientId;
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,8 +198,11 @@ public class User extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         Logout = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         lblGreeting = new javax.swing.JLabel();
+        chartContainer = new javax.swing.JPanel();
+        Feedbackbtn = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -202,7 +317,21 @@ public class User extends javax.swing.JFrame {
         lblGreeting.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 880, 140));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
+        chartContainer.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(chartContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 850, 320));
+
+        Feedbackbtn.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Feedbackbtn.setText("Add Feedback");
+        Feedbackbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FeedbackbtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Feedbackbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 540, 240, 40));
+
+        jScrollPane1.setViewportView(jPanel2);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
@@ -358,6 +487,20 @@ public class User extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_AccMouseClicked
 
+    private void FeedbackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FeedbackbtnActionPerformed
+         String Feedbackbtn = JOptionPane.showInputDialog(
+            this,
+            "Enter your insight about the client's energy:"
+    );
+
+    if(Feedbackbtn == null || Feedbackbtn.trim().isEmpty()){
+        JOptionPane.showMessageDialog(this,"Insight cannot be empty.");
+        return;
+    }
+
+    saveInsight(Feedbackbtn);
+    }//GEN-LAST:event_FeedbackbtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -396,10 +539,12 @@ public class User extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
     private javax.swing.JPanel App;
+    private javax.swing.JButton Feedbackbtn;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel chartContainer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -410,6 +555,7 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGreeting;
     // End of variables declaration//GEN-END:variables
 }

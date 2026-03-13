@@ -544,36 +544,36 @@ public class LogUpdate extends javax.swing.JFrame {
     private void UdbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UdbtnMouseClicked
         config conf = new config();
 
-String sql = "UPDATE energy_log SET task = ?, energy_level = ?, date = ? WHERE id = ?";
+        String sql = "UPDATE energy_log SET task = ?, energy_level = ?, date = ? WHERE id = ?";
 
-try {
+        try {
 
-    int energyLevel = Energy.getValue();
-    java.util.Date selectedDate = Date.getDate();
+            int energyLevel = Energy.getValue();
+            java.util.Date selectedDate = Date.getDate();
 
-    if (Task.getText().equals("") || selectedDate == null) {
-        JOptionPane.showMessageDialog(this, "Please fill in all fields!");
-        return;
-    }
+            if (Task.getText().equals("") || selectedDate == null) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+                return;
+            }
 
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    String formattedDate = sdf.format(selectedDate);
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = sdf.format(selectedDate);
 
-    Connection con = config.connectDB();
-PreparedStatement pst = con.prepareStatement(sql);
-    pst.setString(1, Task.getText());
-    pst.setInt(2, energyLevel);
-    pst.setString(3, formattedDate);
+            Connection con = config.connectDB();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, Task.getText());
+            pst.setInt(2, energyLevel);
+            pst.setString(3, formattedDate);
 
-    pst.setInt(4, energyID);
+            pst.setInt(4, energyID);
 
-    pst.executeUpdate();
+            pst.executeUpdate();
 
-    JOptionPane.showMessageDialog(this, "Updated Successfully!");
+            JOptionPane.showMessageDialog(this, "Updated Successfully!");
 
-} catch (Exception e) {
-    System.out.println(e);
-}
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_UdbtnMouseClicked
 
     private void UdbtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UdbtnMouseEntered

@@ -5,12 +5,16 @@
  */
 package Mentor;
 
+import Config.config;
 import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import User.EditUProfile;
 import User.UserDashboard;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -23,10 +27,40 @@ public class ProfileM extends javax.swing.JFrame {
     /**
      * Creates new form ProfileM
      */
-     session sess = session.getInstance();
+    session sess = session.getInstance();
     public ProfileM() {
         initComponents();
+        loadProfile();
     }
+    
+    public void loadProfile(){
+
+    session sess = session.getInstance();
+
+    String sql = "SELECT * FROM tbl_accts WHERE a_id = ?";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, sess.getUserId());
+
+        ResultSet rs = pst.executeQuery();
+
+        if(rs.next()){
+
+            Idlbl.setText(rs.getString("a_id"));
+            Namelbl.setText(rs.getString("name") + " " + rs.getString("lname"));
+            Usernm.setText(rs.getString("uname"));
+            Emaillbl.setText(rs.getString("email"));
+            Typelbl.setText(rs.getString("type"));
+
+        }
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

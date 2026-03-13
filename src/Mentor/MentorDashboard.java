@@ -5,15 +5,18 @@
  */
 package Mentor;
 
-import Admin.AdminDashboard;
 import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
-import User.LogEnergy;
-import User.Profile;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
+
 
 /**
  *
@@ -37,6 +40,7 @@ public class MentorDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLineChart1 = new org.jfree.beans.JLineChart();
         jPanel1 = new javax.swing.JPanel();
         Logo = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -127,7 +131,7 @@ public class MentorDashboard extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("APPLICATIONS");
         App.add(jLabel3);
-        jLabel3.setBounds(90, 20, 200, 29);
+        jLabel3.setBounds(90, 20, 200, 20);
 
         jPanel1.add(App, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 360, 60));
 
@@ -378,6 +382,7 @@ public class MentorDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private org.jfree.beans.JLineChart jLineChart1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;

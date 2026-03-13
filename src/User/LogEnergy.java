@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -42,14 +43,51 @@ public class LogEnergy extends javax.swing.JFrame {
         loadStatistics();
     }
     
-    void DisplayLog(){
+    void DisplayLog() {
 
     config con = new config();
-    
-    String sql = "SELECT logs_id, task, energy_level, date "
-               + "FROM energy_log WHERE u_id = " + sess.getUserId();
 
-    con.displayData(sql, logTable);
+    String sql = "SELECT logs_id, task, energy_level, date "
+            + "FROM energy_log WHERE u_id = " + sess.getUserId()
+            + " ORDER BY date DESC";
+
+    try {
+
+        Connection conn = config.connectDB();
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{
+            "Log ID", "Task", "Energy Level", "Date"
+        });
+
+        String lastDate = "";
+
+        while (rs.next()) {
+
+            String date = rs.getString("date");
+            int id = rs.getInt("logs_id");
+            String task = rs.getString("task");
+            int energy = rs.getInt("energy_level");
+
+            if (!date.equals(lastDate)) {
+                model.addRow(new Object[]{
+                    "", "===== " + date + " =====", "", ""
+                });
+                lastDate = date;
+            }
+
+            model.addRow(new Object[]{
+                id, task, energy, date
+            });
+        }
+
+        logTable.setModel(model);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 }
     
     void loadStatistics() {
@@ -628,8 +666,8 @@ public class LogEnergy extends javax.swing.JFrame {
     private void DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseClicked
         int row = logTable.getSelectedRow();
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select a log first!");
+        if(row == -1 || logTable.getValueAt(row,0).toString().equals("")){
+            JOptionPane.showMessageDialog(this,"Please select a valid log!");
             return;
         }
 
@@ -663,21 +701,21 @@ public class LogEnergy extends javax.swing.JFrame {
     }//GEN-LAST:event_UdMouseEntered
 
     private void UdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UdMouseClicked
-    int row = logTable.getSelectedRow();
+        int row = logTable.getSelectedRow();
 
-if (row == -1) {
-    JOptionPane.showMessageDialog(this, "Please select a record to update.");
-    return;
-}
+        if(row == -1 || logTable.getValueAt(row,0).toString().equals("")){
+            JOptionPane.showMessageDialog(this,"Please select a valid log!");
+            return;
+        }
 
-int logs_id = Integer.parseInt(logTable.getValueAt(row, 0).toString());
-String task = logTable.getValueAt(row, 1).toString();
-int energy_level = Integer.parseInt(logTable.getValueAt(row, 2).toString());
-String date = logTable.getValueAt(row, 3).toString();
+        int logs_id = Integer.parseInt(logTable.getValueAt(row, 0).toString());
+        String task = logTable.getValueAt(row, 1).toString();
+        int energy_level = Integer.parseInt(logTable.getValueAt(row, 2).toString());
+        String date = logTable.getValueAt(row, 3).toString();
 
-LogUpdate Ud = new LogUpdate(logs_id, task, energy_level, date);
-Ud.setVisible(true);
-dispose();
+        LogUpdate Ud = new LogUpdate(logs_id, task, energy_level, date);
+        Ud.setVisible(true);
+        dispose();
     }//GEN-LAST:event_UdMouseClicked
 
     private void AddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseExited
