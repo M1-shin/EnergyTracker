@@ -17,6 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -38,6 +43,8 @@ public class Mentor extends javax.swing.JFrame {
         }
         initComponents();
         loadGreeting();
+        loadClientEnergyChart();
+        loadMentorInsights();
     }
     
     public String getApprovedMentorName(int clientId) {
@@ -101,6 +108,84 @@ private void loadGreeting() {
         System.out.println("Error loading greeting: " + e.getMessage());
     }
 }
+
+    public void loadMentorInsights(){
+
+    int clientId = sess.getUserId();
+
+    String sql = "SELECT insight, date_created FROM mentor_insights WHERE client_id=? ORDER BY date_created DESC";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setInt(1, clientId);
+
+        ResultSet rs = pst.executeQuery();
+
+        String text = "";
+
+        while(rs.next()){
+
+            text += rs.getString("date_created") + "\n";
+            text += rs.getString("insight") + "\n\n";
+
+        }
+
+        txtMentorInsights.setText(text);
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
+    
+    public void loadClientEnergyChart() {
+
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    session sess = session.getInstance();
+    int userId = sess.getUserId();
+
+    String sql = "SELECT task, energy_level, date FROM energy_log WHERE u_id=? ORDER BY date";
+
+    try {
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, userId);
+
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+
+            String task = rs.getString("task");
+            int energy = rs.getInt("energy_level");
+            String date = rs.getString("date");
+
+            dataset.addValue(energy, date, task);
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "My Energy Tracker",
+                "Tasks",
+                "Energy Level",
+                dataset
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+
+        chartContainer.removeAll();
+        chartContainer.setLayout(new BorderLayout());
+        chartContainer.add(chartPanel, BorderLayout.CENTER);
+        chartContainer.revalidate();
+        chartContainer.repaint();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,8 +209,13 @@ private void loadGreeting() {
         jLabel7 = new javax.swing.JLabel();
         Logout = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         lblGreeting = new javax.swing.JLabel();
+        chartContainer = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtMentorInsights = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -283,7 +373,24 @@ private void loadGreeting() {
         lblGreeting.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 880, 140));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
+        chartContainer.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(chartContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 830, 320));
+
+        txtMentorInsights.setEditable(false);
+        txtMentorInsights.setColumns(20);
+        txtMentorInsights.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        txtMentorInsights.setLineWrap(true);
+        txtMentorInsights.setRows(5);
+        txtMentorInsights.setWrapStyleWord(true);
+        txtMentorInsights.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mentor's Insights:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookman Old Style", 0, 18))); // NOI18N
+        jScrollPane3.setViewportView(txtMentorInsights);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 540, 520, 170));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 720, 260, 40));
+
+        jScrollPane2.setViewportView(jPanel2);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
@@ -445,16 +552,21 @@ private void loadGreeting() {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel chartContainer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblGreeting;
+    private javax.swing.JTextArea txtMentorInsights;
     // End of variables declaration//GEN-END:variables
 }

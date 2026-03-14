@@ -12,6 +12,14 @@ import Main.LoginPage;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -31,9 +39,54 @@ public class AdminDashboard extends javax.swing.JFrame {
             return;
         }
         initComponents();
+        loadSystemEnergySummary();
        
 }
     
+    public void loadSystemEnergySummary(){
+
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    String sql =
+    "SELECT date, AVG(energy_level) as avg_energy "
+  + "FROM energy_log "
+  + "GROUP BY date "
+  + "ORDER BY date";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        ResultSet rs = pst.executeQuery();
+
+        while(rs.next()){
+
+            String date = rs.getString("date");
+            double avgEnergy = rs.getDouble("avg_energy");
+
+            dataset.addValue(avgEnergy, "System Energy", date);
+        }
+
+        JFreeChart chart = ChartFactory.createLineChart(
+                "System Energy Trend",
+                "Date",
+                "Average Energy",
+                dataset
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+
+        homeChartPanel.removeAll();
+        homeChartPanel.setLayout(new BorderLayout());
+        homeChartPanel.add(chartPanel, BorderLayout.CENTER);
+        homeChartPanel.revalidate();
+        homeChartPanel.repaint();
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
     
    
 
@@ -64,6 +117,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         LogoutLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
+        homeChartPanel = new javax.swing.JPanel();
         Dashboard = new javax.swing.JLabel();
         Bg = new javax.swing.JLabel();
 
@@ -246,6 +300,20 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(0, 51, 51));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout homeChartPanelLayout = new javax.swing.GroupLayout(homeChartPanel);
+        homeChartPanel.setLayout(homeChartPanelLayout);
+        homeChartPanelLayout.setHorizontalGroup(
+            homeChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        homeChartPanelLayout.setVerticalGroup(
+            homeChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 510, Short.MAX_VALUE)
+        );
+
+        jPanel6.add(homeChartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 850, 510));
+
         jScrollPane1.setViewportView(jPanel6);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
@@ -409,6 +477,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel Title;
     private javax.swing.JPanel User;
     private javax.swing.JLabel UsersLbl;
+    private javax.swing.JPanel homeChartPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;

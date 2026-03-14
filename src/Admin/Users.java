@@ -539,27 +539,25 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoMouseClicked
 
     private void UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseClicked
+        int row = UserTable.getSelectedRow();
 
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a user to update.");
+            return;
+        }
 
-    int row = UserTable.getSelectedRow();
+        int a_id = Integer.parseInt(UserTable.getValueAt(row, 0).toString());
+        String name = UserTable.getValueAt(row, 1).toString();
+        String lname = UserTable.getValueAt(row, 2).toString();
+        String uname = UserTable.getValueAt(row, 3).toString();
+        String email = UserTable.getValueAt(row, 4).toString();
+        String password = UserTable.getValueAt(row, 5).toString();
+        String type = UserTable.getValueAt(row, 6).toString();
+        String status = UserTable.getValueAt(row, 7).toString();
 
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a user to update.");
-        return;
-    }
-
-    int a_id = Integer.parseInt(UserTable.getValueAt(row, 0).toString());
-    String name = UserTable.getValueAt(row, 1).toString();
-    String email = UserTable.getValueAt(row, 2).toString();
-    String password = UserTable.getValueAt(row, 3).toString();
-    String type = UserTable.getValueAt(row, 4).toString();
-    String status = UserTable.getValueAt(row, 5).toString();
-
-    Update up = new Update (a_id, name, email, password, type, status);
-    up.setVisible(true);
-    dispose();
-
-
+        Update up = new Update(a_id, name, lname, uname, email, password, type, status);
+        up.setVisible(true);
+        dispose();
     }//GEN-LAST:event_UpdateMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked

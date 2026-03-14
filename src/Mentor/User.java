@@ -130,7 +130,7 @@ public class User extends javax.swing.JFrame {
 
     int clientId = getClientId();
 
-    String sql = "INSERT INTO mentor_insights(mentor_id, client_id, insight, date_created) VALUES(?,?,?,NOW())";
+    String sql = "INSERT INTO mentor_insights (mentor_id, client_id, insight, date_created) VALUES (?, ?, ?, datetime('now'))";
 
     try{
 
@@ -203,6 +203,9 @@ public class User extends javax.swing.JFrame {
         lblGreeting = new javax.swing.JLabel();
         chartContainer = new javax.swing.JPanel();
         Feedbackbtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtInsights = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         App = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -318,16 +321,25 @@ public class User extends javax.swing.JFrame {
         jPanel2.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 880, 140));
 
         chartContainer.setLayout(new java.awt.BorderLayout());
-        jPanel2.add(chartContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 850, 320));
+        jPanel2.add(chartContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 830, 320));
 
         Feedbackbtn.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        Feedbackbtn.setText("Add Feedback");
+        Feedbackbtn.setText("Send Feedback");
         Feedbackbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FeedbackbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(Feedbackbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 540, 240, 40));
+        jPanel2.add(Feedbackbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 730, 180, 40));
+
+        txtInsights.setColumns(20);
+        txtInsights.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        txtInsights.setRows(5);
+        txtInsights.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Give Insights:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookman Old Style", 0, 18))); // NOI18N
+        jScrollPane2.setViewportView(txtInsights);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 540, 520, 170));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 780, 180, 20));
 
         jScrollPane1.setViewportView(jPanel2);
 
@@ -488,17 +500,57 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseClicked
 
     private void FeedbackbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FeedbackbtnActionPerformed
-         String Feedbackbtn = JOptionPane.showInputDialog(
-            this,
-            "Enter your insight about the client's energy:"
-    );
+        String insight = txtInsights.getText().trim();
 
-    if(Feedbackbtn == null || Feedbackbtn.trim().isEmpty()){
-        JOptionPane.showMessageDialog(this,"Insight cannot be empty.");
+    int mentorId = sess.getUserId();
+
+    if(insight.isEmpty()){
+        JOptionPane.showMessageDialog(null,
+            "Please write an insight before sending.",
+            "Validation Error",
+            JOptionPane.WARNING_MESSAGE);
+        txtInsights.requestFocus();
         return;
     }
 
-    saveInsight(Feedbackbtn);
+    try{
+
+        Connection con = config.connectDB();
+
+        String getClient = "SELECT client_id FROM mentor_client WHERE mentor_id=? AND status='Approved'";
+        PreparedStatement pst1 = con.prepareStatement(getClient);
+        pst1.setInt(1, mentorId);
+
+        ResultSet rs = pst1.executeQuery();
+
+        if(rs.next()){
+
+            int clientId = rs.getInt("client_id");
+
+            String sql = "INSERT INTO mentor_insights (mentor_id, client_id, insight, date_created) VALUES (?, ?, ?, datetime('now'))";
+
+            PreparedStatement pst2 = con.prepareStatement(sql);
+            pst2.setInt(1, mentorId);
+            pst2.setInt(2, clientId);
+            pst2.setString(3, insight);
+
+            pst2.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Insight sent successfully!");
+
+            txtInsights.setText("");
+
+        } else {
+
+            JOptionPane.showMessageDialog(null,
+                "No client connected to this mentor.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_FeedbackbtnActionPerformed
 
     /**
@@ -549,6 +601,7 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -556,6 +609,8 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblGreeting;
+    private javax.swing.JTextArea txtInsights;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import Admin.Users;
 import Config.session;
 import Main.LoginPage;
+import java.sql.ResultSet;
 
 /**
  *
@@ -25,25 +26,27 @@ public class Update extends javax.swing.JFrame {
      */
     int userId;
     session sess = session.getInstance();
-    public Update(int a_id, String name, String email, String password, String type, String status) {
-        if (session.isInstanceEmpty() || sess.getUserId() == 0) {
-            JOptionPane.showMessageDialog(null, "Login Required!");
-            new LoginPage().setVisible(true);
-            dispose();
-            return;
-        }
-        
-        initComponents();
-        
-            userId = a_id;
+    public Update(int a_id, String name, String lname, String uname, String email, String password, String type, String status) {
 
-            Fname.setText(name);
-            Email.setText(email);
-            Pass.setText(password);
-            Role.setSelectedItem(type);
-            Stats.setSelectedItem(status);
-
+    if (session.isInstanceEmpty() || sess.getUserId() == 0) {
+        JOptionPane.showMessageDialog(null, "Login Required!");
+        new LoginPage().setVisible(true);
+        dispose();
+        return;
     }
+
+        initComponents();
+
+        userId = a_id;
+
+        Fname.setText(name);
+        Lname.setText(lname);
+        Uname.setText(uname);
+        Email.setText(email);
+        Pass.setText(password);
+        Role.setSelectedItem(type);
+        Stats.setSelectedItem(status);
+}
 
     private Update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -94,9 +97,13 @@ public class Update extends javax.swing.JFrame {
         Pass = new javax.swing.JPasswordField();
         Role = new javax.swing.JComboBox<>();
         Stats = new javax.swing.JComboBox<>();
-        Addbtn = new javax.swing.JPanel();
+        Updatebtn = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         Back = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        Lname = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        Uname = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -373,28 +380,28 @@ public class Update extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Full Name");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, -1, -1));
+        jLabel15.setText("First Name");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Email");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Password");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Role");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, -1));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Status");
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, -1, -1));
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, -1, -1));
 
         show.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Untitled_design__11_-removebg-preview.png"))); // NOI18N
         show.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -409,7 +416,7 @@ public class Update extends javax.swing.JFrame {
                 showMouseReleased(evt);
             }
         });
-        jPanel2.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 230, 50, 80));
+        jPanel2.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 180, 50, 40));
 
         Fname.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Fname.addActionListener(new java.awt.event.ActionListener() {
@@ -417,7 +424,7 @@ public class Update extends javax.swing.JFrame {
                 FnameActionPerformed(evt);
             }
         });
-        jPanel2.add(Fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 290, 40));
+        jPanel2.add(Fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 290, 40));
 
         Email.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Email.addActionListener(new java.awt.event.ActionListener() {
@@ -425,10 +432,10 @@ public class Update extends javax.swing.JFrame {
                 EmailActionPerformed(evt);
             }
         });
-        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 290, 40));
+        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 290, 40));
 
         Pass.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jPanel2.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 290, 40));
+        jPanel2.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 180, 290, 40));
 
         Role.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Mentor", "Admin" }));
@@ -437,35 +444,35 @@ public class Update extends javax.swing.JFrame {
                 RoleActionPerformed(evt);
             }
         });
-        jPanel2.add(Role, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 290, 40));
+        jPanel2.add(Role, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 290, 40));
 
         Stats.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Stats.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
-        jPanel2.add(Stats, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, 290, 40));
+        jPanel2.add(Stats, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 320, 290, 40));
 
-        Addbtn.setBackground(new java.awt.Color(0, 51, 51));
-        Addbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        Addbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Addbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        Updatebtn.setBackground(new java.awt.Color(0, 51, 51));
+        Updatebtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Updatebtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Updatebtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddbtnMouseClicked(evt);
+                UpdatebtnMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                AddbtnMouseEntered(evt);
+                UpdatebtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                AddbtnMouseExited(evt);
+                UpdatebtnMouseExited(evt);
             }
         });
-        Addbtn.setLayout(null);
+        Updatebtn.setLayout(null);
 
         jLabel20.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("UPDATE");
-        Addbtn.add(jLabel20);
+        Updatebtn.add(jLabel20);
         jLabel20.setBounds(50, 20, 110, 20);
 
-        jPanel2.add(Addbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 450, 200, 60));
+        jPanel2.add(Updatebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 470, 200, 60));
 
         Back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (9).png"))); // NOI18N
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -475,6 +482,32 @@ public class Update extends javax.swing.JFrame {
             }
         });
         jPanel2.add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 60, 60));
+
+        jLabel21.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Last Name");
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
+
+        Lname.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Lname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LnameActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Lname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 290, 40));
+
+        jLabel22.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Username");
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
+
+        Uname.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Uname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UnameActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Uname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 290, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 940, 570));
 
@@ -598,13 +631,13 @@ public class Update extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_RoleActionPerformed
 
-    private void AddbtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddbtnMouseEntered
-        Addbtn.setBackground(new Color(0,102,102));
-    }//GEN-LAST:event_AddbtnMouseEntered
+    private void UpdatebtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatebtnMouseEntered
+        Updatebtn.setBackground(new Color(0,102,102));
+    }//GEN-LAST:event_UpdatebtnMouseEntered
 
-    private void AddbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddbtnMouseExited
-        Addbtn.setBackground(new Color(0,51,51));
-    }//GEN-LAST:event_AddbtnMouseExited
+    private void UpdatebtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatebtnMouseExited
+        Updatebtn.setBackground(new Color(0,51,51));
+    }//GEN-LAST:event_UpdatebtnMouseExited
 
     private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
         show.setVisible(true);
@@ -620,24 +653,40 @@ public class Update extends javax.swing.JFrame {
 
     }//GEN-LAST:event_showMouseReleased
 
-    private void AddbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddbtnMouseClicked
-       
+    private void UpdatebtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatebtnMouseClicked
+        config conf = new config();
+        String email = Email.getText();
+        String check = "SELECT * FROM tbl_accts WHERE email='"+Email+"' AND a_id!='"+userId+"'";
+        try{
 
-    config conf = new config();
+            ResultSet rs = conf.getData(check);
 
-    String sql = "UPDATE tbl_accts SET name=?, email=?, password=?, type=?, status=? WHERE a_id=?";
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "Email already exists!");
+                return;
+            }
 
-    conf.addRecord(sql,
-        Fname.getText(),
-        Email.getText(),
-        Pass.getText(),
-        Role.getSelectedItem().toString(),
-        Stats.getSelectedItem().toString(),
-        userId
-    );
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        String sql = "UPDATE tbl_accts SET name=?, lname=?, uname=?, email=?, password=?, type=?, status=? WHERE a_id=?";
 
-    JOptionPane.showMessageDialog(this, "User updated successfully!");
-    }//GEN-LAST:event_AddbtnMouseClicked
+        conf.addRecord(sql,
+            Fname.getText(),
+            Lname.getText(),
+            Uname.getText(),
+            Email.getText(),
+            Pass.getText(),
+            Role.getSelectedItem().toString(),
+            Stats.getSelectedItem().toString(),
+            userId
+        );
+
+        JOptionPane.showMessageDialog(this, "User updated successfully!");
+        Users Update = new Users();
+        Update.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_UpdatebtnMouseClicked
 
     private void BackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseClicked
         Users Back = new Users();
@@ -678,6 +727,14 @@ public class Update extends javax.swing.JFrame {
         dispose();
 
     }//GEN-LAST:event_MentorsMouseClicked
+
+    private void LnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LnameActionPerformed
+
+    private void UnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -720,13 +777,13 @@ public class Update extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
     private javax.swing.JPanel Add;
-    private javax.swing.JPanel Addbtn;
     private javax.swing.JPanel App;
     private javax.swing.JLabel Back;
     private javax.swing.JPanel Delete;
     private javax.swing.JTextField Email;
     private javax.swing.JTextField Fname;
     private javax.swing.JPanel Home;
+    private javax.swing.JTextField Lname;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
@@ -735,7 +792,9 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JPanel Search;
     private javax.swing.JTextField SearchText;
     private javax.swing.JComboBox<String> Stats;
+    private javax.swing.JTextField Uname;
     private javax.swing.JPanel Update;
+    private javax.swing.JPanel Updatebtn;
     private javax.swing.JPanel Users;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -750,6 +809,8 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

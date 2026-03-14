@@ -11,10 +11,16 @@ import Config.session;
 import Main.LandingPage;
 import Main.LoginPage;
 import java.awt.Color;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -27,11 +33,64 @@ public class UserDashboard extends javax.swing.JFrame {
      */
     session sess = session.getInstance();
     public UserDashboard() {
-        
-        
+        if (session.isInstanceEmpty() || sess.getUserId() == 0) {
+            JOptionPane.showMessageDialog(null, "Login Required!");
+            new LoginPage().setVisible(true);
+            dispose();
+            return;
+        }
         initComponents();
+        loadClientEnergySummary();
        
     }
+    
+    public void loadClientEnergySummary(){
+
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    int userId = sess.getUserId();
+
+    String sql = "SELECT date, AVG(energy_level) as avg_energy "
+               + "FROM energy_log "
+               + "WHERE u_id=? "
+               + "GROUP BY date "
+               + "ORDER BY date";
+
+    try{
+
+        Connection con = config.connectDB();
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, userId);
+
+        ResultSet rs = pst.executeQuery();
+
+        while(rs.next()){
+
+            String date = rs.getString("date");
+            double avgEnergy = rs.getDouble("avg_energy");
+
+            dataset.addValue(avgEnergy, "Average Energy", date);
+        }
+
+        JFreeChart chart = ChartFactory.createLineChart(
+                "My Energy Trend",
+                "Date",
+                "Average Energy",
+                dataset
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+
+        homeChartPanel.removeAll();
+        homeChartPanel.setLayout(new BorderLayout());
+        homeChartPanel.add(chartPanel, BorderLayout.CENTER);
+        homeChartPanel.revalidate();
+        homeChartPanel.repaint();
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
     
    
 
@@ -60,6 +119,7 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
+        homeChartPanel = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -184,7 +244,7 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("ACCOUNT");
         Acc.add(jLabel7);
-        jLabel7.setBounds(120, 20, 125, 20);
+        jLabel7.setBounds(110, 20, 125, 20);
 
         jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
 
@@ -221,6 +281,20 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(0, 51, 51));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout homeChartPanelLayout = new javax.swing.GroupLayout(homeChartPanel);
+        homeChartPanel.setLayout(homeChartPanelLayout);
+        homeChartPanelLayout.setHorizontalGroup(
+            homeChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        homeChartPanelLayout.setVerticalGroup(
+            homeChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 510, Short.MAX_VALUE)
+        );
+
+        jPanel6.add(homeChartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 850, 510));
+
         jScrollPane1.setViewportView(jPanel6);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
@@ -396,6 +470,7 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel homeChartPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
