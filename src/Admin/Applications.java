@@ -12,6 +12,7 @@ import Main.LoginPage;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,27 +43,34 @@ public class Applications extends javax.swing.JFrame {
 
     JPanel card = new JPanel();
     card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-    card.setPreferredSize(new Dimension(250, 200));
-    card.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    card.setBackground(Color.WHITE);
+    card.setPreferredSize(new Dimension(260, 180));
+    card.setBackground(new Color(0,51,51));
+
+    card.setBorder(BorderFactory.createSoftBevelBorder(
+            javax.swing.border.BevelBorder.RAISED,
+            Color.WHITE,
+            Color.WHITE,
+            Color.BLACK,
+            Color.BLACK
+    ));
 
     Font titleFont = new Font("Bookman Old Style", Font.BOLD, 18);
     Font textFont = new Font("Bookman Old Style", Font.PLAIN, 16);
 
     JLabel title = new JLabel("Mentor Request Approval");
     title.setFont(titleFont);
+    title.setForeground(Color.WHITE);
     title.setAlignmentX(Component.CENTER_ALIGNMENT);
-    title.setHorizontalAlignment(SwingConstants.CENTER);
 
     JLabel mentorLabel = new JLabel("Mentor: " + mentorName);
     mentorLabel.setFont(textFont);
+    mentorLabel.setForeground(Color.WHITE);
     mentorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    mentorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
     JLabel clientLabel = new JLabel("Client: " + clientName);
     clientLabel.setFont(textFont);
+    clientLabel.setForeground(Color.WHITE);
     clientLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    clientLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
     JButton approveBtn = new JButton("Approve");
     JButton declineBtn = new JButton("Decline");
@@ -70,8 +78,17 @@ public class Applications extends javax.swing.JFrame {
     approveBtn.setFont(textFont);
     declineBtn.setFont(textFont);
 
-    approveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    declineBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    approveBtn.setBackground(new Color(16,79,79));
+    declineBtn.setBackground(new Color(120,30,30));
+
+    approveBtn.setForeground(Color.WHITE);
+    declineBtn.setForeground(Color.WHITE);
+
+    approveBtn.setFocusPainted(false);
+    declineBtn.setFocusPainted(false);
+
+    approveBtn.setPreferredSize(new Dimension(100,30));
+    declineBtn.setPreferredSize(new Dimension(100,30));
 
     approveBtn.addActionListener(e -> {
         updateStatus(recordId, "Approved");
@@ -79,9 +96,15 @@ public class Applications extends javax.swing.JFrame {
     });
 
     declineBtn.addActionListener(e -> {
-        updateStatus(recordId, "Declined");
+        updateStatus(recordId, "Rejected");
         card.setVisible(false);
     });
+
+    // Panel for side-by-side buttons
+    JPanel buttonPanel = new JPanel(new java.awt.FlowLayout(FlowLayout.CENTER, 10, 0));
+    buttonPanel.setBackground(new Color(0,51,51));
+    buttonPanel.add(approveBtn);
+    buttonPanel.add(declineBtn);
 
     card.add(Box.createVerticalStrut(15));
     card.add(title);
@@ -89,12 +112,11 @@ public class Applications extends javax.swing.JFrame {
     card.add(mentorLabel);
     card.add(clientLabel);
     card.add(Box.createVerticalStrut(15));
-    card.add(approveBtn);
-    card.add(Box.createVerticalStrut(8));
-    card.add(declineBtn);
+    card.add(buttonPanel);
 
     return card;
 }
+    
     private void loadApplications() {
 
     config con = new config();
@@ -124,6 +146,7 @@ public class Applications extends javax.swing.JFrame {
             JPanel card = createApplicationCard(recordId, mentorName, clientName);
             applicationContainer.add(card);
         }
+        rs.close();
 
         applicationContainer.revalidate();
         applicationContainer.repaint();
@@ -435,10 +458,21 @@ public class Applications extends javax.swing.JFrame {
     }//GEN-LAST:event_HomeMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+);
+
+if(confirm == JOptionPane.YES_OPTION){
+
+    session.getInstance().clearSession();
+    JOptionPane.showMessageDialog(null, "Logged out successfully!");
+    new LoginPage().setVisible(true);
+    dispose();
+
+}
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered

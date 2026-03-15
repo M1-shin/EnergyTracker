@@ -41,6 +41,7 @@ public class Profile extends javax.swing.JFrame {
     }
     private void loadProfile() {
         Namelbl.setText(sess.getName());
+        LastNamelbl.setText(sess.getLname());
         Emaillbl.setText(sess.getEmail());
         Typelbl.setText(sess.getType());
         Usernm.setText(sess.getUname());
@@ -60,13 +61,14 @@ public class Profile extends javax.swing.JFrame {
             if (path != null && !path.isEmpty()) {
                 ImageIcon icon = new ImageIcon(path);
                 Image img = icon.getImage().getScaledInstance(
-                        Dp.getWidth(),
-                        Dp.getHeight(),
+                        Pics.getWidth(),
+                        Pics.getHeight(),
                         Image.SCALE_SMOOTH
                 );
-                Dp.setIcon(new ImageIcon(img));
+                Pics.setIcon(new ImageIcon(img));
             }
         }
+        rs.close();
     }
 
 } catch (Exception e) {
@@ -104,16 +106,14 @@ public class Profile extends javax.swing.JFrame {
         Emaillbl = new javax.swing.JLabel();
         Typelbl = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        Dp = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        Pics = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         Idlbl = new javax.swing.JLabel();
         Usernm = new javax.swing.JLabel();
-        Edit = new javax.swing.JPanel();
-        Editlbl = new javax.swing.JLabel();
-        Reports = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        Out = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        Edit1 = new javax.swing.JPanel();
+        TypeLbl3 = new javax.swing.JLabel();
+        NameLbl1 = new javax.swing.JLabel();
+        LastNamelbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -262,120 +262,92 @@ public class Profile extends javax.swing.JFrame {
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
 
-        jPanel2.setBackground(new java.awt.Color(16, 79, 79));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         NameLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         NameLbl.setForeground(new java.awt.Color(255, 255, 255));
-        NameLbl.setText("Name:");
-        jPanel2.add(NameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
+        NameLbl.setText("First Name:");
+        jPanel2.add(NameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, -1, -1));
 
         EmailLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         EmailLbl.setForeground(new java.awt.Color(255, 255, 255));
         EmailLbl.setText("Email:");
-        jPanel2.add(EmailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, 20));
+        jPanel2.add(EmailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, -1, 20));
 
         TypeLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         TypeLbl.setForeground(new java.awt.Color(255, 255, 255));
         TypeLbl.setText("Type:");
-        jPanel2.add(TypeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
+        jPanel2.add(TypeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, -1, -1));
 
         Namelbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Namelbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Namelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 60, 220, 40));
+        jPanel2.add(Namelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, 220, 40));
 
         Emaillbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Emaillbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Emaillbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 220, 40));
+        jPanel2.add(Emaillbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 220, 40));
 
         Typelbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Typelbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Typelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 180, 220, 40));
+        jPanel2.add(Typelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 220, 40));
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
         jPanel3.setLayout(null);
 
-        Dp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
-        jPanel3.add(Dp);
-        Dp.setBounds(50, 30, 200, 200);
+        Pics.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
+        jPanel3.add(Pics);
+        Pics.setBounds(50, 30, 200, 200);
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 310, 260));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 310, 240));
 
-        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("ID:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, 20));
+        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("ID:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, -1, 20));
 
         Idlbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Idlbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Idlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 90, 40));
+        jPanel2.add(Idlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 90, 40));
 
         Usernm.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Usernm.setForeground(new java.awt.Color(255, 255, 255));
         Usernm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(Usernm, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 190, 30));
+        jPanel2.add(Usernm, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 190, 30));
 
-        Edit.setBackground(new java.awt.Color(0, 51, 51));
-        Edit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Edit.addMouseListener(new java.awt.event.MouseAdapter() {
+        Edit1.setBackground(new java.awt.Color(0, 51, 51));
+        Edit1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Edit1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EditMouseClicked(evt);
+                Edit1MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                EditMouseEntered(evt);
+                Edit1MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                EditMouseExited(evt);
+                Edit1MouseExited(evt);
             }
         });
-        Edit.setLayout(null);
+        Edit1.setLayout(null);
 
-        Editlbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/7_2.png"))); // NOI18N
-        Editlbl.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EditlblMouseClicked(evt);
-            }
-        });
-        Edit.add(Editlbl);
-        Editlbl.setBounds(0, 0, 190, 180);
+        TypeLbl3.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        TypeLbl3.setForeground(new java.awt.Color(255, 255, 255));
+        TypeLbl3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TypeLbl3.setText("EDIT PROFILE");
+        Edit1.add(TypeLbl3);
+        TypeLbl3.setBounds(40, 10, 200, 40);
 
-        jPanel2.add(Edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 190, 180));
+        jPanel2.add(Edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 270, 60));
 
-        Reports.setBackground(new java.awt.Color(0, 51, 51));
-        Reports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Reports.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ReportsMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ReportsMouseExited(evt);
-            }
-        });
-        Reports.setLayout(null);
+        NameLbl1.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        NameLbl1.setForeground(new java.awt.Color(255, 255, 255));
+        NameLbl1.setText("Last Name:");
+        jPanel2.add(NameLbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, -1, -1));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/8_2.png"))); // NOI18N
-        Reports.add(jLabel11);
-        jLabel11.setBounds(10, 0, 160, 180);
-
-        jPanel2.add(Reports, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 190, 180));
-
-        Out.setBackground(new java.awt.Color(0, 51, 51));
-        Out.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Out.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                OutMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                OutMouseExited(evt);
-            }
-        });
-        Out.setLayout(null);
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/6_2.png"))); // NOI18N
-        Out.add(jLabel12);
-        jLabel12.setBounds(10, 0, 170, 180);
-
-        jPanel2.add(Out, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, 190, 180));
+        LastNamelbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        LastNamelbl.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(LastNamelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 150, 220, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
@@ -459,47 +431,21 @@ public class Profile extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
-
-    private void EditlblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditlblMouseClicked
-        EditUProfile Edit = new EditUProfile();
-        Edit.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_EditlblMouseClicked
-
-    private void EditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseClicked
-        EditUProfile Edit = new EditUProfile();
-        Edit.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_EditMouseClicked
-
-    private void EditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseEntered
-        resetColor(Edit);
-    }//GEN-LAST:event_EditMouseEntered
-
-    private void EditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseExited
-        setColor(Edit);
-    }//GEN-LAST:event_EditMouseExited
-
-    private void ReportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseEntered
-        resetColor(Reports);
-    }//GEN-LAST:event_ReportsMouseEntered
-
-    private void ReportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReportsMouseExited
-        setColor(Reports);
-    }//GEN-LAST:event_ReportsMouseExited
-
-    private void OutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseEntered
-        resetColor(Out);
-    }//GEN-LAST:event_OutMouseEntered
-
-    private void OutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseExited
-        setColor(Out);
-    }//GEN-LAST:event_OutMouseExited
 
     private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
         LogEnergy App = new LogEnergy();
@@ -525,13 +471,27 @@ public class Profile extends javax.swing.JFrame {
             } else {
                 new Apply().setVisible(true);
             }
-
+            rs.close();
             this.dispose();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }//GEN-LAST:event_MentorsMouseClicked
+
+    private void Edit1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Edit1MouseClicked
+        EditUProfile Edit1 = new EditUProfile();
+        Edit1.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_Edit1MouseClicked
+
+    private void Edit1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Edit1MouseEntered
+        resetColor(Edit1);
+    }//GEN-LAST:event_Edit1MouseEntered
+
+    private void Edit1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Edit1MouseExited
+        setColor(Edit1);
+    }//GEN-LAST:event_Edit1MouseExited
 
     /**
      * @param args the command line arguments
@@ -571,31 +531,29 @@ public class Profile extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
     private javax.swing.JPanel App;
-    private javax.swing.JLabel Dp;
-    private javax.swing.JPanel Edit;
-    private javax.swing.JLabel Editlbl;
+    private javax.swing.JPanel Edit1;
     private javax.swing.JLabel EmailLbl;
     private javax.swing.JLabel Emaillbl;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Idlbl;
+    private javax.swing.JLabel LastNamelbl;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
     private javax.swing.JLabel NameLbl;
+    private javax.swing.JLabel NameLbl1;
     private javax.swing.JLabel Namelbl;
-    private javax.swing.JPanel Out;
-    private javax.swing.JPanel Reports;
+    private javax.swing.JLabel Pics;
     private javax.swing.JLabel TypeLbl;
+    private javax.swing.JLabel TypeLbl3;
     private javax.swing.JLabel Typelbl;
     private javax.swing.JLabel Usernm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

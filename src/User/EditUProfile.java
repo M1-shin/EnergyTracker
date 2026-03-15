@@ -44,6 +44,7 @@ session sess = session.getInstance();
     
     private void loadProfile() {
         Name.setText(sess.getName());
+        LastName.setText(sess.getLname());
         Email.setText(sess.getEmail());
         Typelbl.setText(sess.getType());
         Username.setText(sess.getUname());
@@ -62,13 +63,14 @@ session sess = session.getInstance();
             if (path != null && !path.isEmpty()) {
                 ImageIcon icon = new ImageIcon(path);
                 Image img = icon.getImage().getScaledInstance(
-                        Pfp.getWidth(),
-                        Pfp.getHeight(),
+                        Pic.getWidth(),
+                        Pic.getHeight(),
                         Image.SCALE_SMOOTH
                 );
-                Pfp.setIcon(new ImageIcon(img));
+                Pic.setIcon(new ImageIcon(img));
             }
         }
+        rs.close();
     }
 
 } catch (Exception e) {
@@ -103,8 +105,8 @@ session sess = session.getInstance();
         NameLbl = new javax.swing.JLabel();
         EmailLbl = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        Pfp = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        Pic = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         Idlbl = new javax.swing.JLabel();
         Edit = new javax.swing.JPanel();
         TypeLbl3 = new javax.swing.JLabel();
@@ -118,6 +120,8 @@ session sess = session.getInstance();
         TypeLbl2 = new javax.swing.JLabel();
         Save = new javax.swing.JPanel();
         TypeLbl4 = new javax.swing.JLabel();
+        LastNameLbl = new javax.swing.JLabel();
+        LastName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -268,36 +272,37 @@ session sess = session.getInstance();
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
 
-        jPanel2.setBackground(new java.awt.Color(16, 79, 79));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         NameLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         NameLbl.setForeground(new java.awt.Color(255, 255, 255));
-        NameLbl.setText("Name:");
-        jPanel2.add(NameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, -1, -1));
+        NameLbl.setText("First Name:");
+        jPanel2.add(NameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, -1, -1));
 
         EmailLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         EmailLbl.setForeground(new java.awt.Color(255, 255, 255));
         EmailLbl.setText("Email:");
-        jPanel2.add(EmailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, -1, 20));
+        jPanel2.add(EmailLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, -1, 20));
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
         jPanel3.setLayout(null);
 
-        Pfp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
-        jPanel3.add(Pfp);
-        Pfp.setBounds(50, 30, 200, 200);
+        Pic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg (11).png"))); // NOI18N
+        jPanel3.add(Pic);
+        Pic.setBounds(50, 30, 200, 200);
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 310, 260));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 310, 260));
 
-        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("ID:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, -1, 20));
+        jLabel4.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("ID:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, -1, 20));
 
         Idlbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Idlbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Idlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 90, 40));
+        jPanel2.add(Idlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, 90, 40));
 
         Edit.setBackground(new java.awt.Color(0, 51, 51));
         Edit.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -321,7 +326,7 @@ session sess = session.getInstance();
         Edit.add(TypeLbl3);
         TypeLbl3.setBounds(50, 10, 170, 40);
 
-        jPanel2.add(Edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 270, 60));
+        jPanel2.add(Edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 330, 270, 60));
 
         Out.setBackground(new java.awt.Color(0, 51, 51));
         Out.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -345,30 +350,30 @@ session sess = session.getInstance();
         Out.add(TypeLbl);
         TypeLbl.setBounds(30, 20, 210, 40);
 
-        jPanel2.add(Out, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, 270, 80));
+        jPanel2.add(Out, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, 270, 80));
 
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EmailActionPerformed(evt);
             }
         });
-        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 150, 250, 40));
-        jPanel2.add(Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 270, 250, 40));
-        jPanel2.add(Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 250, 40));
+        jPanel2.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 290, 250, 40));
+        jPanel2.add(Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 250, 40));
+        jPanel2.add(Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 250, 40));
 
         TypeLbl1.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         TypeLbl1.setForeground(new java.awt.Color(255, 255, 255));
         TypeLbl1.setText("Type:");
-        jPanel2.add(TypeLbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, -1, -1));
+        jPanel2.add(TypeLbl1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
 
         Typelbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Typelbl.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(Typelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 220, 40));
+        jPanel2.add(Typelbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 220, 40));
 
         TypeLbl2.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         TypeLbl2.setForeground(new java.awt.Color(255, 255, 255));
         TypeLbl2.setText("Username:");
-        jPanel2.add(TypeLbl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, -1, -1));
+        jPanel2.add(TypeLbl2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, -1, -1));
 
         Save.setBackground(new java.awt.Color(0, 51, 51));
         Save.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -392,7 +397,13 @@ session sess = session.getInstance();
         Save.add(TypeLbl4);
         TypeLbl4.setBounds(30, 20, 210, 40);
 
-        jPanel2.add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, 270, 80));
+        jPanel2.add(Save, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, 270, 80));
+
+        LastNameLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        LastNameLbl.setForeground(new java.awt.Color(255, 255, 255));
+        LastNameLbl.setText("Last Name:");
+        jPanel2.add(LastNameLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, -1, -1));
+        jPanel2.add(LastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 230, 250, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
@@ -468,10 +479,20 @@ session sess = session.getInstance();
     }//GEN-LAST:event_AccMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
@@ -481,6 +502,38 @@ session sess = session.getInstance();
     private void LogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseExited
         setColor(Logout);
     }//GEN-LAST:event_LogoutMouseExited
+
+    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
+        LogEnergy App = new LogEnergy();
+        App.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AppMouseClicked
+
+    private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
+        config con = new config();
+
+        session sess = session.getInstance();
+        int userId = sess.getUserId();
+
+        String sql = "SELECT mentor_id FROM mentor_client WHERE client_id = ?";
+
+        try {
+            PreparedStatement pst = con.connectDB().prepareStatement(sql);
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next() && rs.getInt("mentor_id") > 0) {
+                new Mentor().setVisible(true);
+            } else {
+                new Apply().setVisible(true);
+            }
+            rs.close();
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_MentorsMouseClicked
 
     private void EditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseClicked
         JFileChooser fileChooser = new JFileChooser();
@@ -500,11 +553,11 @@ session sess = session.getInstance();
 
                 ImageIcon icon = new ImageIcon(imagePath);
                 Image img = icon.getImage().getScaledInstance(
-                    Pfp.getWidth(),
-                    Pfp.getHeight(),
+                    Pic.getWidth(),
+                    Pic.getHeight(),
                     Image.SCALE_SMOOTH
                 );
-                Pfp.setIcon(new ImageIcon(img));
+                Pic.setIcon(new ImageIcon(img));
 
                 JOptionPane.showMessageDialog(this, "Profile picture updated!");
 
@@ -523,7 +576,7 @@ session sess = session.getInstance();
     }//GEN-LAST:event_EditMouseExited
 
     private void OutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutMouseClicked
-        new Profile().setVisible(true);
+        new AdminProfile().setVisible(true);
         dispose();
     }//GEN-LAST:event_OutMouseClicked
 
@@ -594,38 +647,6 @@ session sess = session.getInstance();
         setColor(Save);
     }//GEN-LAST:event_SaveMouseExited
 
-    private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
-        LogEnergy App = new LogEnergy();
-        App.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_AppMouseClicked
-
-    private void MentorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseClicked
-        config con = new config();
-
-        session sess = session.getInstance();
-        int userId = sess.getUserId();
-
-        String sql = "SELECT mentor_id FROM mentor_client WHERE client_id = ?";
-
-        try {
-            PreparedStatement pst = con.connectDB().prepareStatement(sql);
-            pst.setInt(1, userId);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next() && rs.getInt("mentor_id") > 0) {
-                new Mentor().setVisible(true);
-            } else {
-                new Apply().setVisible(true);
-            }
-
-            this.dispose();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_MentorsMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -669,13 +690,15 @@ session sess = session.getInstance();
     private javax.swing.JLabel EmailLbl;
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Idlbl;
+    private javax.swing.JTextField LastName;
+    private javax.swing.JLabel LastNameLbl;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
     private javax.swing.JTextField Name;
     private javax.swing.JLabel NameLbl;
     private javax.swing.JPanel Out;
-    private javax.swing.JLabel Pfp;
+    private javax.swing.JLabel Pic;
     private javax.swing.JPanel Save;
     private javax.swing.JLabel TypeLbl;
     private javax.swing.JLabel TypeLbl1;
@@ -688,8 +711,8 @@ session sess = session.getInstance();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

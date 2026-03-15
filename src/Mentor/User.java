@@ -69,6 +69,7 @@ public class User extends javax.swing.JFrame {
                 "You currently have no approved client connections.</html>"
             );
         }
+        rs.close();
 
     } catch (SQLException e) {
         System.out.println("Error loading greeting: " + e.getMessage());
@@ -80,11 +81,12 @@ public class User extends javax.swing.JFrame {
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
     String sql =
-        "SELECT e.task, e.energy_level, e.date " +
-        "FROM energy_log e " +
-        "JOIN mentor_client mc ON e.u_id = mc.client_id " +
-        "WHERE mc.mentor_id = ? " +
-        "ORDER BY e.date";
+    "SELECT e.task, e.energy_level, e.date " +
+    "FROM energy_log e " +
+    "JOIN mentor_client mc ON e.u_id = mc.client_id " +
+    "WHERE mc.mentor_id = ? " +
+    "AND mc.status = 'Approved' " +
+    "ORDER BY e.date";
 
     try{
 
@@ -101,7 +103,7 @@ public class User extends javax.swing.JFrame {
             String date = rs.getString("date");
 
             dataset.addValue(energy, date, task);
-        }
+        }rs.close();
 
         JFreeChart chart = ChartFactory.createBarChart(
                 "Client Energy Tracker",
@@ -171,7 +173,7 @@ public class User extends javax.swing.JFrame {
         if(rs.next()){
             clientId = rs.getInt("client_id");
         }
-
+        rs.close();
     }catch(Exception e){
         e.printStackTrace();
     }
@@ -211,6 +213,8 @@ public class User extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Mentors = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        Record = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1300, 737));
@@ -286,7 +290,7 @@ public class User extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(120, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -313,7 +317,8 @@ public class User extends javax.swing.JFrame {
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
 
-        jPanel2.setBackground(new java.awt.Color(16, 79, 79));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblGreeting.setFont(new java.awt.Font("Sylfaen", 3, 24)); // NOI18N
@@ -398,6 +403,31 @@ public class User extends javax.swing.JFrame {
 
         jPanel1.add(Mentors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 360, 60));
 
+        Record.setBackground(new java.awt.Color(0, 51, 51));
+        Record.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Record.setForeground(new java.awt.Color(255, 255, 255));
+        Record.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Record.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RecordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                RecordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                RecordMouseExited(evt);
+            }
+        });
+        Record.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("RECORDS");
+        Record.add(jLabel11);
+        jLabel11.setBounds(120, 20, 130, 20);
+
+        jPanel1.add(Record, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -451,10 +481,20 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
@@ -547,11 +587,26 @@ public class User extends javax.swing.JFrame {
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
+        rs.close();
 
     }catch(Exception e){
         e.printStackTrace();
     }
     }//GEN-LAST:event_FeedbackbtnActionPerformed
+
+    private void RecordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseClicked
+        Records Record = new Records();
+        Record.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_RecordMouseClicked
+
+    private void RecordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseEntered
+        resetColor(Record);
+    }//GEN-LAST:event_RecordMouseEntered
+
+    private void RecordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseExited
+        setColor(Record);
+    }//GEN-LAST:event_RecordMouseExited
 
     /**
      * @param args the command line arguments
@@ -596,9 +651,11 @@ public class User extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel Record;
     private javax.swing.JPanel chartContainer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

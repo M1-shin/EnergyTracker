@@ -96,16 +96,22 @@ import net.proteanit.sql.DbUtils;
             }
         }
 
-        public ResultSet getData(String sql) {
-    try {
-        Connection conn = connectDB();
-        Statement stmt = conn.createStatement();
-        return stmt.executeQuery(sql);
-    } catch (SQLException e) {
-        System.out.println("Error getting data: " + e.getMessage());
-        return null;
-    }
-}
+        public ResultSet getData(String sql){
+            ResultSet rs = null;
+
+            try{
+                Connection conn = connectDB();
+                Statement stmt = conn.createStatement();
+                rs = stmt.executeQuery(sql);
+
+            }catch(SQLException e){
+                System.out.println("Error getting data: " + e.getMessage());
+            }
+
+            return rs;
+        }
+        
+        
 public Connection connect;
                 //Function to save data
                 public int insertData(String sql){

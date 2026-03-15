@@ -82,7 +82,7 @@ public class LogEnergy extends javax.swing.JFrame {
                 id, task, energy, date
             });
         }
-
+        rs.close();
         logTable.setModel(model);
 
     } catch (Exception e) {
@@ -107,7 +107,7 @@ public class LogEnergy extends javax.swing.JFrame {
             avgValue.setText(String.format("%.2f", rs.getDouble("avg_energy")));
             lowestValue.setText(String.valueOf(rs.getInt("min_energy")));
             highestValue.setText(String.valueOf(rs.getInt("max_energy")));
-        }
+        }rs.close();
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -193,7 +193,8 @@ public class LogEnergy extends javax.swing.JFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(0, 102, 102));
 
-        jPanel2.setBackground(new java.awt.Color(16, 79, 79));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         jPanel2.setMaximumSize(new java.awt.Dimension(1300, 737));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -306,7 +307,7 @@ public class LogEnergy extends javax.swing.JFrame {
 
         jPanel2.add(Search, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 130, 50));
 
-        jPanel3.setBackground(new java.awt.Color(16, 79, 79));
+        jPanel3.setBackground(new java.awt.Color(0, 51, 51));
         jPanel3.setLayout(null);
 
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, null, null));
@@ -593,10 +594,20 @@ public class LogEnergy extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void SearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchMouseExited
@@ -762,6 +773,7 @@ public class LogEnergy extends javax.swing.JFrame {
             } else {
                 new Apply().setVisible(true);
             }
+            rs.close();
 
             this.dispose();
 

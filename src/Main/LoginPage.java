@@ -11,6 +11,8 @@ import Config.session;
 import Mentor.MentorDashboard;
 import User.UserDashboard;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -23,6 +25,8 @@ public class LoginPage extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
+    
+    session sess = session.getInstance();
     public LoginPage() {
         initComponents();
     }
@@ -307,8 +311,9 @@ public class LoginPage extends javax.swing.JFrame {
                 );
                 return;
             }
-
-            session sess = session.getInstance();
+            
+            int userID = rs.getInt("a_id");
+            
                 sess.setUserId(rs.getInt("a_id"));
                 sess.setName(rs.getString("name"));
                 sess.setLname(rs.getString("lname"));
@@ -328,12 +333,13 @@ public class LoginPage extends javax.swing.JFrame {
             } else if (userType.equalsIgnoreCase("Mentor")) {
                 new MentorDashboard().setVisible(true);
             }
-
+            rs.close();
             dispose();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
         }
+        
     }//GEN-LAST:event_LoginButtonMouseClicked
 
     private void BackHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackHomeMouseEntered

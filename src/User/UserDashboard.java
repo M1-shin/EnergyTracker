@@ -70,7 +70,7 @@ public class UserDashboard extends javax.swing.JFrame {
             double avgEnergy = rs.getDouble("avg_energy");
 
             dataset.addValue(avgEnergy, "Average Energy", date);
-        }
+        }rs.close();
 
         JFreeChart chart = ChartFactory.createLineChart(
                 "My Energy Trend",
@@ -336,10 +336,20 @@ public class UserDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseEntered
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void AccMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseExited
@@ -381,7 +391,7 @@ public class UserDashboard extends javax.swing.JFrame {
                 new Mentor().setVisible(true);
             } else {
                 new Apply().setVisible(true);
-            }
+            }rs.close();
 
             this.dispose();
 

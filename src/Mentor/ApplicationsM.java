@@ -15,6 +15,7 @@ import User.Profile;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,22 +46,29 @@ public class ApplicationsM extends javax.swing.JFrame {
 
     JPanel card = new JPanel();
     card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-    card.setPreferredSize(new Dimension(240, 190));
-    card.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    card.setBackground(Color.WHITE);
+    card.setPreferredSize(new Dimension(260, 180));
+    card.setBackground(new Color(0,51,51));
+
+    card.setBorder(BorderFactory.createSoftBevelBorder(
+            javax.swing.border.BevelBorder.RAISED,
+            Color.WHITE,
+            Color.WHITE,
+            Color.BLACK,
+            Color.BLACK
+    ));
 
     Font titleFont = new Font("Bookman Old Style", Font.BOLD, 18);
     Font textFont = new Font("Bookman Old Style", Font.PLAIN, 16);
 
     JLabel title = new JLabel("Client Application");
     title.setFont(titleFont);
+    title.setForeground(Color.WHITE);
     title.setAlignmentX(Component.CENTER_ALIGNMENT);
-    title.setHorizontalAlignment(SwingConstants.CENTER);
 
     JLabel nameLabel = new JLabel(fname + " " + lname);
     nameLabel.setFont(textFont);
+    nameLabel.setForeground(Color.WHITE);
     nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
     JButton acceptBtn = new JButton("Accept");
     JButton declineBtn = new JButton("Decline");
@@ -68,8 +76,19 @@ public class ApplicationsM extends javax.swing.JFrame {
     acceptBtn.setFont(textFont);
     declineBtn.setFont(textFont);
 
-    acceptBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    declineBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    acceptBtn.setBackground(new Color(16,79,79));
+    declineBtn.setBackground(new Color(120,30,30));
+
+    acceptBtn.setForeground(Color.WHITE);
+    declineBtn.setForeground(Color.WHITE);
+
+    acceptBtn.setFocusPainted(false);
+    declineBtn.setFocusPainted(false);
+
+    JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+    btnPanel.setOpaque(false);
+    btnPanel.add(acceptBtn);
+    btnPanel.add(declineBtn);
 
     acceptBtn.addActionListener(e -> {
         updateStatus(recordId, "For Approval");
@@ -87,10 +106,8 @@ public class ApplicationsM extends javax.swing.JFrame {
     card.add(title);
     card.add(Box.createVerticalStrut(15));
     card.add(nameLabel);
-    card.add(Box.createVerticalStrut(15));
-    card.add(acceptBtn);
-    card.add(Box.createVerticalStrut(8));
-    card.add(declineBtn);
+    card.add(Box.createVerticalStrut(20));
+    card.add(btnPanel);
 
     return card;
 }
@@ -100,7 +117,7 @@ public class ApplicationsM extends javax.swing.JFrame {
     config con = new config();
     int mentorId = session.getInstance().getUserId();
 
-   String sql = "SELECT mc.mc_id, mc.client_id, a.name, a.lname " +
+    String sql = "SELECT mc.mc_id, mc.client_id, a.name, a.lname " +
              "FROM mentor_client mc " +
              "JOIN tbl_accts a ON mc.client_id = a.a_id " +
              "WHERE mc.mentor_id = ? AND mc.status = 'Pending'";
@@ -120,6 +137,7 @@ public class ApplicationsM extends javax.swing.JFrame {
             JPanel card = createApplicationCard(recordId, clientId, fname, lname);
             applicationContainer.add(card);
         }
+        rs.close();
 
         applicationContainer.revalidate();
         applicationContainer.repaint();
@@ -171,6 +189,8 @@ public class ApplicationsM extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         applicationContainer = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        Record = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1300, 737));
@@ -296,7 +316,7 @@ public class ApplicationsM extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(120, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -337,6 +357,31 @@ public class ApplicationsM extends javax.swing.JFrame {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
+
+        Record.setBackground(new java.awt.Color(0, 51, 51));
+        Record.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Record.setForeground(new java.awt.Color(255, 255, 255));
+        Record.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Record.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RecordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                RecordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                RecordMouseExited(evt);
+            }
+        });
+        Record.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("RECORDS");
+        Record.add(jLabel11);
+        jLabel11.setBounds(120, 20, 130, 20);
+
+        jPanel1.add(Record, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -431,10 +476,20 @@ public class ApplicationsM extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
@@ -444,6 +499,20 @@ public class ApplicationsM extends javax.swing.JFrame {
     private void LogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseExited
         setColor(Logout);
     }//GEN-LAST:event_LogoutMouseExited
+
+    private void RecordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseClicked
+        Records Record = new Records();
+        Record.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_RecordMouseClicked
+
+    private void RecordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseEntered
+        resetColor(Record);
+    }//GEN-LAST:event_RecordMouseEntered
+
+    private void RecordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseExited
+        setColor(Record);
+    }//GEN-LAST:event_RecordMouseExited
 
     /**
      * @param args the command line arguments
@@ -488,9 +557,11 @@ public class ApplicationsM extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel Record;
     private javax.swing.JPanel applicationContainer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

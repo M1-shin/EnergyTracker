@@ -208,6 +208,9 @@ public class Add_1 extends javax.swing.JFrame {
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -469,7 +472,7 @@ public class Add_1 extends javax.swing.JFrame {
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, -1, -1));
 
         Role.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Mentor", "Admin" }));
+        Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Mentor", "Admin" }));
         Role.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RoleActionPerformed(evt);
@@ -611,6 +614,8 @@ public class Add_1 extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Email already exists!");
                 return;
             }
+            
+            rs.close();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -641,10 +646,21 @@ public class Add_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_BackMouseClicked
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+);
+
+if(confirm == JOptionPane.YES_OPTION){
+
+    session.getInstance().clearSession();
+    JOptionPane.showMessageDialog(null, "Logged out successfully!");
+    new LoginPage().setVisible(true);
+    dispose();
+
+}
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void MentorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorMouseEntered
@@ -702,6 +718,12 @@ public class Add_1 extends javax.swing.JFrame {
     private void RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RoleActionPerformed
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+         AdminProfile Acc = new AdminProfile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
 
     /**
      * @param args the command line arguments

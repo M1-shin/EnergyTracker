@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -59,10 +60,19 @@ public class Assignments extends javax.swing.JFrame {
         String sql;
 
         if (newStatus.equals("Approved")) {
+
             sql = "UPDATE mentor_client " +
                   "SET status = ?, approved_date = datetime('now') " +
                   "WHERE mc_id = ?";
+
+        } else if (newStatus.equals("Ended")) {
+
+            sql = "UPDATE mentor_client " +
+                  "SET status = ? " +
+                  "WHERE mc_id = ?";
+
         } else {
+
             sql = "UPDATE mentor_client SET status = ? WHERE mc_id = ?";
         }
 
@@ -72,7 +82,7 @@ public class Assignments extends javax.swing.JFrame {
 
         int rows = pst.executeUpdate();
 
-        System.out.println("Rows updated: " + rows); 
+        System.out.println("Rows updated: " + rows);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -102,7 +112,8 @@ public class Assignments extends javax.swing.JFrame {
             String name = rs.getString("name") + " " + rs.getString("lname");
             mentors.put(name, id);
         }
-
+        rs.close();
+        
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -127,6 +138,7 @@ public class Assignments extends javax.swing.JFrame {
             String name = rs.getString("name") + " " + rs.getString("lname");
             clients.put(name, id);
         }
+        rs.close();
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -155,6 +167,7 @@ public class Assignments extends javax.swing.JFrame {
         while (rs.next()) {
             assignments.put(rs.getString("info"), rs.getInt("mc_id"));
         }
+        rs.close();
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -164,45 +177,107 @@ public class Assignments extends javax.swing.JFrame {
 }
     
     
-    
-    private JPanel createAssignmentCard(String mentorName, String clientName, String approvedDate) {
+    private JPanel createAssignmentCard(int recordId, String mentorName, String clientName, String date, String status) {
 
     JPanel card = new JPanel();
     card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-    card.setPreferredSize(new Dimension(260, 200));
-    card.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    card.setBackground(Color.WHITE);
+    card.setPreferredSize(new Dimension(260, 190));
+
+    Color bgColor;
+
+    if(status.equals("Rejected")){
+        bgColor = new Color(120,30,30);
+    }else if(status.equals("End Requested")){
+        bgColor = new Color(90,70,0); // yellowish for pending end
+    }else{
+        bgColor = new Color(0,51,51);
+    }
+
+    card.setBackground(bgColor);
+
+    card.setBorder(BorderFactory.createSoftBevelBorder(
+            javax.swing.border.BevelBorder.RAISED,
+            Color.WHITE,
+            Color.WHITE,
+            Color.BLACK,
+            Color.BLACK
+    ));
 
     Font titleFont = new Font("Bookman Old Style", Font.BOLD, 18);
     Font textFont = new Font("Bookman Old Style", Font.PLAIN, 16);
 
-    JLabel title = new JLabel("Approved Assignment");
+    String titleText;
+
+    if(status.equals("Rejected")){
+        titleText = "Rejected Assignment";
+    }else if(status.equals("End Requested")){
+        titleText = "End Session Request";
+    }else{
+        titleText = "Approved Assignment";
+    }
+
+    JLabel title = new JLabel(titleText);
     title.setFont(titleFont);
+    title.setForeground(Color.WHITE);
     title.setAlignmentX(Component.CENTER_ALIGNMENT);
-    title.setHorizontalAlignment(SwingConstants.CENTER);
 
     JLabel mentorLabel = new JLabel("Mentor: " + mentorName);
     mentorLabel.setFont(textFont);
+    mentorLabel.setForeground(Color.WHITE);
     mentorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    mentorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
     JLabel clientLabel = new JLabel("Client: " + clientName);
     clientLabel.setFont(textFont);
+    clientLabel.setForeground(Color.WHITE);
     clientLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    clientLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-    JLabel dateLabel = new JLabel("Approved On: " + approvedDate);
+    JLabel dateLabel = new JLabel("Date: " + date);
     dateLabel.setFont(textFont);
+    dateLabel.setForeground(Color.WHITE);
     dateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    dateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
     card.add(Box.createVerticalStrut(15));
     card.add(title);
-    card.add(Box.createVerticalStrut(15));
-    card.add(mentorLabel);
-    card.add(clientLabel);
     card.add(Box.createVerticalStrut(10));
+    card.add(mentorLabel);
+    card.add(Box.createVerticalStrut(5));
+    card.add(clientLabel);
+    card.add(Box.createVerticalStrut(5));
     card.add(dateLabel);
+
+    // SHOW BUTTONS IF CLIENT REQUESTS TO END SESSION
+    if(status.equals("End Requested")){
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setOpaque(false);
+
+        JButton approveBtn = new JButton("Approve End");
+        JButton declineBtn = new JButton("Decline");
+
+        approveBtn.addActionListener(e -> {
+
+            updateStatus(recordId, "Ended");
+
+            JOptionPane.showMessageDialog(null, "Session End Approved");
+
+            card.setVisible(false);
+        });
+
+        declineBtn.addActionListener(e -> {
+
+            updateStatus(recordId, "Approved");
+
+            JOptionPane.showMessageDialog(null, "End Request Declined");
+
+            card.setVisible(false);
+        });
+
+        btnPanel.add(approveBtn);
+        btnPanel.add(declineBtn);
+
+        card.add(Box.createVerticalStrut(10));
+        card.add(btnPanel);
+    }
 
     return card;
 }
@@ -212,34 +287,42 @@ public class Assignments extends javax.swing.JFrame {
     config con = new config();
 
     String sql = "SELECT " +
-                 "m.name AS mentor_fname, m.lname AS mentor_lname, " +
-                 "c.name AS client_fname, c.lname AS client_lname, " +
-                 "mc.approved_date " +
-                 "FROM mentor_client mc " +
-                 "JOIN tbl_accts m ON mc.mentor_id = m.a_id " +
-                 "JOIN tbl_accts c ON mc.client_id = c.a_id " +
-                 "WHERE mc.status = 'Approved'";
+        "mc.mc_id, " +
+        "m.name AS mentor_fname, m.lname AS mentor_lname, " +
+        "c.name AS client_fname, c.lname AS client_lname, " +
+        "mc.approved_date, mc.status " +
+        "FROM mentor_client mc " +
+        "JOIN tbl_accts m ON mc.mentor_id = m.a_id " +
+        "JOIN tbl_accts c ON mc.client_id = c.a_id " +
+        "WHERE mc.status IN ('Approved','Rejected','End Requested')";
 
     try {
+        
         PreparedStatement pst = con.connectDB().prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
 
         while (rs.next()) {
 
-            String mentorName = rs.getString("mentor_fname") + " " +
-                                rs.getString("mentor_lname");
+        int recordId = rs.getInt("mc_id");
 
-            String clientName = rs.getString("client_fname") + " " +
-                                rs.getString("client_lname");
+        String mentorName = rs.getString("mentor_fname") + " " +
+                rs.getString("mentor_lname");
 
-            String approvedDate = rs.getString("approved_date");
-if (approvedDate != null && approvedDate.contains(" ")) {
-    approvedDate = approvedDate.split(" ")[0]; 
-}
+        String clientName = rs.getString("client_fname") + " " +
+                rs.getString("client_lname");
 
-            JPanel card = createAssignmentCard(mentorName, clientName, approvedDate);
-            assignmentContainer.add(card);
+        String approvedDate = rs.getString("approved_date");
+        String status = rs.getString("status");
+
+        if (approvedDate != null && approvedDate.contains(" ")) {
+            approvedDate = approvedDate.split(" ")[0];
         }
+
+        JPanel card = createAssignmentCard(recordId, mentorName, clientName, approvedDate, status);
+
+        assignmentContainer.add(card);
+    }
+        rs.close();
 
         assignmentContainer.revalidate();
         assignmentContainer.repaint();
@@ -375,7 +458,7 @@ private final Font popupFont = new Font("Bookman Old Style", Font.PLAIN, 18);
 
         assignmentContainer.setBackground(new java.awt.Color(16, 79, 79));
         assignmentContainer.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 25));
-        jPanel6.add(assignmentContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 880, 860));
+        jPanel6.add(assignmentContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 880, 870));
 
         Add.setBackground(new java.awt.Color(0, 51, 51));
         Add.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -644,10 +727,20 @@ private final Font popupFont = new Font("Bookman Old Style", Font.PLAIN, 18);
     }//GEN-LAST:event_HomeMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered

@@ -46,35 +46,53 @@ public class Apply extends javax.swing.JFrame {
 
     JPanel card = new JPanel();
     card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-    card.setPreferredSize(new Dimension(220, 170));
-    card.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-    card.setBackground(Color.WHITE);
+    card.setPreferredSize(new Dimension(260, 180));
+    card.setBackground(new Color(0,51,51));
+
+    card.setBorder(BorderFactory.createSoftBevelBorder(
+            javax.swing.border.BevelBorder.RAISED,
+            Color.WHITE,
+            Color.WHITE,
+            Color.BLACK,
+            Color.BLACK
+    ));
 
     Font titleFont = new Font("Bookman Old Style", Font.BOLD, 18);
     Font textFont = new Font("Bookman Old Style", Font.PLAIN, 16);
 
     JLabel title = new JLabel("Mentor");
     title.setFont(titleFont);
+    title.setForeground(Color.WHITE);
     title.setAlignmentX(Component.CENTER_ALIGNMENT);
-    title.setHorizontalAlignment(SwingConstants.CENTER);
 
     JLabel nameLabel = new JLabel(fname + " " + lname);
     nameLabel.setFont(textFont);
+    nameLabel.setForeground(Color.WHITE);
     nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
     JButton applyBtn = new JButton("Apply");
     applyBtn.setFont(textFont);
+    applyBtn.setBackground(new Color(16,79,79));
+    applyBtn.setForeground(Color.WHITE);
+    applyBtn.setFocusPainted(false);
     applyBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    applyBtn.addActionListener(e -> sendRequest(mentorId));
+    applyBtn.setPreferredSize(new Dimension(120,30));
+
+    applyBtn.addActionListener(e -> {
+
+        sendRequest(mentorId);
+
+        applyBtn.setText("Applied");
+        applyBtn.setEnabled(false);
+
+    });
 
     card.add(Box.createVerticalStrut(15));
     card.add(title);
     card.add(Box.createVerticalStrut(15));
     card.add(nameLabel);
-    card.add(Box.createVerticalGlue());
+    card.add(Box.createVerticalStrut(20));
     card.add(applyBtn);
-    card.add(Box.createVerticalStrut(15));
 
     return card;
 }
@@ -109,6 +127,7 @@ public class Apply extends javax.swing.JFrame {
             JPanel card = createMentorCard(mentorId, fname, lname);
             mentorContainer.add(card);
         }
+        rs.close();
 
         mentorContainer.revalidate();
         mentorContainer.repaint();
@@ -316,7 +335,8 @@ public class Apply extends javax.swing.JFrame {
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
 
-        mentorContainer.setBackground(new java.awt.Color(16, 79, 79));
+        mentorContainer.setBackground(new java.awt.Color(0, 51, 51));
+        mentorContainer.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         mentorContainer.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 20));
         jPanel1.add(mentorContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 940, 570));
 
@@ -400,10 +420,21 @@ public class Apply extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void AppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AppMouseClicked
@@ -430,6 +461,7 @@ public class Apply extends javax.swing.JFrame {
             } else {
                 new Apply().setVisible(true);
             }
+            rs.close();
 
             this.dispose();
 

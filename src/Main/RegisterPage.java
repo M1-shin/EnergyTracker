@@ -58,7 +58,7 @@ public class RegisterPage extends javax.swing.JFrame {
         BackHome = new javax.swing.JLabel();
         FullNameLbl1 = new javax.swing.JLabel();
         Lname = new javax.swing.JTextField();
-        Uname1 = new javax.swing.JTextField();
+        Uname = new javax.swing.JTextField();
         Bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -248,13 +248,13 @@ public class RegisterPage extends javax.swing.JFrame {
         });
         jPanel2.add(Lname, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 400, 40));
 
-        Uname1.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        Uname1.addActionListener(new java.awt.event.ActionListener() {
+        Uname.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
+        Uname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Uname1ActionPerformed(evt);
+                UnameActionPerformed(evt);
             }
         });
-        jPanel2.add(Uname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 400, 40));
+        jPanel2.add(Uname, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 400, 40));
 
         Bg.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
@@ -322,9 +322,9 @@ public class RegisterPage extends javax.swing.JFrame {
         con.addRecord(
             sql,
             Fname.getText(),   
-            Lname.getText(),  
+            Lname.getText(),
+            Uname.getText(),
             Email.getText(),  
-            Email.getText(),   
             Pass.getText(),   
             "User",           
             "Pending"         
@@ -334,7 +334,7 @@ public class RegisterPage extends javax.swing.JFrame {
 
         Fname.setText("");
         Lname.setText("");
-        Email.setText("");
+        Uname.setText("");
         Email.setText("");
         Pass.setText("");
     }//GEN-LAST:event_RegisterMouseClicked
@@ -375,9 +375,9 @@ public class RegisterPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_LnameActionPerformed
 
-    private void Uname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Uname1ActionPerformed
+    private void UnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Uname1ActionPerformed
+    }//GEN-LAST:event_UnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,7 +438,7 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TitleDesc;
     private javax.swing.JLabel Top;
-    private javax.swing.JTextField Uname1;
+    private javax.swing.JTextField Uname;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

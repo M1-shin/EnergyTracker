@@ -438,7 +438,7 @@ public class Update extends javax.swing.JFrame {
         jPanel2.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 180, 290, 40));
 
         Role.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Mentor", "Admin" }));
+        Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Mentor", "Admin" }));
         Role.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RoleActionPerformed(evt);
@@ -655,36 +655,55 @@ public class Update extends javax.swing.JFrame {
 
     private void UpdatebtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatebtnMouseClicked
         config conf = new config();
-        String email = Email.getText();
-        String check = "SELECT * FROM tbl_accts WHERE email='"+Email+"' AND a_id!='"+userId+"'";
+
+        String fname = Fname.getText().trim();
+        String lname = Lname.getText().trim();
+        String uname = Uname.getText().trim();
+        String email = Email.getText().trim();
+        String pass = Pass.getText().trim();
+        String role = Role.getSelectedItem().toString();
+        String status = Stats.getSelectedItem().toString();
+
+        if(fname.isEmpty() || lname.isEmpty() || uname.isEmpty() || email.isEmpty() || pass.isEmpty()){
+            JOptionPane.showMessageDialog(null, "All fields must be filled!");
+            return;
+        }
+
+        String check = "SELECT * FROM tbl_accts WHERE email='"+email+"' AND a_id!='"+userId+"'";
+
         try{
 
             ResultSet rs = conf.getData(check);
 
             if(rs.next()){
-                JOptionPane.showMessageDialog(null, "Email already exists!");
+                JOptionPane.showMessageDialog(null, "Email already exists! Please use another email.");
+                rs.close();
                 return;
             }
+
+            rs.close();
 
         }catch(Exception e){
             e.printStackTrace();
         }
+
         String sql = "UPDATE tbl_accts SET name=?, lname=?, uname=?, email=?, password=?, type=?, status=? WHERE a_id=?";
 
         conf.addRecord(sql,
-            Fname.getText(),
-            Lname.getText(),
-            Uname.getText(),
-            Email.getText(),
-            Pass.getText(),
-            Role.getSelectedItem().toString(),
-            Stats.getSelectedItem().toString(),
-            userId
+                fname,
+                lname,
+                uname,
+                email,
+                pass,
+                role,
+                status,
+                userId
         );
 
         JOptionPane.showMessageDialog(this, "User updated successfully!");
-        Users Update = new Users();
-        Update.setVisible(true);
+
+        Users update = new Users();
+        update.setVisible(true);
         dispose();
     }//GEN-LAST:event_UpdatebtnMouseClicked
 
@@ -695,10 +714,20 @@ public class Update extends javax.swing.JFrame {
     }//GEN-LAST:event_BackMouseClicked
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked

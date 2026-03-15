@@ -73,7 +73,7 @@ public class MentorDashboard extends javax.swing.JFrame {
             double avgEnergy = rs.getDouble("avg_energy");
 
             dataset.addValue(avgEnergy, "Client Energy", date);
-        }
+        }rs.close();
 
         JFreeChart chart = ChartFactory.createLineChart(
                 "Client Energy Trend",
@@ -119,6 +119,8 @@ public class MentorDashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         Logout = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        Record = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         homeChartPanel = new javax.swing.JPanel();
@@ -150,7 +152,7 @@ public class MentorDashboard extends javax.swing.JFrame {
         jLabel1.setText("EnergiFy");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 180, 30));
 
-        Home.setBackground(new java.awt.Color(0, 51, 51));
+        Home.setBackground(new java.awt.Color(16, 79, 79));
         Home.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Home.setForeground(new java.awt.Color(255, 255, 255));
         Home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -248,7 +250,7 @@ public class MentorDashboard extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(120, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -274,6 +276,31 @@ public class MentorDashboard extends javax.swing.JFrame {
         jLabel8.setBounds(126, 16, 107, 29);
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
+
+        Record.setBackground(new java.awt.Color(0, 51, 51));
+        Record.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Record.setForeground(new java.awt.Color(255, 255, 255));
+        Record.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Record.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RecordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                RecordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                RecordMouseExited(evt);
+            }
+        });
+        Record.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("RECORDS");
+        Record.add(jLabel11);
+        jLabel11.setBounds(120, 20, 130, 20);
+
+        jPanel1.add(Record, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
 
         jScrollPane1.setBackground(new java.awt.Color(0, 51, 51));
         jScrollPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -393,10 +420,20 @@ public class MentorDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_AccMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void LogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseEntered
@@ -406,6 +443,20 @@ public class MentorDashboard extends javax.swing.JFrame {
     private void LogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseExited
         setColor(Logout);
     }//GEN-LAST:event_LogoutMouseExited
+
+    private void RecordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseClicked
+        Records Record = new Records();
+        Record.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_RecordMouseClicked
+
+    private void RecordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseEntered
+        resetColor(Record);
+    }//GEN-LAST:event_RecordMouseEntered
+
+    private void RecordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecordMouseExited
+        setColor(Record);
+    }//GEN-LAST:event_RecordMouseExited
 
     /**
      * @param args the command line arguments
@@ -449,9 +500,11 @@ public class MentorDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel Record;
     private javax.swing.JPanel homeChartPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

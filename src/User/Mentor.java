@@ -22,6 +22,9 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.JButton;
 
 /**
  *
@@ -42,10 +45,42 @@ public class Mentor extends javax.swing.JFrame {
         return;
         }
         initComponents();
-        loadGreeting();
+        String status = loadGreeting();
+
+    if(status.equals("Rejected")){
+        showApplyAgainButton();
+    }else{
         loadClientEnergyChart();
-        loadMentorInsights();
     }
+
+    loadMentorInsights();
+    }
+    
+    private void showApplyAgainButton(){
+
+    chartContainer.removeAll();
+    chartContainer.setLayout(new BorderLayout());
+
+    JPanel centerPanel = new JPanel();
+    centerPanel.setBackground(new Color(16,79,79)); // same as your page color
+
+    JButton applyAgainBtn = new JButton("Apply Again");
+    applyAgainBtn.setFont(new Font("Bookman Old Style", Font.BOLD, 18));
+    applyAgainBtn.setPreferredSize(new Dimension(180, 40));
+    applyAgainBtn.setFocusPainted(false);
+
+    applyAgainBtn.addActionListener(e -> {
+        new Apply().setVisible(true);
+        dispose();
+    });
+
+    centerPanel.add(applyAgainBtn);
+
+    chartContainer.add(centerPanel, BorderLayout.CENTER);
+
+    chartContainer.revalidate();
+    chartContainer.repaint();
+}
     
     public String getApprovedMentorName(int clientId) {
     String mentorName = "";
@@ -63,7 +98,7 @@ public class Mentor extends javax.swing.JFrame {
 
         if (rs.next()) {
             mentorName = rs.getString("name") + " " + rs.getString("lname");
-        }
+        }rs.close();
 
     } catch (SQLException e) {
         System.out.println("Error fetching mentor: " + e.getMessage());
@@ -72,16 +107,16 @@ public class Mentor extends javax.swing.JFrame {
     return mentorName;
 }
     
-private void loadGreeting() {
+    private String loadGreeting() {
 
     session sess = session.getInstance();
     String clientName = sess.getName() + " " + sess.getLname();
+    String status = "None";
 
-    String mentorName = "";
-    String sql = "SELECT a.name, a.lname " +
+    String sql = "SELECT mc.status, a.name, a.lname " +
                  "FROM mentor_client mc " +
-                 "JOIN tbl_accts a ON mc.mentor_id = a.a_id " +
-                 "WHERE mc.client_id = ? AND mc.status = 'Approved'";
+                 "LEFT JOIN tbl_accts a ON mc.mentor_id = a.a_id " +
+                 "WHERE mc.client_id = ?";
 
     try (Connection conn = config.connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -90,23 +125,43 @@ private void loadGreeting() {
         ResultSet rs = pstmt.executeQuery();
 
         if (rs.next()) {
-            mentorName = rs.getString("name") + " " + rs.getString("lname");
 
-            lblGreeting.setText(
-                "<html>Welcome, <b>" + clientName + "</b>! <br>" +
-                "<br>You are now successfully connected with your mentor, <b>" +
-                mentorName + "</b> in Energify!</html>"
-            );
-        } else {
-            lblGreeting.setText(
-                "<html>Welcome, <b>" + clientName + "</b>!<br>" +
-                "Your mentor application is still pending approval.</html>"
-            );
+            status = rs.getString("status");
+
+            if(status.equals("Approved")){
+
+                String mentorName = rs.getString("name") + " " + rs.getString("lname");
+
+                lblGreeting.setText(
+                    "<html>Welcome, <b>" + clientName + "</b>!<br><br>" +
+                    "You are connected with mentor <b>" + mentorName + "</b>.</html>"
+                );
+
+            } else if(status.equals("Rejected")){
+
+                lblGreeting.setText(
+                    "<html>Welcome, <b>" + clientName + "</b>!<br><br>" +
+                    "Your mentor application was <b>rejected</b>.</html>"
+                );
+
+            } else {
+
+                lblGreeting.setText(
+                    "<html>Welcome, <b>" + clientName + "</b>!<br><br>" +
+                    "Your mentor application is still <b>pending approval</b>.</html>"
+                );
+
+            }
+
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error loading greeting: " + e.getMessage());
+        rs.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return status;
 }
 
     public void loadMentorInsights(){
@@ -131,7 +186,7 @@ private void loadGreeting() {
             text += rs.getString("date_created") + "\n";
             text += rs.getString("insight") + "\n\n";
 
-        }
+        }rs.close();
 
         txtMentorInsights.setText(text);
 
@@ -164,7 +219,7 @@ private void loadGreeting() {
             String date = rs.getString("date");
 
             dataset.addValue(energy, date, task);
-        }
+        }rs.close();
 
         JFreeChart chart = ChartFactory.createBarChart(
                 "My Energy Tracker",
@@ -185,6 +240,20 @@ private void loadGreeting() {
         e.printStackTrace();
     }
 }
+    
+    private void requestEndSession(int clientId){
+
+    config con = new config();
+
+    String sql = "UPDATE mentor_client SET status='Pending End' WHERE client_id='"+clientId+"' AND status='Approved'";
+
+    con.updateData(sql);
+
+    JOptionPane.showMessageDialog(null,"End session request sent to Admin.");
+
+}
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -216,6 +285,9 @@ private void loadGreeting() {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtMentorInsights = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
+        endSessionbtn = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -324,6 +396,9 @@ private void loadGreeting() {
         Acc.setForeground(new java.awt.Color(255, 255, 255));
         Acc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Acc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AccMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AccMouseEntered(evt);
             }
@@ -366,7 +441,8 @@ private void loadGreeting() {
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 360, 60));
 
-        jPanel2.setBackground(new java.awt.Color(16, 79, 79));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblGreeting.setFont(new java.awt.Font("Sylfaen", 3, 24)); // NOI18N
@@ -374,7 +450,7 @@ private void loadGreeting() {
         jPanel2.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 880, 140));
 
         chartContainer.setLayout(new java.awt.BorderLayout());
-        jPanel2.add(chartContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 830, 320));
+        jPanel2.add(chartContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 830, 350));
 
         txtMentorInsights.setEditable(false);
         txtMentorInsights.setColumns(20);
@@ -385,8 +461,26 @@ private void loadGreeting() {
         txtMentorInsights.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mentor's Insights:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookman Old Style", 0, 18))); // NOI18N
         jScrollPane3.setViewportView(txtMentorInsights);
 
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 540, 520, 170));
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 720, 260, 40));
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 590, 520, 170));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 880, 260, 40));
+
+        endSessionbtn.setBackground(new java.awt.Color(0, 51, 51));
+        endSessionbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        endSessionbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                endSessionbtnMouseClicked(evt);
+            }
+        });
+        endSessionbtn.setLayout(null);
+
+        jLabel6.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("END SESSION");
+        endSessionbtn.add(jLabel6);
+        jLabel6.setBounds(40, 20, 180, 20);
+
+        jPanel2.add(endSessionbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 810, 250, 60));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 770, 260, 40));
 
         jScrollPane2.setViewportView(jPanel2);
 
@@ -456,10 +550,20 @@ private void loadGreeting() {
     }//GEN-LAST:event_LogoutMouseExited
 
     private void LogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutMouseClicked
-        session.getInstance().clearSession();
-        JOptionPane.showMessageDialog(null, "Logged out successfully!");
-        new LoginPage().setVisible(true);
-        dispose();
+        int confirm = JOptionPane.showConfirmDialog(
+        null,
+        "Are you sure you want to logout?",
+        "Logout Confirmation",
+        JOptionPane.YES_NO_OPTION
+        );
+
+        if(confirm == JOptionPane.YES_OPTION){
+
+            session.getInstance().clearSession();
+            JOptionPane.showMessageDialog(null, "Logged out successfully!");
+            new LoginPage().setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void MentorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MentorsMouseExited
@@ -487,7 +591,7 @@ private void loadGreeting() {
                 new Mentor().setVisible(true);
             } else {
                 new Apply().setVisible(true);
-            }
+            }rs.close();
 
             this.dispose();
 
@@ -509,6 +613,45 @@ private void loadGreeting() {
         App.setVisible(true);
         dispose();
     }//GEN-LAST:event_AppMouseClicked
+
+    private void endSessionbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_endSessionbtnMouseClicked
+        int confirm = JOptionPane.showConfirmDialog(
+            null,
+            "Request to end this session?",
+            "End Session",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if(confirm == JOptionPane.YES_OPTION){
+
+        try{
+
+            config con = new config();
+
+            session sess = session.getInstance();
+            int clientId = sess.getUserId();
+
+            String sql = "UPDATE mentor_client SET status='End Requested' WHERE client_id=? AND status='Approved'";
+
+            PreparedStatement pst = con.connectDB().prepareStatement(sql);
+            pst.setInt(1, clientId);
+
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null,"End session request sent to mentor/admin.");
+endSessionbtn.setEnabled(false);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+    }//GEN-LAST:event_endSessionbtnMouseClicked
+
+    private void AccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseClicked
+        Profile Acc = new Profile();
+        Acc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AccMouseClicked
 
     /**
      * @param args the command line arguments
@@ -553,12 +696,15 @@ private void loadGreeting() {
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
     private javax.swing.JPanel chartContainer;
+    private javax.swing.JPanel endSessionbtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
