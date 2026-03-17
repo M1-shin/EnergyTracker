@@ -419,8 +419,8 @@ public class Records extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        MentorDashboard Users = new MentorDashboard();
-        Users.setVisible(true);
+        MentorDashboard Home = new MentorDashboard();
+        Home.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
     public void setColor(JPanel p){

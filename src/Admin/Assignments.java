@@ -371,6 +371,8 @@ private final Font popupFont = new Font("Bookman Old Style", Font.PLAIN, 18);
         AssignLbl = new javax.swing.JLabel();
         Acc = new javax.swing.JPanel();
         AccLbl = new javax.swing.JLabel();
+        Logs = new javax.swing.JPanel();
+        AccLbl2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1300, 737));
@@ -674,7 +676,32 @@ private final Font popupFont = new Font("Bookman Old Style", Font.PLAIN, 18);
         Acc.add(AccLbl);
         AccLbl.setBounds(114, 16, 125, 29);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 360, 60));
+
+        Logs.setBackground(new java.awt.Color(0, 51, 51));
+        Logs.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Logs.setForeground(new java.awt.Color(255, 255, 255));
+        Logs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Logs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogsMouseExited(evt);
+            }
+        });
+        Logs.setLayout(null);
+
+        AccLbl2.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AccLbl2.setForeground(new java.awt.Color(255, 255, 255));
+        AccLbl2.setText("REPORTS");
+        Logs.add(AccLbl2);
+        AccLbl2.setBounds(120, 20, 130, 20);
+
+        jPanel1.add(Logs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -848,9 +875,11 @@ private final Font popupFont = new Font("Bookman Old Style", Font.PLAIN, 18);
             int mentorId = mentors.get(mentorBox.getSelectedItem());
             int clientId = clients.get(clientBox.getSelectedItem());
 
-            String sql = "INSERT INTO mentor_client " +
-                         "(mentor_id, client_id, status, approved_date) " +
-                         "VALUES (?, ?, 'Approved', datetime('now'))";
+            String sql = "SELECT mc.status, a.name, a.lname " +
+             "FROM mentor_client mc " +
+             "LEFT JOIN tbl_accts a ON mc.mentor_id = a.a_id " +
+             "WHERE mc.client_id = ? " +
+             "ORDER BY mc.approved_date DESC LIMIT 1";
 
             try {
                 PreparedStatement pst =
@@ -1040,6 +1069,20 @@ panel.add(clientBox);
         setColor(Search);
     }//GEN-LAST:event_SearchMouseExited
 
+    private void LogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogsMouseClicked
+        SystemLogs Logs = new SystemLogs();
+        Logs.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogsMouseClicked
+
+    private void LogsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogsMouseEntered
+        resetColor(Logs);
+    }//GEN-LAST:event_LogsMouseEntered
+
+    private void LogsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogsMouseExited
+        setColor(Logs);
+    }//GEN-LAST:event_LogsMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -1078,6 +1121,7 @@ panel.add(clientBox);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
     private javax.swing.JLabel AccLbl;
+    private javax.swing.JLabel AccLbl2;
     private javax.swing.JPanel Add;
     private javax.swing.JLabel AddLbl;
     private javax.swing.JPanel App;
@@ -1088,6 +1132,7 @@ panel.add(clientBox);
     private javax.swing.JPanel Home;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
+    private javax.swing.JPanel Logs;
     private javax.swing.JPanel Mentor;
     private javax.swing.JPanel Search;
     private javax.swing.JLabel SearchLbl;

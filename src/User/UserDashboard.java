@@ -21,6 +21,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.BorderLayout;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 
 /**
  *
@@ -91,8 +93,6 @@ public class UserDashboard extends javax.swing.JFrame {
         e.printStackTrace();
     }
 }
-    
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,6 +121,8 @@ public class UserDashboard extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         homeChartPanel = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        Urecord = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1300, 737));
@@ -148,7 +150,7 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel1.setText("EnergiFy");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 180, 30));
 
-        Home.setBackground(new java.awt.Color(0, 51, 51));
+        Home.setBackground(new java.awt.Color(16, 79, 79));
         Home.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Home.setForeground(new java.awt.Color(255, 255, 255));
         Home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -246,7 +248,7 @@ public class UserDashboard extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(110, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -302,6 +304,31 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
 
+        Urecord.setBackground(new java.awt.Color(0, 51, 51));
+        Urecord.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Urecord.setForeground(new java.awt.Color(255, 255, 255));
+        Urecord.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Urecord.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UrecordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                UrecordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UrecordMouseExited(evt);
+            }
+        });
+        Urecord.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("RECORDS");
+        Urecord.add(jLabel11);
+        jLabel11.setBounds(110, 20, 130, 20);
+
+        jPanel1.add(Urecord, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -341,15 +368,16 @@ public class UserDashboard extends javax.swing.JFrame {
         "Are you sure you want to logout?",
         "Logout Confirmation",
         JOptionPane.YES_NO_OPTION
-        );
+);
 
-        if(confirm == JOptionPane.YES_OPTION){
+if(confirm == JOptionPane.YES_OPTION){
 
-            session.getInstance().clearSession();
-            JOptionPane.showMessageDialog(null, "Logged out successfully!");
-            new LoginPage().setVisible(true);
-            dispose();
-        }
+    session.getInstance().clearSession();
+    JOptionPane.showMessageDialog(null, "Logged out successfully!");
+    new LoginPage().setVisible(true);
+    dispose();
+
+}
     }//GEN-LAST:event_LogoutMouseClicked
 
     private void AccMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccMouseExited
@@ -431,6 +459,20 @@ public class UserDashboard extends javax.swing.JFrame {
         Logo.setVisible(true);
         dispose();
     }//GEN-LAST:event_LogoMouseClicked
+
+    private void UrecordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UrecordMouseClicked
+        Urecords Urecord = new Urecords();
+        Urecord.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_UrecordMouseClicked
+
+    private void UrecordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UrecordMouseEntered
+        resetColor(Urecord);
+    }//GEN-LAST:event_UrecordMouseEntered
+
+    private void UrecordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UrecordMouseExited
+        setColor(Urecord);
+    }//GEN-LAST:event_UrecordMouseExited
     public void setColor(JPanel p){
         p.setBackground(new Color(0,51,51));
     }
@@ -480,9 +522,11 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel Urecord;
     private javax.swing.JPanel homeChartPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

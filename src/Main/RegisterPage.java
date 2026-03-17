@@ -47,7 +47,6 @@ public class RegisterPage extends javax.swing.JFrame {
         Acc = new javax.swing.JLabel();
         EmailLbl = new javax.swing.JLabel();
         CpassLbl = new javax.swing.JLabel();
-        Forgot = new javax.swing.JLabel();
         Register = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         Fname = new javax.swing.JTextField();
@@ -140,20 +139,6 @@ public class RegisterPage extends javax.swing.JFrame {
         CpassLbl.setText("Email Address");
         jPanel2.add(CpassLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, 20));
 
-        Forgot.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        Forgot.setForeground(new java.awt.Color(255, 255, 255));
-        Forgot.setText("Forgot Password?");
-        Forgot.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Forgot.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ForgotMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ForgotMouseExited(evt);
-            }
-        });
-        jPanel2.add(Forgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, 160, 20));
-
         Register.setBackground(new java.awt.Color(0, 51, 51));
         Register.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         Register.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -175,7 +160,7 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel9.setText("REGISTER");
         Register.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 140, 20));
 
-        jPanel2.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 620, 210, 60));
+        jPanel2.add(Register, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 610, 210, 60));
 
         Fname.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Fname.addActionListener(new java.awt.event.ActionListener() {
@@ -355,14 +340,6 @@ public class RegisterPage extends javax.swing.JFrame {
         Loginbtn.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_LoginbtnMouseExited
 
-    private void ForgotMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseEntered
-        Forgot.setForeground(new Color(255,153,51));
-    }//GEN-LAST:event_ForgotMouseEntered
-
-    private void ForgotMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseExited
-        Forgot.setForeground(new Color(255,255,255));
-    }//GEN-LAST:event_ForgotMouseExited
-
     private void RegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegisterMouseEntered
         Register.setBackground(new Color(0,102,102));
     }//GEN-LAST:event_RegisterMouseEntered
@@ -423,7 +400,6 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JTextField Email;
     private javax.swing.JLabel EmailLbl;
     private javax.swing.JTextField Fname;
-    private javax.swing.JLabel Forgot;
     private javax.swing.JLabel FullNameLbl;
     private javax.swing.JLabel FullNameLbl1;
     private javax.swing.JTextField Lname;

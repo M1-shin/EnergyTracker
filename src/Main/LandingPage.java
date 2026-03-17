@@ -41,8 +41,6 @@ public class LandingPage extends javax.swing.JFrame {
         Balanced = new javax.swing.JLabel();
         Text = new javax.swing.JLabel();
         Text2 = new javax.swing.JLabel();
-        AboutPanel = new javax.swing.JPanel();
-        AboutLbl = new javax.swing.JLabel();
         LoginPanel = new javax.swing.JPanel();
         LoginLbl = new javax.swing.JLabel();
         SignPanel = new javax.swing.JPanel();
@@ -58,8 +56,7 @@ public class LandingPage extends javax.swing.JFrame {
         jLabel6.setText("jLabel6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1300, 737));
-        setMinimumSize(new java.awt.Dimension(1300, 737));
+        setMaximumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Background.setBackground(new java.awt.Color(0, 51, 51));
@@ -97,27 +94,6 @@ public class LandingPage extends javax.swing.JFrame {
         Text2.setForeground(new java.awt.Color(255, 255, 255));
         Text2.setText("how your energy changes throughout the day.");
         Background.add(Text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 30));
-
-        AboutPanel.setBackground(new java.awt.Color(0, 51, 51));
-        AboutPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
-        AboutPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                AboutPanelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                AboutPanelMouseExited(evt);
-            }
-        });
-        AboutPanel.setLayout(null);
-
-        AboutLbl.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
-        AboutLbl.setForeground(new java.awt.Color(255, 255, 255));
-        AboutLbl.setText("ABOUT");
-        AboutLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        AboutPanel.add(AboutLbl);
-        AboutLbl.setBounds(34, 16, 88, 29);
-
-        Background.add(AboutPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, 160, 60));
 
         LoginPanel.setBackground(new java.awt.Color(0, 51, 51));
         LoginPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -210,14 +186,6 @@ public class LandingPage extends javax.swing.JFrame {
     p.setBackground(new Color(0,102,102));
     }
     
-    private void AboutPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutPanelMouseEntered
-        resetColor(AboutPanel);
-    }//GEN-LAST:event_AboutPanelMouseEntered
-
-    private void AboutPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutPanelMouseExited
-        setColor(AboutPanel);
-    }//GEN-LAST:event_AboutPanelMouseExited
-
     private void LoginPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginPanelMouseClicked
         LoginPage LoginPanel = new LoginPage();
         LoginPanel.setVisible(true);
@@ -296,8 +264,6 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel AboutLbl;
-    private javax.swing.JPanel AboutPanel;
     private javax.swing.JPanel Background;
     private javax.swing.JLabel Balanced;
     private javax.swing.JLabel Bg;

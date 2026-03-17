@@ -460,8 +460,8 @@ public class EditProfileM extends javax.swing.JFrame {
         p2.setBackground(new Color(16,79,79));
     }
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        MentorDashboard Users = new MentorDashboard();
-        Users.setVisible(true);
+        MentorDashboard Home = new MentorDashboard();
+        Home.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
 

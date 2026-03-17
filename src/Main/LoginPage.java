@@ -57,7 +57,6 @@ public class LoginPage extends javax.swing.JFrame {
         ShowIcon = new javax.swing.JLabel();
         PassLbl = new javax.swing.JLabel();
         Pass = new javax.swing.JPasswordField();
-        Forgot = new javax.swing.JLabel();
         LoginButton = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         BackHome = new javax.swing.JLabel();
@@ -166,20 +165,6 @@ public class LoginPage extends javax.swing.JFrame {
         });
         jPanel2.add(Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 390, 60));
 
-        Forgot.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
-        Forgot.setForeground(new java.awt.Color(255, 255, 255));
-        Forgot.setText("Forgot Password?");
-        Forgot.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Forgot.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ForgotMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ForgotMouseExited(evt);
-            }
-        });
-        jPanel2.add(Forgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, 190, -1));
-
         LoginButton.setBackground(new java.awt.Color(0, 51, 51));
         LoginButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         LoginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -201,7 +186,7 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel10.setText("LOGIN");
         LoginButton.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, 20));
 
-        jPanel2.add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, 220, 60));
+        jPanel2.add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 540, 220, 60));
 
         BackHome.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         BackHome.setForeground(new java.awt.Color(255, 255, 255));
@@ -220,6 +205,7 @@ public class LoginPage extends javax.swing.JFrame {
         });
         jPanel2.add(BackHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 60, 60));
 
+        Bg.setFont(new java.awt.Font("Bookman Old Style", 0, 18)); // NOI18N
         Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel2.add(Bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -280,65 +266,66 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void LoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginButtonMouseClicked
         String email = Email.getText();
-        String password = Pass.getText();
+String password = Pass.getText();
 
-        if (email.equals("") || password.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields!");
-            return;
-        }
+if (email.equals("") || password.equals("")) {
+    JOptionPane.showMessageDialog(null, "Please fill in all fields!");
+    return;
+}
 
-        String sql = "SELECT * FROM tbl_accts WHERE email = ? AND password = ?";
+String sql = "SELECT * FROM tbl_accts WHERE email = ? AND password = ?";
 
-        try (
-            java.sql.Connection conn = Config.config.connectDB();
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        ) {
+try (
+    java.sql.Connection conn = Config.config.connectDB();
+    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+) {
 
-            pst.setString(1, email);
-            pst.setString(2, password);
+    pst.setString(1, email);
+    pst.setString(2, password);
 
-            java.sql.ResultSet rs = pst.executeQuery();
+    java.sql.ResultSet rs = pst.executeQuery();
 
-            if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "Invalid email or password!");
-                return;
-            }
+    if (!rs.next()) {
+        JOptionPane.showMessageDialog(null, "Invalid email or password!");
+        return;
+    }
 
-            if (!rs.getString("status").equalsIgnoreCase("Active")) {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Your account is inactive. Please contact the administrator."
-                );
-                return;
-            }
-            
-            int userID = rs.getInt("a_id");
-            
-                sess.setUserId(rs.getInt("a_id"));
-                sess.setName(rs.getString("name"));
-                sess.setLname(rs.getString("lname"));
-                sess.setUname(rs.getString("uname"));
-                sess.setEmail(rs.getString("email"));
-                sess.setType(rs.getString("type"));
-                sess.setStatus(rs.getString("status"));
+    if (!rs.getString("status").equalsIgnoreCase("Active")) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Your account is inactive. Please contact the administrator."
+        );
+        return;
+    }
 
-            JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
+    int userID = rs.getInt("a_id");
 
-            String userType = rs.getString("type");
+    sess.setUserId(userID);
+    sess.setName(rs.getString("name"));
+    sess.setLname(rs.getString("lname"));
+    sess.setUname(rs.getString("uname"));
+    sess.setEmail(rs.getString("email"));
+    sess.setType(rs.getString("type"));
+    sess.setStatus(rs.getString("status"));
 
-            if (userType.equalsIgnoreCase("Admin")) {
-                new AdminDashboard().setVisible(true);
-            } else if (userType.equalsIgnoreCase("User")) {
-                new UserDashboard().setVisible(true);
-            } else if (userType.equalsIgnoreCase("Mentor")) {
-                new MentorDashboard().setVisible(true);
-            }
-            rs.close();
-            dispose();
+    JOptionPane.showMessageDialog(null, "LOGIN SUCCESS!");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
-        }
+    String userType = rs.getString("type");
+
+    if (userType.equalsIgnoreCase("Admin")) {
+        new AdminDashboard().setVisible(true);
+    } else if (userType.equalsIgnoreCase("User")) {
+        new UserDashboard().setVisible(true);
+    } else if (userType.equalsIgnoreCase("Mentor")) {
+        new MentorDashboard().setVisible(true);
+    }
+
+    rs.close();
+    dispose();
+
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Login Error: " + e.getMessage());
+}
         
     }//GEN-LAST:event_LoginButtonMouseClicked
 
@@ -350,10 +337,6 @@ public class LoginPage extends javax.swing.JFrame {
         SignUpbtn.setForeground(new Color(255,153,51));
     }//GEN-LAST:event_SignUpbtnMouseEntered
 
-    private void ForgotMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseEntered
-        Forgot.setForeground(new Color(255,153,51));
-    }//GEN-LAST:event_ForgotMouseEntered
-
     private void BackHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackHomeMouseExited
         BackHome.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_BackHomeMouseExited
@@ -361,10 +344,6 @@ public class LoginPage extends javax.swing.JFrame {
     private void SignUpbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignUpbtnMouseExited
         SignUpbtn.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_SignUpbtnMouseExited
-
-    private void ForgotMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseExited
-        Forgot.setForeground(new Color(255,255,255));
-    }//GEN-LAST:event_ForgotMouseExited
 
     /**
      * @param args the command line arguments
@@ -407,7 +386,6 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel Bg;
     private javax.swing.JLabel Bot;
     private javax.swing.JTextField Email;
-    private javax.swing.JLabel Forgot;
     private javax.swing.JPanel LoginButton;
     private javax.swing.JLabel LoginTitle;
     private javax.swing.JLabel Logo;

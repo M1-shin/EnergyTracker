@@ -234,8 +234,8 @@ public class User extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Bookman Old Style", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("USER'S CLIENT");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, -1, -1));
+        jLabel9.setText("MENTOR'S CLIENT");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Broadway", 2, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -454,8 +454,8 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        MentorDashboard Users = new MentorDashboard();
-        Users.setVisible(true);
+        MentorDashboard Home = new MentorDashboard();
+        Home.setVisible(true);
         dispose();
     }//GEN-LAST:event_HomeMouseClicked
      public void setColor(JPanel p){

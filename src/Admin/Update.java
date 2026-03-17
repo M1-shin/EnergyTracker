@@ -105,6 +105,8 @@ public class Update extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         Uname = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        Logs = new javax.swing.JPanel();
+        AccLbl2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1300, 737));
@@ -246,7 +248,7 @@ public class Update extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(114, 16, 125, 29);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -273,8 +275,8 @@ public class Update extends javax.swing.JFrame {
 
         jPanel1.add(Logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, 360, 60));
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102,90));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 51), java.awt.Color.lightGray));
+        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Add.setBackground(new java.awt.Color(16, 79, 79));
@@ -513,6 +515,31 @@ public class Update extends javax.swing.JFrame {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, -1, -1));
+
+        Logs.setBackground(new java.awt.Color(0, 51, 51));
+        Logs.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Logs.setForeground(new java.awt.Color(255, 255, 255));
+        Logs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Logs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogsMouseExited(evt);
+            }
+        });
+        Logs.setLayout(null);
+
+        AccLbl2.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        AccLbl2.setForeground(new java.awt.Color(255, 255, 255));
+        AccLbl2.setText("REPORTS");
+        Logs.add(AccLbl2);
+        AccLbl2.setBounds(120, 20, 130, 20);
+
+        jPanel1.add(Logs, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 360, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 1310, 750));
 
@@ -765,6 +792,20 @@ public class Update extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_UnameActionPerformed
 
+    private void LogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogsMouseClicked
+        SystemLogs Logs = new SystemLogs();
+        Logs.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogsMouseClicked
+
+    private void LogsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogsMouseEntered
+        resetColor(Logs);
+    }//GEN-LAST:event_LogsMouseEntered
+
+    private void LogsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogsMouseExited
+        setColor(Logs);
+    }//GEN-LAST:event_LogsMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -805,6 +846,7 @@ public class Update extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Acc;
+    private javax.swing.JLabel AccLbl2;
     private javax.swing.JPanel Add;
     private javax.swing.JPanel App;
     private javax.swing.JLabel Back;
@@ -815,6 +857,7 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JTextField Lname;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
+    private javax.swing.JPanel Logs;
     private javax.swing.JPanel Mentors;
     private javax.swing.JPasswordField Pass;
     private javax.swing.JComboBox<String> Role;

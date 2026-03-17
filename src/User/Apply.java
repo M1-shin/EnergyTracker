@@ -184,6 +184,8 @@ public class Apply extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         mentorContainer = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        Urecord = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1300, 737));
@@ -308,7 +310,7 @@ public class Apply extends javax.swing.JFrame {
         Acc.add(jLabel7);
         jLabel7.setBounds(110, 20, 125, 20);
 
-        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
+        jPanel1.add(Acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 360, 60));
 
         Logout.setBackground(new java.awt.Color(0, 51, 51));
         Logout.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
@@ -342,6 +344,31 @@ public class Apply extends javax.swing.JFrame {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
+
+        Urecord.setBackground(new java.awt.Color(0, 51, 51));
+        Urecord.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, null, null));
+        Urecord.setForeground(new java.awt.Color(255, 255, 255));
+        Urecord.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Urecord.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UrecordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                UrecordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UrecordMouseExited(evt);
+            }
+        });
+        Urecord.setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("RECORDS");
+        Urecord.add(jLabel11);
+        jLabel11.setBounds(110, 20, 130, 20);
+
+        jPanel1.add(Urecord, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -476,6 +503,20 @@ public class Apply extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_AccMouseClicked
 
+    private void UrecordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UrecordMouseClicked
+        Urecords Urecord = new Urecords();
+        Urecord.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_UrecordMouseClicked
+
+    private void UrecordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UrecordMouseEntered
+        resetColor(Urecord);
+    }//GEN-LAST:event_UrecordMouseEntered
+
+    private void UrecordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UrecordMouseExited
+        setColor(Urecord);
+    }//GEN-LAST:event_UrecordMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -519,8 +560,10 @@ public class Apply extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Logout;
     private javax.swing.JPanel Mentors;
+    private javax.swing.JPanel Urecord;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
